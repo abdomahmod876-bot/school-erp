@@ -36,6 +36,7 @@ Documentation screenshots: [docs/screenshots/demo](docs/screenshots/demo/README.
 ## Quick start
 
 ```bash
+cp .env.example .env            # set POSTGRES_PASSWORD (file is git-ignored)
 docker compose up -d --build
 # first run: install the school modules with demo data
 docker compose stop odoo
@@ -50,8 +51,9 @@ docker compose start odoo
 
 Open http://localhost:8069 (database `school_erp`).
 
-Database credentials for local development are in `docker-compose.yml`
-(`odoo` / `odoo`).
+Database credentials and database name are read from `.env` (seeded from
+`.env.example`); the odoo and db containers share the same values, and the
+`.env` file is excluded from version control.
 
 ## Demo users
 

@@ -8,6 +8,8 @@ filestore/
 
 # Local secrets and certificates
 .env
+.env.*
+!.env.example
 docker/nginx/certs/
 
 # Third-party Odoo addons (not part of this project, see README)
