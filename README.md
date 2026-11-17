@@ -19,7 +19,7 @@ library, transport, communication — plus web portals for parents and students.
 - **Daily operations**: timetables, attendance sessions, exams, schedules and results.
 - **Finance**: fee types, structures, student plans, payments and invoice bridging.
 - **Extras**: library loans, transport routes/subscriptions, announcements and messages.
-- **Portals**: parents follow fees, attendance, results and timetables; students get their own dashboard.
+- **Portals**: parents follow fees, attendance, results and timetables; a dedicated progress tracker (backed by a JSON API) shows each child's level, averages, subject performance, exam trend and attention flags; students get their own dashboard.
 - **Demo data and tests for every module**, verified on a live Odoo 19 + PostgreSQL stack.
 
 ## Table of contents
@@ -29,6 +29,7 @@ library, transport, communication — plus web portals for parents and students.
 - [Requirements](#requirements)
 - [Quick start](#quick-start)
 - [Demo data and users](#demo-data-and-users)
+- [Parent progress tracker & API](#parent-progress-tracker--api)
 - [Configuration](#configuration)
 - [Testing](#testing)
 - [Automatic school codes](#automatic-school-codes)
@@ -68,8 +69,8 @@ All screens captured from the demo database — full gallery in
 | `school_library` | Books, members and loans |
 | `school_transport` | Vehicles, routes, stops and subscriptions |
 | `school_communication` | Announcements and school messages |
-| `school_parent_portal` | Parent portal: `/my/children`, child dashboard, notifications |
-| `school_student_portal` | Student portal: `/my/student` |
+| `school_parent_portal` | Parent portal: `/my/children`, child dashboard, progress tracker API, notifications |
+| `school_student_portal` | Student portal: `/my/student` and own progress tracker |
 
 ## Requirements
 
@@ -127,6 +128,41 @@ four sections, seven students with guardians and enrollments, eight admission
 applications, four teachers, periods and published timetables, attendance
 sessions, exams with results, fee types, plans and payments, library records,
 transport routes and subscriptions, announcements and messages.
+
+## Parent progress tracker & API
+
+Guardians open **My Children → Progress** (or `/my/children/<student_id>/progress`)
+to track a child's performance. Students reach the same page from their own
+dashboard. The page is rendered from a JSON endpoint, so the data can also be
+consumed by other clients.
+
+Endpoint: `POST /school/parent/api/children/<student_id>/progress`
+(JSON-RPC envelope, session authentication).
+
+```bash
+curl -s -X POST http://localhost:8069/school/parent/api/children/1/progress \
+  -H 'Content-Type: application/json' \
+  -b cookies.txt \
+  -d '{"jsonrpc":"2.0","method":"call","params":{}}'
+```
+
+Response fields:
+
+| Field | Content |
+| --- | --- |
+| `student` | Name, student number, state, school |
+| `level` | Stage, grade, section and academic year |
+| `attendance` | Sessions, present/absent/late/excused counts and attendance rate |
+| `academics` | Weighted average, performance level, per-subject averages, exam trend and attention flags |
+| `fees` | Confirmed totals, paid amount, balance and payment state |
+
+Performance levels: 90+ **Excellent**, 80+ **Very Good**, 70+ **Good**,
+60+ **Acceptable**, below 60 **Needs Support**. Attention flags are added when
+the average is below the pass mark, attendance is under 75%, or an exam result
+is failed.
+
+Access is limited to the guardian's own children (or the student's own file);
+other student ids return a JSON-RPC `NotFound` error.
 
 ## Configuration
 

@@ -10,6 +10,13 @@
             <li t-if="page_name == 'school_child'" class="breadcrumb-item">
                 <t t-out="student.name"/>
             </li>
+            <li t-if="page_name == 'school_child_progress'" class="breadcrumb-item">
+                <a href="/my/children">My Children</a>
+            </li>
+            <li t-if="page_name == 'school_child_progress'" class="breadcrumb-item">
+                <a t-attf-href="/my/children/#{student.id}" t-out="student.name"/>
+            </li>
+            <li t-if="page_name == 'school_child_progress'" class="breadcrumb-item">Progress</li>
             <li t-if="page_name == 'school_notifications'" class="breadcrumb-item">Notifications</li>
         </xpath>
     </template>
@@ -30,20 +37,34 @@
             <div class="row g-3">
                 <t t-foreach="children" t-as="child">
                     <div class="col-md-6">
-                        <a t-attf-href="/my/children/#{child.id}"
-                           class="card h-100 text-decoration-none shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title mb-1" t-out="child.name"/>
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body d-flex flex-column">
+                                <a t-attf-href="/my/children/#{child.id}"
+                                   class="text-decoration-none">
+                                    <h5 class="card-title mb-1" t-out="child.name"/>
+                                </a>
                                 <div class="text-muted small" t-out="child.reference"/>
                                 <div class="text-muted small" t-out="child.school_id.name"/>
-                                <span t-if="child.state == 'active'"
-                                      class="badge text-bg-success mt-2">Active</span>
-                                <span t-elif="child.state == 'graduated'"
-                                      class="badge text-bg-info mt-2">Graduated</span>
-                                <span t-else="" class="badge text-bg-secondary mt-2"
-                                      t-out="child.state"/>
+                                <div class="mt-2">
+                                    <span t-if="child.state == 'active'"
+                                          class="badge text-bg-success">Active</span>
+                                    <span t-elif="child.state == 'graduated'"
+                                          class="badge text-bg-info">Graduated</span>
+                                    <span t-else="" class="badge text-bg-secondary"
+                                          t-out="child.state"/>
+                                </div>
+                                <div class="mt-auto pt-3 d-flex gap-2">
+                                    <a t-attf-href="/my/children/#{child.id}"
+                                       class="btn btn-outline-secondary btn-sm flex-fill">
+                                        Dashboard
+                                    </a>
+                                    <a t-attf-href="/my/children/#{child.id}/progress"
+                                       class="btn btn-outline-primary btn-sm flex-fill">
+                                        Progress
+                                    </a>
+                                </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </t>
             </div>
@@ -65,6 +86,8 @@
                     </div>
                 </div>
                 <div class="d-flex gap-2">
+                    <a t-attf-href="/my/children/#{student.id}/progress"
+                       class="btn btn-primary btn-sm">Progress tracker</a>
                     <a href="/my/children" class="btn btn-outline-secondary btn-sm">
                         All children
                     </a>
@@ -267,6 +290,345 @@
                     </t>
                 </div>
             </div>
+        </t>
+    </template>
+
+    <template id="portal_child_progress" name="Child Progress Tracker">
+        <t t-call="portal.portal_layout">
+            <t t-set="page_name" t-value="'school_child_progress'"/>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+                <div>
+                    <h3 class="mb-1">Progress tracker</h3>
+                    <div class="text-muted">
+                        <span t-out="student.name"/>
+                        <span> - </span>
+                        <span t-out="student.reference"/>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a t-attf-href="/my/children/#{student.id}"
+                       class="btn btn-outline-secondary btn-sm">Child dashboard</a>
+                    <a href="/my/children" class="btn btn-outline-secondary btn-sm">
+                        All children
+                    </a>
+                </div>
+            </div>
+
+            <div id="school-progress-app"
+                 t-att-data-api-url="progress_api_url"
+                 t-att-data-student-id="student.id">
+                <div id="progress-loading" class="text-muted py-5 text-center">
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                    Loading progress...
+                </div>
+                <div id="progress-error" class="alert alert-danger d-none" role="alert"></div>
+                <div id="progress-content" class="d-none">
+                    <div id="progress-level"></div>
+                    <div id="progress-kpis" class="row g-3 mb-4"></div>
+                    <div class="row g-3">
+                        <div class="col-lg-6">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Attendance</h5>
+                                </div>
+                                <div class="card-body" id="progress-attendance"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Fees</h5>
+                                </div>
+                                <div class="card-body" id="progress-fees"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Subjects</h5>
+                                </div>
+                                <div class="card-body" id="progress-subjects"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Exam trend</h5>
+                                </div>
+                                <div class="card-body" id="progress-trend"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script><![CDATA[
+            (function () {
+                'use strict';
+
+                var app = document.getElementById('school-progress-app');
+                if (!app) {
+                    return;
+                }
+
+                function el(tag, cls, text) {
+                    var node = document.createElement(tag);
+                    if (cls) {
+                        node.className = cls;
+                    }
+                    if (text !== undefined) {
+                        node.textContent = String(text === null ? '' : text);
+                    }
+                    return node;
+                }
+
+                function formatNumber(value, suffix) {
+                    if (value === null || value === undefined) {
+                        return 'n/a';
+                    }
+                    return Number(value).toFixed(2) + (suffix || '');
+                }
+
+                function badge(label, tone) {
+                    return el('span', 'badge text-bg-' + (tone || 'secondary'), label);
+                }
+
+                function table(headers, rows) {
+                    var wrapper = el('div', 'table-responsive');
+                    var node = el('table', 'table table-sm align-middle mb-0');
+                    var thead = el('thead');
+                    var headRow = el('tr');
+                    headers.forEach(function (header) {
+                        headRow.appendChild(el('th', null, header));
+                    });
+                    thead.appendChild(headRow);
+                    node.appendChild(thead);
+                    var tbody = el('tbody');
+                    rows.forEach(function (cells) {
+                        var row = el('tr');
+                        cells.forEach(function (cell) {
+                            var td = el('td');
+                            if (cell instanceof Node) {
+                                td.appendChild(cell);
+                            } else {
+                                td.textContent = cell === null || cell === undefined ? '' : String(cell);
+                            }
+                            row.appendChild(td);
+                        });
+                        tbody.appendChild(row);
+                    });
+                    node.appendChild(tbody);
+                    wrapper.appendChild(node);
+                    return wrapper;
+                }
+
+                function kpiCard(title, value, hint, tone) {
+                    var column = el('div', 'col-sm-6 col-xl-3');
+                    var card = el('div', 'card shadow-sm h-100');
+                    var body = el('div', 'card-body');
+                    body.appendChild(el('div', 'text-muted small text-uppercase', title));
+                    body.appendChild(el('div', 'fs-4 fw-bold mt-1', value));
+                    body.appendChild(el('div', 'small mt-1 text-' + (tone || 'muted'), hint));
+                    card.appendChild(body);
+                    column.appendChild(card);
+                    return column;
+                }
+
+                function attendanceTone(rate) {
+                    if (rate === null || rate === undefined) {
+                        return 'muted';
+                    }
+                    if (rate >= 90) {
+                        return 'success';
+                    }
+                    return rate >= 75 ? 'warning' : 'danger';
+                }
+
+                function attendanceSummary(attendance) {
+                    var parts = [
+                        attendance.present + ' present',
+                        attendance.absent + ' absent',
+                    ];
+                    if (attendance.late) {
+                        parts.push(attendance.late + ' late');
+                    }
+                    if (attendance.excused) {
+                        parts.push(attendance.excused + ' excused');
+                    }
+                    return parts.join(', ');
+                }
+
+                function renderLevel(data) {
+                    var card = el('div', 'card shadow-sm mb-4');
+                    var body = el('div', 'card-body d-flex justify-content-between align-items-center flex-wrap gap-3');
+                    var left = el('div');
+                    left.appendChild(el('div', 'text-muted small text-uppercase', 'Overall performance'));
+                    var heading = el('div', 'd-flex align-items-center gap-2 mt-1');
+                    heading.appendChild(el('h4', 'mb-0', data.academics.level));
+                    heading.appendChild(badge(
+                        formatNumber(data.academics.average_percentage, '%'),
+                        data.academics.level_tone));
+                    left.appendChild(heading);
+                    var parts = [data.level.stage, data.level.grade, data.level.section]
+                        .filter(function (part) { return part; });
+                    var subtitle = parts.join(' - ');
+                    if (data.level.academic_year) {
+                        subtitle += ' (' + data.level.academic_year + ')';
+                    }
+                    left.appendChild(el('div', 'text-muted mt-1', subtitle));
+                    body.appendChild(left);
+                    if (data.academics.attention.length) {
+                        var alerts = el('div');
+                        data.academics.attention.forEach(function (message) {
+                            alerts.appendChild(badge(message, 'warning'));
+                            alerts.appendChild(document.createTextNode(' '));
+                        });
+                        body.appendChild(alerts);
+                    }
+                    card.appendChild(body);
+                    return card;
+                }
+
+                function renderAttendance(data) {
+                    var container = document.getElementById('progress-attendance');
+                    if (!data.attendance.total) {
+                        container.appendChild(el('div', 'text-muted', 'No attendance records yet.'));
+                        return;
+                    }
+                    var head = el('div', 'd-flex justify-content-between align-items-center mb-3');
+                    head.appendChild(el('div', 'small text-muted', 'Sessions: ' + data.attendance.total));
+                    head.appendChild(badge(
+                        'Rate ' + formatNumber(data.attendance.rate, '%'),
+                        attendanceTone(data.attendance.rate)));
+                    container.appendChild(head);
+                    container.appendChild(table(['Status', 'Count'], [
+                        ['Present', data.attendance.present],
+                        ['Absent', data.attendance.absent],
+                        ['Late', data.attendance.late],
+                        ['Excused', data.attendance.excused],
+                    ]));
+                }
+
+                function renderFees(data) {
+                    var container = document.getElementById('progress-fees');
+                    if (!data.fees.total) {
+                        container.appendChild(el('div', 'text-muted', 'No confirmed fee plan yet.'));
+                        return;
+                    }
+                    var labels = {
+                        paid: 'Paid',
+                        partial: 'Partially Paid',
+                        not_paid: 'Not Paid',
+                    };
+                    var tones = {
+                        paid: 'success',
+                        partial: 'warning',
+                        not_paid: 'secondary',
+                    };
+                    var head = el('div', 'd-flex justify-content-between align-items-center mb-3');
+                    head.appendChild(el('div', 'small text-muted', 'Confirmed fee plans'));
+                    head.appendChild(badge(
+                        labels[data.fees.state] || data.fees.state,
+                        tones[data.fees.state]));
+                    container.appendChild(head);
+                    container.appendChild(table(['Item', 'Amount'], [
+                        ['Total', formatNumber(data.fees.total)],
+                        ['Paid', formatNumber(data.fees.paid)],
+                        ['Balance', formatNumber(data.fees.balance)],
+                    ]));
+                }
+
+                function renderSubjects(data) {
+                    var container = document.getElementById('progress-subjects');
+                    if (!data.academics.subjects.length) {
+                        container.appendChild(el('div', 'text-muted', 'No published results yet.'));
+                        return;
+                    }
+                    container.appendChild(table(['Subject', 'Exams', 'Average', 'Best'], 
+                        data.academics.subjects.map(function (subject) {
+                            return [
+                                subject.name,
+                                subject.results,
+                                formatNumber(subject.average_percentage, '%'),
+                                formatNumber(subject.best_percentage, '%'),
+                            ];
+                        })));
+                }
+
+                function renderTrend(data) {
+                    var container = document.getElementById('progress-trend');
+                    if (!data.academics.trend.length) {
+                        container.appendChild(el('div', 'text-muted', 'No published results yet.'));
+                        return;
+                    }
+                    container.appendChild(table(['Exam', 'Date', 'Average'],
+                        data.academics.trend.map(function (exam) {
+                            return [exam.exam, exam.date, formatNumber(exam.average_percentage, '%')];
+                        })));
+                }
+
+                function render(data) {
+                    document.getElementById('progress-loading').classList.add('d-none');
+                    document.getElementById('progress-level').appendChild(renderLevel(data));
+                    var kpis = document.getElementById('progress-kpis');
+                    kpis.appendChild(kpiCard(
+                        'Level',
+                        data.level.grade + (data.level.section ? ' / ' + data.level.section : ''),
+                        data.level.academic_year ? 'Academic year ' + data.level.academic_year : '',
+                        'muted'));
+                    kpis.appendChild(kpiCard(
+                        'Average',
+                        formatNumber(data.academics.average_percentage, '%'),
+                        data.academics.published_results + ' published result(s)',
+                        data.academics.level_tone));
+                    kpis.appendChild(kpiCard(
+                        'Attendance',
+                        formatNumber(data.attendance.rate, '%'),
+                        attendanceSummary(data.attendance),
+                        attendanceTone(data.attendance.rate)));
+                    kpis.appendChild(kpiCard(
+                        'Fees balance',
+                        formatNumber(data.fees.balance),
+                        formatNumber(data.fees.paid) + ' paid of ' + formatNumber(data.fees.total),
+                        data.fees.balance > 0 ? 'warning' : 'success'));
+                    renderAttendance(data);
+                    renderFees(data);
+                    renderSubjects(data);
+                    renderTrend(data);
+                    document.getElementById('progress-content').classList.remove('d-none');
+                }
+
+                function showError(message) {
+                    document.getElementById('progress-loading').classList.add('d-none');
+                    var box = document.getElementById('progress-error');
+                    box.textContent = 'Could not load the progress data. ' + message;
+                    box.classList.remove('d-none');
+                }
+
+                fetch(app.getAttribute('data-api-url'), {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({jsonrpc: '2.0', method: 'call', params: {}})
+                }).then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('HTTP ' + response.status);
+                    }
+                    return response.json();
+                }).then(function (payload) {
+                    if (payload.error) {
+                        throw new Error(payload.error.message || 'API error');
+                    }
+                    render(payload.result);
+                }).catch(function (error) {
+                    var message = 'Unexpected error';
+                    if (error) {
+                        message = error.message || message;
+                    }
+                    showError(message);
+                });
+            })();
+            ]]></script>
         </t>
     </template>
 </odoo>

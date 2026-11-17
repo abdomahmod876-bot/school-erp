@@ -10,6 +10,12 @@ class SchoolStudentPortal(SchoolParentPortal):
             ('user_id', '=', request.env.uid),
         ], limit=1)
 
+    def _get_child(self, student_id):
+        own_student = self._get_portal_student()
+        if own_student and own_student.id == student_id:
+            return own_student
+        return super()._get_child(student_id)
+
     def _prepare_home_portal_values(self, counters):
         values = super()._prepare_home_portal_values(counters)
         if 'school_student_count' in counters:

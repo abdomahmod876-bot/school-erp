@@ -1,4 +1,5 @@
 from datetime import date
+import json
 
 from odoo import Command
 from odoo.tests import tagged
@@ -171,6 +172,90 @@ class TestSchoolParentPortal(HttpCase):
         self.authenticate('school_parent', 'school_parent')
         response = self.url_open(f'/my/children/{self.other_student.id}')
         self.assertEqual(response.status_code, 404)
+
+    def test_progress_page_renders(self):
+        self.authenticate('school_parent', 'school_parent')
+        response = self.url_open(f'/my/children/{self.student.id}/progress')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Progress tracker', response.text)
+        self.assertIn('school-progress-app', response.text)
+        self.assertIn(
+            f'/school/parent/api/children/{self.student.id}/progress',
+            response.text)
+
+    def test_progress_api_returns_child_summary(self):
+        self.authenticate('school_parent', 'school_parent')
+        response = self.url_open(
+            f'/school/parent/api/children/{self.student.id}/progress',
+            data=json.dumps({
+                'jsonrpc': '2.0',
+                'method': 'call',
+                'params': {},
+            }),
+            headers={'Content-Type': 'application/json'},
+        )
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()['result']
+        self.assertEqual(payload['student']['name'], 'Omar Hany')
+        self.assertEqual(payload['level']['stage'], 'Primary')
+        self.assertEqual(payload['level']['grade'], 'Grade 5')
+        self.assertEqual(payload['level']['section'], 'A')
+        self.assertEqual(payload['level']['academic_year'], '2026/2027')
+        academics = payload['academics']
+        self.assertEqual(academics['average_percentage'], 85.0)
+        self.assertEqual(academics['level'], 'Very Good')
+        self.assertEqual(academics['published_results'], 1)
+        self.assertEqual(academics['passed'], 1)
+        self.assertEqual(academics['failed'], 0)
+        self.assertEqual(academics['attention'], [])
+        self.assertEqual(academics['subjects'][0]['name'], 'Mathematics')
+        self.assertEqual(academics['subjects'][0]['average_percentage'], 85.0)
+        self.assertEqual(academics['trend'][0]['exam'], 'Midterm')
+        self.assertEqual(academics['trend'][0]['average_percentage'], 85.0)
+        attendance = payload['attendance']
+        self.assertEqual(attendance['total'], 1)
+        self.assertEqual(attendance['present'], 1)
+        self.assertEqual(attendance['rate'], 100.0)
+        fees = payload['fees']
+        self.assertEqual(fees['total'], 1000.0)
+        self.assertEqual(fees['paid'], 0.0)
+        self.assertEqual(fees['balance'], 1000.0)
+        self.assertEqual(fees['state'], 'not_paid')
+
+    def test_progress_api_hides_other_parents_child(self):
+        self.authenticate('school_parent', 'school_parent')
+        response = self.url_open(
+            f'/school/parent/api/children/{self.other_student.id}/progress',
+            data=json.dumps({
+                'jsonrpc': '2.0',
+                'method': 'call',
+                'params': {},
+            }),
+            headers={'Content-Type': 'application/json'},
+        )
+        body = response.json()
+        self.assertNotIn('result', body)
+        self.assertIn('NotFound', json.dumps(body))
+
+    def test_progress_api_flags_low_performance(self):
+        self.env['school.exam.result'].search([
+            ('student_id', '=', self.student.id),
+        ]).score = 40.0
+        self.authenticate('school_parent', 'school_parent')
+        response = self.url_open(
+            f'/school/parent/api/children/{self.student.id}/progress',
+            data=json.dumps({
+                'jsonrpc': '2.0',
+                'method': 'call',
+                'params': {},
+            }),
+            headers={'Content-Type': 'application/json'},
+        )
+        academics = response.json()['result']['academics']
+        self.assertEqual(academics['average_percentage'], 40.0)
+        self.assertEqual(academics['level'], 'Needs Support')
+        self.assertEqual(academics['failed'], 1)
+        self.assertTrue(academics['attention'])
 
     def test_notifications_page_shows_sent_messages(self):
         self.announcement.action_notify_guardians()

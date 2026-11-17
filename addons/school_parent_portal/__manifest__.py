@@ -1,8 +1,8 @@
 {
     'name': 'School Management Parent Portal',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Education',
-    'summary': 'Portal for guardians: children, fees, attendance, results and timetable',
+    'summary': 'Guardian portal: child dashboard, progress tracker (JSON API), fees, attendance and results',
     'author': 'School ERP Team',
     'license': 'LGPL-3',
     'depends': [

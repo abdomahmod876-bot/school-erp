@@ -1,6 +1,6 @@
 {
     'name': 'School Management Student Portal',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Education',
     'summary': 'Portal for students: fees, attendance, results and timetable',
     'author': 'School ERP Team',

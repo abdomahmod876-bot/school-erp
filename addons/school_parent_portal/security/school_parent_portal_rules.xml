@@ -7,6 +7,12 @@
             <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
             <field name="domain_force">[('student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
         </record>
+        <record id="rule_school_stage_parent" model="ir.rule">
+            <field name="name">Stage: parents see the stages of their children schools</field>
+            <field name="model_id" ref="school_academic.model_school_stage"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
         <record id="rule_school_attendance_session_parent" model="ir.rule">
             <field name="name">Attendance register: parents see their children sections only</field>
             <field name="model_id" ref="school_attendance.model_school_attendance_session"/>

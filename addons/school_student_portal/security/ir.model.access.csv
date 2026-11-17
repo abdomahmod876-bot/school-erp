@@ -11,6 +11,7 @@ access_school_fee_assignment_line_student_portal,school.fee.assignment.line.stud
 access_school_fee_type_student_portal,school.fee.type.student.portal,school_fees.model_school_fee_type,school_core.group_school_student,1,0,0,0
 access_school_section_student_portal,school.section.student.portal,school_academic.model_school_section,school_core.group_school_student,1,0,0,0
 access_school_grade_student_portal,school.grade.student.portal,school_academic.model_school_grade,school_core.group_school_student,1,0,0,0
+access_school_stage_student_portal,school.stage.student.portal,school_academic.model_school_stage,school_core.group_school_student,1,0,0,0
 access_school_academic_year_student_portal,school.academic.year.student.portal,school_academic.model_school_academic_year,school_core.group_school_student,1,0,0,0
 access_school_subject_student_portal,school.subject.student.portal,school_academic.model_school_subject,school_core.group_school_student,1,0,0,0
 access_school_period_student_portal,school.period.student.portal,school_timetable.model_school_period,school_core.group_school_student,1,0,0,0

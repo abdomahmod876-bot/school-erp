@@ -9,7 +9,7 @@
             <t groups="school_core.group_school_parent">
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="title">My Children</t>
-                    <t t-set="text">Fees, attendance, results and timetable</t>
+                    <t t-set="text">Progress tracker, fees, attendance and results</t>
                     <t t-set="url" t-value="'/my/children'"/>
                     <t t-set="placeholder_count" t-value="'school_children_count'"/>
                 </t>

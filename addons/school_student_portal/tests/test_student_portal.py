@@ -1,4 +1,5 @@
 from datetime import date
+import json
 
 from odoo import Command
 from odoo.tests import tagged
@@ -108,6 +109,31 @@ class TestSchoolStudentPortal(HttpCase):
     def test_student_cannot_open_other_student(self):
         self.authenticate('school_student', 'school_student')
         response = self.url_open(f'/my/children/{self.other_student.id}')
+        self.assertEqual(response.status_code, 404)
+
+    def test_student_progress_page_and_api(self):
+        self.authenticate('school_student', 'school_student')
+        response = self.url_open(f'/my/children/{self.student.id}/progress')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Progress tracker', response.text)
+        api_response = self.url_open(
+            f'/school/parent/api/children/{self.student.id}/progress',
+            data=json.dumps({
+                'jsonrpc': '2.0',
+                'method': 'call',
+                'params': {},
+            }),
+            headers={'Content-Type': 'application/json'},
+        )
+        payload = api_response.json()['result']
+        self.assertEqual(payload['student']['name'], 'Omar Hany')
+        self.assertEqual(payload['level']['stage'], 'Primary')
+        self.assertEqual(payload['level']['grade'], 'Grade 5')
+        self.assertEqual(payload['level']['section'], 'A')
+
+    def test_student_cannot_open_other_student_progress(self):
+        self.authenticate('school_student', 'school_student')
+        response = self.url_open(f'/my/children/{self.other_student.id}/progress')
         self.assertEqual(response.status_code, 404)
 
     def test_portal_home_lists_student_card(self):
