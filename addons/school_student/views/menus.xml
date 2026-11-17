@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <menuitem id="menu_school_students"
+                  name="Students"
+                  parent="school_core.menu_school_root"
+                  sequence="20"
+                  groups="school_core.group_school_user,school_core.group_school_manager"/>
+
+        <menuitem id="menu_school_student_list"
+                  name="Students"
+                  parent="menu_school_students"
+                  action="action_school_student"
+                  sequence="10"/>
+
+        <menuitem id="menu_school_guardians"
+                  name="Guardians"
+                  parent="menu_school_students"
+                  action="action_school_guardian"
+                  sequence="20"/>
+    </data>
+</odoo>

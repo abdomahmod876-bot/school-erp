@@ -1,0 +1,141 @@
+<odoo>
+    <data>
+        <record id="view_school_school_list" model="ir.ui.view">
+            <field name="name">school.school.list</field>
+            <field name="model">school.school</field>
+            <field name="arch" type="xml">
+                <list string="Schools" decoration-muted="not active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="city"/>
+                    <field name="phone"/>
+                    <field name="branch_count" string="Branches"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_school_school_form" model="ir.ui.view">
+            <field name="name">school.school.form</field>
+            <field name="model">school.school</field>
+            <field name="arch" type="xml">
+                <form string="School">
+                    <header>
+                        <button name="action_open_branches" type="object" string="Branches" class="btn-secondary"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <field name="active" invisible="1"/>
+                        <field name="logo" widget="image" class="oe_avatar" options="{'preview_image': 'logo'}"/>
+                        <div class="oe_title">
+                            <label for="name" string="School Name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Al-Nile International School"/>
+                            </h1>
+                            <group>
+                                <field name="code" placeholder="e.g. NIS"/>
+                            </group>
+                        </div>
+                        <notebook>
+                            <page string="General" name="general">
+                                <group>
+                                    <group string="Contact">
+                                        <field name="phone" widget="phone"/>
+                                        <field name="email" widget="email"/>
+                                        <field name="website" widget="url"/>
+                                    </group>
+                                    <group string="Address">
+                                        <field name="street"/>
+                                        <field name="street2"/>
+                                        <field name="city"/>
+                                        <field name="country_id"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group string="Profile">
+                                        <field name="established_date"/>
+                                        <field name="motto"/>
+                                        <field name="company_id" groups="base.group_multi_company"/>
+                                    </group>
+                                    <group string="Defaults">
+                                        <field name="grading_system"/>
+                                        <field name="pass_mark"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Branches" name="branches">
+                                <field name="branch_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="phone"/>
+                                        <field name="manager_id"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="note" placeholder="Internal notes"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_school_school_kanban" model="ir.ui.view">
+            <field name="name">school.school.kanban</field>
+            <field name="model">school.school</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="phone"/>
+                    <field name="city"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="row">
+                                <div class="col-8">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <field name="code" class="badge text-bg-info"/>
+                                </div>
+                            </div>
+                            <div><field name="phone"/></div>
+                            <div class="text-muted"><field name="city"/></div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_school_school_search" model="ir.ui.view">
+            <field name="name">school.school.search</field>
+            <field name="model">school.school</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="city"/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                    <group name="group_by">
+                        <filter name="group_company" string="Company" context="{'group_by': 'company_id'}"/>
+                        <filter name="group_city" string="City" context="{'group_by': 'city'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_school_school" model="ir.actions.act_window">
+            <field name="name">Schools</field>
+            <field name="res_model">school.school</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create your first school</p>
+                <p>Schools hold the academic setup, students and staff. Branches can be added under each school.</p>
+            </field>
+        </record>
+    </data>
+</odoo>

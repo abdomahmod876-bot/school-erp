@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_school_parent" name="School Parent Portal Cards"
+              customize_show="True" inherit_id="portal.portal_my_home" priority="25">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t groups="school_core.group_school_parent">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">My Children</t>
+                    <t t-set="text">Fees, attendance, results and timetable</t>
+                    <t t-set="url" t-value="'/my/children'"/>
+                    <t t-set="placeholder_count" t-value="'school_children_count'"/>
+                </t>
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Notifications</t>
+                    <t t-set="text">School messages and announcements</t>
+                    <t t-set="url" t-value="'/my/notifications'"/>
+                    <t t-set="placeholder_count" t-value="'school_notification_count'"/>
+                </t>
+            </t>
+        </div>
+    </template>
+</odoo>

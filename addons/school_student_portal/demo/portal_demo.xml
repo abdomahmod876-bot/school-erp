@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="demo_student_user" model="res.users">
+            <field name="name">Sara Khaled</field>
+            <field name="login">demo.student</field>
+            <field name="password">demo</field>
+            <field name="email">sara.khaled@example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_portal'), ref('school_core.group_school_student')])]"/>
+            <field name="school_ids" eval="[(6, 0, [ref('school_core.demo_school')])]"/>
+            <field name="default_school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="school_student.demo_student_sara" model="school.student">
+            <field name="user_id" ref="demo_student_user"/>
+        </record>
+    </data>
+</odoo>

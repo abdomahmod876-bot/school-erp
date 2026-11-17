@@ -1,0 +1,23 @@
+# Python / Odoo
+*.pyc
+*.pyo
+__pycache__/
+*.log
+odoo-data/
+filestore/
+
+# Local secrets and certificates
+.env
+docker/nginx/certs/
+
+# Third-party Odoo addons (not part of this project, see README)
+custom-addons/
+
+# Editors / OS
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea/
+.DS_Store
+Thumbs.db

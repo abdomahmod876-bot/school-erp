@@ -1,0 +1,20 @@
+{
+    'name': 'School Management Accounting',
+    'version': '19.0.1.0.0',
+    'category': 'Education',
+    'summary': 'Bridge school fees with Odoo Accounting: invoices, partners and payments',
+    'author': 'School ERP Team',
+    'license': 'LGPL-3',
+    'depends': ['account', 'school_core', 'school_student', 'school_fees'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/fee_type_views.xml',
+        'views/student_views.xml',
+        'views/fee_assignment_views.xml',
+        'views/fee_payment_views.xml',
+        'views/account_move_views.xml',
+        'views/menus.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rule_school_transport_vehicle_teacher" model="ir.rule">
+            <field name="name">Vehicle: teachers see assigned schools only</field>
+            <field name="model_id" ref="model_school_transport_vehicle"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_transport_vehicle_accountant" model="ir.rule">
+            <field name="name">Vehicle: accountants see assigned schools only</field>
+            <field name="model_id" ref="model_school_transport_vehicle"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_transport_route_teacher" model="ir.rule">
+            <field name="name">Route: teachers see assigned schools only</field>
+            <field name="model_id" ref="model_school_transport_route"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_transport_route_accountant" model="ir.rule">
+            <field name="name">Route: accountants see assigned schools only</field>
+            <field name="model_id" ref="model_school_transport_route"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_transport_stop_teacher" model="ir.rule">
+            <field name="name">Stop: teachers see stops of assigned schools only</field>
+            <field name="model_id" ref="model_school_transport_stop"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('route_id.school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_transport_stop_accountant" model="ir.rule">
+            <field name="name">Stop: accountants see stops of assigned schools only</field>
+            <field name="model_id" ref="model_school_transport_stop"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('route_id.school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_transport_subscription_teacher" model="ir.rule">
+            <field name="name">Transport subscription: teachers see assigned schools only</field>
+            <field name="model_id" ref="model_school_transport_subscription"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_transport_subscription_accountant" model="ir.rule">
+            <field name="name">Transport subscription: accountants see assigned schools only</field>
+            <field name="model_id" ref="model_school_transport_subscription"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+    </data>
+</odoo>

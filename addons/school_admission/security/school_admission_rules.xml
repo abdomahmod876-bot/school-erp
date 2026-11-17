@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_admission_teacher_school" model="ir.rule">
+        <field name="name">Admission: teachers limited to assigned schools</field>
+        <field name="model_id" ref="model_school_admission"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_admission_accountant_school" model="ir.rule">
+        <field name="name">Admission: accountants limited to assigned schools</field>
+        <field name="model_id" ref="model_school_admission"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_enrollment_teacher_school" model="ir.rule">
+        <field name="name">Enrollment: teachers limited to assigned schools</field>
+        <field name="model_id" ref="model_school_enrollment"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_enrollment_accountant_school" model="ir.rule">
+        <field name="name">Enrollment: accountants limited to assigned schools</field>
+        <field name="model_id" ref="model_school_enrollment"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+</odoo>

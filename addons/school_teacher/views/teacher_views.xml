@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_teacher_list" model="ir.ui.view">
+        <field name="name">school.teacher.list</field>
+        <field name="model">school.teacher</field>
+        <field name="arch" type="xml">
+            <list string="Teachers" sample="1" decoration-muted="state == 'terminated' or not active">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="specialization" optional="show"/>
+                <field name="subject_ids" widget="many2many_tags" optional="show"/>
+                <field name="phone" optional="hide"/>
+                <field name="school_id"/>
+                <field name="contract_type" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'on_leave'"
+                       decoration-danger="state == 'terminated'"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_teacher_form" model="ir.ui.view">
+        <field name="name">school.teacher.form</field>
+        <field name="model">school.teacher</field>
+        <field name="arch" type="xml">
+            <form string="Teacher">
+                <header>
+                    <button name="action_set_active" type="object" string="Set Active"
+                            class="btn-primary" invisible="state == 'active'"/>
+                    <button name="action_set_on_leave" type="object" string="Set On Leave"
+                            invisible="state != 'active'"/>
+                    <button name="action_terminate" type="object" string="Terminate"
+                            invisible="state == 'terminated'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="active,on_leave,terminated"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Teacher full name"/></h1>
+                        <group>
+                            <field name="reference" readonly="1"/>
+                        </group>
+                    </div>
+                    <group>
+                        <group string="Employment">
+                            <field name="school_id" options="{'no_create': True}"/>
+                            <field name="branch_id" options="{'no_create': True}"/>
+                            <field name="user_id" options="{'no_create': True}"/>
+                            <field name="hire_date"/>
+                            <field name="contract_type"/>
+                        </group>
+                        <group string="Professional">
+                            <field name="qualification"/>
+                            <field name="specialization"/>
+                            <field name="subject_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Personal">
+                            <field name="gender"/>
+                            <field name="birth_date"/>
+                            <field name="age"/>
+                            <field name="national_id"/>
+                            <field name="nationality_id" options="{'no_create': True}"/>
+                        </group>
+                        <group string="Contact">
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="street"/>
+                            <field name="city"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_teacher_kanban" model="ir.ui.view">
+        <field name="name">school.teacher.kanban</field>
+        <field name="model">school.teacher</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="image"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex">
+                            <field name="image" widget="image" class="o_kanban_image me-2"/>
+                            <div class="flex-grow-1">
+                                <strong><field name="name"/></strong>
+                                <div class="text-muted"><field name="reference"/></div>
+                                <field name="state" widget="label_selection" options="{'classes': {'active': 'success', 'on_leave': 'warning', 'terminated': 'danger'}}"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_school_teacher_search" model="ir.ui.view">
+        <field name="name">school.teacher.search</field>
+        <field name="model">school.teacher</field>
+        <field name="arch" type="xml">
+            <search string="Teachers">
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="national_id"/>
+                <field name="subject_ids"/>
+                <filter name="filter_active" string="Active"
+                        domain="[('state', '=', 'active')]"/>
+                <filter name="filter_on_leave" string="On Leave"
+                        domain="[('state', '=', 'on_leave')]"/>
+                <filter name="filter_terminated" string="Terminated"
+                        domain="[('state', '=', 'terminated')]"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_school" string="School" context="{'group_by': 'school_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_contract" string="Contract" context="{'group_by': 'contract_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_teacher" model="ir.actions.act_window">
+        <field name="name">Teachers</field>
+        <field name="res_model">school.teacher</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_school_teacher_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add your first teacher</p>
+            <p>Keep teacher profiles, subjects and employment status in one place.</p>
+        </field>
+    </record>
+</odoo>

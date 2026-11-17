@@ -1,0 +1,175 @@
+<odoo>
+    <data>
+        <record id="demo_partner_khaled" model="res.partner">
+            <field name="name">Khaled Samir</field>
+            <field name="email">khaled.samir@example.com</field>
+            <field name="phone">+20 100 000 2001</field>
+            <field name="is_school_guardian" eval="True"/>
+            <field name="guardian_occupation">Engineer</field>
+        </record>
+
+        <record id="demo_partner_sherif" model="res.partner">
+            <field name="name">Sherif Adel</field>
+            <field name="email">sherif.adel@example.com</field>
+            <field name="phone">+20 100 000 2002</field>
+            <field name="is_school_guardian" eval="True"/>
+            <field name="guardian_occupation">Accountant</field>
+        </record>
+
+        <record id="demo_partner_nour" model="res.partner">
+            <field name="name">Nour Hassan</field>
+            <field name="email">nour.hassan@example.com</field>
+            <field name="phone">+20 100 000 2003</field>
+            <field name="is_school_guardian" eval="True"/>
+            <field name="guardian_occupation">Doctor</field>
+        </record>
+
+        <record id="demo_partner_fathy" model="res.partner">
+            <field name="name">Fathy Ibrahim</field>
+            <field name="email">fathy.ibrahim@example.com</field>
+            <field name="phone">+20 100 000 2004</field>
+            <field name="is_school_guardian" eval="True"/>
+            <field name="guardian_occupation">Teacher</field>
+        </record>
+
+        <record id="demo_student_omar" model="school.student">
+            <field name="name">Omar Khaled</field>
+            <field name="gender">male</field>
+            <field name="birth_date">2019-03-12</field>
+            <field name="blood_group">o+</field>
+            <field name="national_id">DEMO-2019-0001</field>
+            <field name="email">omar.khaled@example.com</field>
+            <field name="phone">+20 100 000 3001</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_student_sara" model="school.student">
+            <field name="name">Sara Khaled</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2019-07-22</field>
+            <field name="blood_group">a+</field>
+            <field name="national_id">DEMO-2019-0002</field>
+            <field name="email">sara.khaled@example.com</field>
+            <field name="phone">+20 100 000 3002</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_student_adam" model="school.student">
+            <field name="name">Adam Sherif</field>
+            <field name="gender">male</field>
+            <field name="birth_date">2018-05-10</field>
+            <field name="blood_group">b+</field>
+            <field name="national_id">DEMO-2018-0003</field>
+            <field name="email">adam.sherif@example.com</field>
+            <field name="phone">+20 100 000 3003</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_student_laila" model="school.student">
+            <field name="name">Laila Sherif</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2018-11-30</field>
+            <field name="blood_group">ab+</field>
+            <field name="national_id">DEMO-2018-0004</field>
+            <field name="email">laila.sherif@example.com</field>
+            <field name="phone">+20 100 000 3004</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_student_youssef" model="school.student">
+            <field name="name">Youssef Adel</field>
+            <field name="gender">male</field>
+            <field name="birth_date">2014-02-17</field>
+            <field name="blood_group">o-</field>
+            <field name="national_id">DEMO-2014-0005</field>
+            <field name="email">youssef.adel@example.com</field>
+            <field name="phone">+20 100 000 3005</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_student_jana" model="school.student">
+            <field name="name">Jana Hassan</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2019-09-05</field>
+            <field name="blood_group">a-</field>
+            <field name="national_id">DEMO-2019-0006</field>
+            <field name="email">jana.hassan@example.com</field>
+            <field name="phone">+20 100 000 3006</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_new_cairo"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_student_nadia" model="school.student">
+            <field name="name">Nadia Fathy</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2019-01-28</field>
+            <field name="blood_group">b-</field>
+            <field name="national_id">DEMO-2019-0007</field>
+            <field name="email">nadia.fathy@example.com</field>
+            <field name="phone">+20 100 000 3007</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_guardian_omar" model="school.student.guardian">
+            <field name="student_id" ref="demo_student_omar"/>
+            <field name="partner_id" ref="demo_partner_khaled"/>
+            <field name="relation">father</field>
+            <field name="is_primary" eval="True"/>
+        </record>
+
+        <record id="demo_guardian_sara" model="school.student.guardian">
+            <field name="student_id" ref="demo_student_sara"/>
+            <field name="partner_id" ref="demo_partner_khaled"/>
+            <field name="relation">father</field>
+            <field name="is_primary" eval="True"/>
+        </record>
+
+        <record id="demo_guardian_adam" model="school.student.guardian">
+            <field name="student_id" ref="demo_student_adam"/>
+            <field name="partner_id" ref="demo_partner_sherif"/>
+            <field name="relation">father</field>
+            <field name="is_primary" eval="True"/>
+        </record>
+
+        <record id="demo_guardian_laila" model="school.student.guardian">
+            <field name="student_id" ref="demo_student_laila"/>
+            <field name="partner_id" ref="demo_partner_sherif"/>
+            <field name="relation">father</field>
+            <field name="is_primary" eval="True"/>
+        </record>
+
+        <record id="demo_guardian_youssef" model="school.student.guardian">
+            <field name="student_id" ref="demo_student_youssef"/>
+            <field name="partner_id" ref="demo_partner_sherif"/>
+            <field name="relation">guardian</field>
+            <field name="is_primary" eval="True"/>
+        </record>
+
+        <record id="demo_guardian_jana" model="school.student.guardian">
+            <field name="student_id" ref="demo_student_jana"/>
+            <field name="partner_id" ref="demo_partner_nour"/>
+            <field name="relation">mother</field>
+            <field name="is_primary" eval="True"/>
+        </record>
+
+        <record id="demo_guardian_nadia" model="school.student.guardian">
+            <field name="student_id" ref="demo_student_nadia"/>
+            <field name="partner_id" ref="demo_partner_fathy"/>
+            <field name="relation">father</field>
+            <field name="is_primary" eval="True"/>
+        </record>
+    </data>
+</odoo>

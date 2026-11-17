@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_student_manager,school.student.manager,model_school_student,school_core.group_school_manager,1,1,1,1
+access_school_student_user,school.student.user,model_school_student,school_core.group_school_user,1,1,1,0
+access_school_student_teacher,school.student.teacher,model_school_student,school_core.group_school_teacher,1,0,0,0
+access_school_student_accountant,school.student.accountant,model_school_student,school_core.group_school_accountant,1,0,0,0
+access_school_student_parent,school.student.parent,model_school_student,school_core.group_school_parent,1,0,0,0
+access_school_student_student,school.student.student,model_school_student,school_core.group_school_student,1,0,0,0
+access_school_student_guardian_manager,school.student.guardian.manager,model_school_student_guardian,school_core.group_school_manager,1,1,1,1
+access_school_student_guardian_user,school.student.guardian.user,model_school_student_guardian,school_core.group_school_user,1,1,1,0
+access_school_student_guardian_teacher,school.student.guardian.teacher,model_school_student_guardian,school_core.group_school_teacher,1,0,0,0
+access_school_student_guardian_accountant,school.student.guardian.accountant,model_school_student_guardian,school_core.group_school_accountant,1,0,0,0
+access_school_student_guardian_parent,school.student.guardian.parent,model_school_student_guardian,school_core.group_school_parent,1,0,0,0
+access_school_student_guardian_student,school.student.guardian.student,model_school_student_guardian,school_core.group_school_student,1,0,0,0

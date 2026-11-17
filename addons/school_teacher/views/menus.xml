@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_school_teachers"
+              name="Teachers"
+              parent="school_core.menu_school_root"
+              action="action_school_teacher"
+              sequence="40"/>
+</odoo>

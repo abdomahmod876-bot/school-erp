@@ -1,0 +1,215 @@
+<odoo>
+    <data>
+        <record id="demo_fee_tuition" model="school.fee.type">
+            <field name="name">Tuition</field>
+            <field name="code">TUITION</field>
+            <field name="category">tuition</field>
+            <field name="default_amount">8000.0</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_fee_registration" model="school.fee.type">
+            <field name="name">Registration</field>
+            <field name="code">REG</field>
+            <field name="category">registration</field>
+            <field name="default_amount">1000.0</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_fee_books" model="school.fee.type">
+            <field name="name">Books and Materials</field>
+            <field name="code">BOOKS</field>
+            <field name="category">books</field>
+            <field name="default_amount">1500.0</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_fee_uniform" model="school.fee.type">
+            <field name="name">Uniform</field>
+            <field name="code">UNIFORM</field>
+            <field name="category">uniform</field>
+            <field name="default_amount">750.0</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_fee_transport" model="school.fee.type">
+            <field name="name">Transport</field>
+            <field name="code">TRANSPORT</field>
+            <field name="category">transport</field>
+            <field name="default_amount">900.0</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_fee_activity" model="school.fee.type">
+            <field name="name">Activities</field>
+            <field name="code">ACTIVITY</field>
+            <field name="category">activity</field>
+            <field name="default_amount">500.0</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_fee_exam" model="school.fee.type">
+            <field name="name">Exam Fees</field>
+            <field name="code">EXAM</field>
+            <field name="category">exam</field>
+            <field name="default_amount">300.0</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_fee_other" model="school.fee.type">
+            <field name="name">Other Fees</field>
+            <field name="code">OTHER</field>
+            <field name="category">other</field>
+            <field name="default_amount">100.0</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_structure_grade1" model="school.fee.structure">
+            <field name="name">Grade 1 Fees 2026/2027</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_1"/>
+            <field name="line_ids" eval="[(0, 0, {
+                'fee_type_id': ref('demo_fee_tuition'),
+                'amount': 8000.0,
+                'due_date': '2026-09-15',
+            }), (0, 0, {
+                'fee_type_id': ref('demo_fee_books'),
+                'amount': 1500.0,
+                'due_date': '2026-09-15',
+            }), (0, 0, {
+                'fee_type_id': ref('demo_fee_activity'),
+                'amount': 500.0,
+                'due_date': '2026-10-01',
+            })]"/>
+        </record>
+
+        <record id="demo_assignment_omar" model="school.fee.assignment">
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="student_id" ref="school_student.demo_student_omar"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="date">2026-09-01</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <record id="demo_line_omar_tuition" model="school.fee.assignment.line">
+            <field name="assignment_id" ref="demo_assignment_omar"/>
+            <field name="fee_type_id" ref="demo_fee_tuition"/>
+            <field name="amount">8000.0</field>
+            <field name="due_date">2026-09-15</field>
+        </record>
+
+        <record id="demo_line_omar_books" model="school.fee.assignment.line">
+            <field name="assignment_id" ref="demo_assignment_omar"/>
+            <field name="fee_type_id" ref="demo_fee_books"/>
+            <field name="amount">1500.0</field>
+            <field name="due_date">2026-09-15</field>
+        </record>
+
+        <record id="demo_line_omar_activity" model="school.fee.assignment.line">
+            <field name="assignment_id" ref="demo_assignment_omar"/>
+            <field name="fee_type_id" ref="demo_fee_activity"/>
+            <field name="amount">500.0</field>
+            <field name="due_date">2026-10-01</field>
+        </record>
+
+        <record id="demo_assignment_sara" model="school.fee.assignment">
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="student_id" ref="school_student.demo_student_sara"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="date">2026-09-01</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <record id="demo_line_sara_tuition" model="school.fee.assignment.line">
+            <field name="assignment_id" ref="demo_assignment_sara"/>
+            <field name="fee_type_id" ref="demo_fee_tuition"/>
+            <field name="amount">8000.0</field>
+            <field name="due_date">2026-09-15</field>
+        </record>
+
+        <record id="demo_line_sara_books" model="school.fee.assignment.line">
+            <field name="assignment_id" ref="demo_assignment_sara"/>
+            <field name="fee_type_id" ref="demo_fee_books"/>
+            <field name="amount">1500.0</field>
+            <field name="due_date">2026-09-15</field>
+        </record>
+
+        <record id="demo_assignment_adam" model="school.fee.assignment">
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="student_id" ref="school_student.demo_student_adam"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="date">2026-09-01</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <record id="demo_line_adam_tuition" model="school.fee.assignment.line">
+            <field name="assignment_id" ref="demo_assignment_adam"/>
+            <field name="fee_type_id" ref="demo_fee_tuition"/>
+            <field name="amount">8000.0</field>
+            <field name="due_date">2026-09-15</field>
+        </record>
+
+        <record id="demo_line_adam_books" model="school.fee.assignment.line">
+            <field name="assignment_id" ref="demo_assignment_adam"/>
+            <field name="fee_type_id" ref="demo_fee_books"/>
+            <field name="amount">1500.0</field>
+            <field name="due_date">2026-09-15</field>
+        </record>
+
+        <record id="demo_payment_omar_tuition" model="school.fee.payment">
+            <field name="line_id" ref="demo_line_omar_tuition"/>
+            <field name="amount">4000.0</field>
+            <field name="date">2026-09-20</field>
+            <field name="method">cash</field>
+            <field name="reference">CASH-1001</field>
+        </record>
+
+        <record id="demo_payment_omar_books" model="school.fee.payment">
+            <field name="line_id" ref="demo_line_omar_books"/>
+            <field name="amount">1500.0</field>
+            <field name="date">2026-09-18</field>
+            <field name="method">bank_transfer</field>
+            <field name="reference">TRF-2201</field>
+        </record>
+
+        <record id="demo_payment_sara_tuition" model="school.fee.payment">
+            <field name="line_id" ref="demo_line_sara_tuition"/>
+            <field name="amount">8000.0</field>
+            <field name="date">2026-09-16</field>
+            <field name="method">card</field>
+            <field name="reference">CARD-3301</field>
+        </record>
+
+        <record id="demo_payment_adam_books" model="school.fee.payment">
+            <field name="line_id" ref="demo_line_adam_books"/>
+            <field name="amount">500.0</field>
+            <field name="date">2026-09-25</field>
+            <field name="method">cheque</field>
+            <field name="reference">CHQ-4401</field>
+        </record>
+
+        <record id="demo_assignment_jana" model="school.fee.assignment">
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_new_cairo"/>
+            <field name="student_id" ref="school_student.demo_student_jana"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="structure_id" ref="demo_structure_grade1"/>
+            <field name="date">2026-09-01</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_accountant_user" model="res.users">
+            <field name="name">Tarek Nabil</field>
+            <field name="login">demo.accountant</field>
+            <field name="password">demo</field>
+            <field name="email">tarek.nabil@example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('school_core.group_school_accountant')])]"/>
+            <field name="school_ids" eval="[(6, 0, [ref('school_core.demo_school')])]"/>
+            <field name="default_school_id" ref="school_core.demo_school"/>
+        </record>
+    </data>
+</odoo>

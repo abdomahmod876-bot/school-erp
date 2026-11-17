@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_library_loan_list" model="ir.ui.view">
+        <field name="name">school.library.loan.list</field>
+        <field name="model">school.library.loan</field>
+        <field name="arch" type="xml">
+            <list string="Library Loans" sample="1">
+                <field name="reference"/>
+                <field name="book_id"/>
+                <field name="member_id"/>
+                <field name="loan_date"/>
+                <field name="due_date"/>
+                <field name="return_date" optional="show"/>
+                <field name="late_days" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'borrowed'"
+                       decoration-success="state == 'returned'"
+                       decoration-danger="state == 'lost'"/>
+                <field name="school_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_library_loan_form" model="ir.ui.view">
+        <field name="name">school.library.loan.form</field>
+        <field name="model">school.library.loan</field>
+        <field name="arch" type="xml">
+            <form string="Library Loan">
+                <header>
+                    <button name="action_return" type="object" string="Return Book"
+                            class="btn-primary" invisible="state != 'borrowed'"/>
+                    <button name="action_mark_lost" type="object" string="Mark as Lost"
+                            invisible="state != 'borrowed'"/>
+                    <button name="action_reset_borrowed" type="object"
+                            string="Reopen Loan" invisible="state != 'returned'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="borrowed,returned"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="reference" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Loan">
+                            <field name="book_id"
+                                   options="{'no_create': True}"/>
+                            <field name="member_id"
+                                   options="{'no_create': True}"/>
+                            <field name="school_id" readonly="1"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="loan_date"/>
+                            <field name="due_date"/>
+                            <field name="return_date"/>
+                            <field name="late_days"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note" placeholder="Internal notes..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_library_loan_search" model="ir.ui.view">
+        <field name="name">school.library.loan.search</field>
+        <field name="model">school.library.loan</field>
+        <field name="arch" type="xml">
+            <search string="Library Loans">
+                <field name="reference"/>
+                <field name="book_id"/>
+                <field name="member_id"/>
+                <field name="school_id"/>
+                <filter name="filter_borrowed" string="Borrowed"
+                        domain="[('state', '=', 'borrowed')]"/>
+                <filter name="filter_returned" string="Returned"
+                        domain="[('state', '=', 'returned')]"/>
+                <filter name="filter_lost" string="Lost"
+                        domain="[('state', '=', 'lost')]"/>
+                <separator/>
+                <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                <filter name="group_book" string="Book"
+                        context="{'group_by': 'book_id'}"/>
+                <filter name="group_school" string="School"
+                        context="{'group_by': 'school_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_library_loan" model="ir.actions.act_window">
+        <field name="name">Library Loans</field>
+        <field name="res_model">school.library.loan</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a book loan</p>
+            <p>Loans are checked against the available copies of each book.</p>
+        </field>
+    </record>
+</odoo>

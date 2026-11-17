@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_transport_subscription_list" model="ir.ui.view">
+        <field name="name">school.transport.subscription.list</field>
+        <field name="model">school.transport.subscription</field>
+        <field name="arch" type="xml">
+            <list string="Transport Subscriptions" sample="1">
+                <field name="reference"/>
+                <field name="student_id"/>
+                <field name="route_id"/>
+                <field name="stop_id"/>
+                <field name="direction"/>
+                <field name="date_start"/>
+                <field name="date_end" optional="show"/>
+                <field name="monthly_fee" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'running'"
+                       decoration-danger="state == 'cancelled'"/>
+                <field name="school_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_transport_subscription_form" model="ir.ui.view">
+        <field name="name">school.transport.subscription.form</field>
+        <field name="model">school.transport.subscription</field>
+        <field name="arch" type="xml">
+            <form string="Transport Subscription">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state == 'cancelled'"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,running"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="reference" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Subscription">
+                            <field name="student_id"
+                                   options="{'no_create': True}"/>
+                            <field name="school_id"/>
+                            <field name="branch_id"/>
+                            <field name="route_id"
+                                   options="{'no_create': True}"/>
+                            <field name="stop_id"
+                                   options="{'no_create': True}"/>
+                            <field name="direction"/>
+                        </group>
+                        <group string="Period">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="monthly_fee"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note" placeholder="Notes..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_transport_subscription_search" model="ir.ui.view">
+        <field name="name">school.transport.subscription.search</field>
+        <field name="model">school.transport.subscription</field>
+        <field name="arch" type="xml">
+            <search string="Transport Subscriptions">
+                <field name="reference"/>
+                <field name="student_id"/>
+                <field name="route_id"/>
+                <field name="stop_id"/>
+                <field name="school_id"/>
+                <filter name="filter_running" string="Running"
+                        domain="[('state', '=', 'running')]"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_cancelled" string="Cancelled"
+                        domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                <filter name="group_route" string="Route"
+                        context="{'group_by': 'route_id'}"/>
+                <filter name="group_school" string="School"
+                        context="{'group_by': 'school_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_transport_subscription" model="ir.actions.act_window">
+        <field name="name">Subscriptions</field>
+        <field name="res_model">school.transport.subscription</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Subscribe a student to a route</p>
+            <p>Confirming a subscription checks the seats left on the vehicle.</p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+        <record id="rule_academic_year_scoped" model="ir.rule">
+            <field name="name">Academic Year: assigned schools only</field>
+            <field name="model_id" ref="model_school_academic_year"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher')), (4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_curriculum_scoped" model="ir.rule">
+            <field name="name">Curriculum: assigned schools only</field>
+            <field name="model_id" ref="model_school_curriculum"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher')), (4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_stage_scoped" model="ir.rule">
+            <field name="name">Stage: assigned schools only</field>
+            <field name="model_id" ref="model_school_stage"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher')), (4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_grade_scoped" model="ir.rule">
+            <field name="name">Grade: assigned schools only</field>
+            <field name="model_id" ref="model_school_grade"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher')), (4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_grade_subject_scoped" model="ir.rule">
+            <field name="name">Grade Subject: assigned schools only</field>
+            <field name="model_id" ref="model_school_grade_subject"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher')), (4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_subject_scoped" model="ir.rule">
+            <field name="name">Subject: assigned schools only</field>
+            <field name="model_id" ref="model_school_subject"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher')), (4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_section_scoped" model="ir.rule">
+            <field name="name">Section: assigned schools only</field>
+            <field name="model_id" ref="model_school_section"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher')), (4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+    </data>
+</odoo>

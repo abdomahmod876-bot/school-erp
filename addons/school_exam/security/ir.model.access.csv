@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_exam_manager,school.exam manager,model_school_exam,school_core.group_school_manager,1,1,1,1
+access_school_exam_user,school.exam user,model_school_exam,school_core.group_school_user,1,1,1,0
+access_school_exam_teacher,school.exam teacher,model_school_exam,school_core.group_school_teacher,1,1,1,0
+access_school_exam_accountant,school.exam accountant,model_school_exam,school_core.group_school_accountant,1,0,0,0
+access_school_exam_schedule_manager,school.exam.schedule manager,model_school_exam_schedule,school_core.group_school_manager,1,1,1,1
+access_school_exam_schedule_user,school.exam.schedule user,model_school_exam_schedule,school_core.group_school_user,1,1,1,1
+access_school_exam_schedule_teacher,school.exam.schedule teacher,model_school_exam_schedule,school_core.group_school_teacher,1,1,1,1
+access_school_exam_schedule_accountant,school.exam.schedule accountant,model_school_exam_schedule,school_core.group_school_accountant,1,0,0,0
+access_school_exam_result_manager,school.exam.result manager,model_school_exam_result,school_core.group_school_manager,1,1,1,1
+access_school_exam_result_user,school.exam.result user,model_school_exam_result,school_core.group_school_user,1,1,1,1
+access_school_exam_result_teacher,school.exam.result teacher,model_school_exam_result,school_core.group_school_teacher,1,1,1,1
+access_school_exam_result_accountant,school.exam.result accountant,model_school_exam_result,school_core.group_school_accountant,1,0,0,0

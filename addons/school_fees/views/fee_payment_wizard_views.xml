@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_fee_payment_wizard_form" model="ir.ui.view">
+        <field name="name">school.fee.payment.wizard.form</field>
+        <field name="model">school.fee.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Register Payment">
+                <group>
+                    <group>
+                        <field name="assignment_id" readonly="1"/>
+                        <field name="line_id" options="{'no_create': True}"/>
+                        <field name="amount"/>
+                        <field name="date"/>
+                    </group>
+                    <group>
+                        <field name="method"/>
+                        <field name="reference"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="note" placeholder="Internal notes..."/>
+                </group>
+                <footer>
+                    <button name="action_register_payment" string="Register Payment"
+                            type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

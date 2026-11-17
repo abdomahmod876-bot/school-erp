@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_school_transport_subscription" model="ir.sequence">
+            <field name="name">Transport Subscription</field>
+            <field name="code">school.transport.subscription</field>
+            <field name="prefix">BUS/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,79 @@
+<odoo>
+    <data>
+        <record id="demo_teacher_user" model="res.users">
+            <field name="name">Mona Fathy</field>
+            <field name="login">demo.teacher</field>
+            <field name="password">demo</field>
+            <field name="email">mona.fathy@example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('school_core.group_school_teacher')])]"/>
+            <field name="school_ids" eval="[(6, 0, [ref('school_core.demo_school')])]"/>
+            <field name="default_school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_teacher_mona" model="school.teacher">
+            <field name="name">Mona Fathy</field>
+            <field name="gender">female</field>
+            <field name="birth_date">1990-04-15</field>
+            <field name="email">mona.fathy@nile-school.example.com</field>
+            <field name="phone">+20 100 000 5001</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="hire_date">2018-09-01</field>
+            <field name="qualification">B.Sc. Mathematics</field>
+            <field name="specialization">Mathematics</field>
+            <field name="contract_type">full_time</field>
+            <field name="state">active</field>
+            <field name="subject_ids" eval="[(6, 0, [ref('school_academic.demo_subject_math')])]"/>
+            <field name="user_id" ref="demo_teacher_user"/>
+        </record>
+
+        <record id="demo_teacher_hany" model="school.teacher">
+            <field name="name">Hany Mostafa</field>
+            <field name="gender">male</field>
+            <field name="birth_date">1987-11-02</field>
+            <field name="email">hany.mostafa@nile-school.example.com</field>
+            <field name="phone">+20 100 000 5002</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="hire_date">2016-09-01</field>
+            <field name="qualification">B.Sc. Biology</field>
+            <field name="specialization">Science</field>
+            <field name="contract_type">full_time</field>
+            <field name="state">active</field>
+            <field name="subject_ids" eval="[(6, 0, [ref('school_academic.demo_subject_science')])]"/>
+        </record>
+
+        <record id="demo_teacher_salma" model="school.teacher">
+            <field name="name">Salma Adel</field>
+            <field name="gender">female</field>
+            <field name="birth_date">1993-07-21</field>
+            <field name="email">salma.adel@nile-school.example.com</field>
+            <field name="phone">+20 100 000 5003</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="hire_date">2020-09-01</field>
+            <field name="qualification">B.A. English Literature</field>
+            <field name="specialization">English</field>
+            <field name="contract_type">part_time</field>
+            <field name="state">active</field>
+            <field name="subject_ids" eval="[(6, 0, [ref('school_academic.demo_subject_english'), ref('school_academic.demo_subject_arabic')])]"/>
+        </record>
+
+        <record id="demo_teacher_karim" model="school.teacher">
+            <field name="name">Karim Nabil</field>
+            <field name="gender">male</field>
+            <field name="birth_date">1995-01-30</field>
+            <field name="email">karim.nabil@nile-school.example.com</field>
+            <field name="phone">+20 100 000 5004</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_new_cairo"/>
+            <field name="hire_date">2022-09-01</field>
+            <field name="qualification">B.Sc. Computer Science</field>
+            <field name="specialization">ICT and Art</field>
+            <field name="contract_type">hourly</field>
+            <field name="state">on_leave</field>
+            <field name="subject_ids" eval="[(6, 0, [ref('school_academic.demo_subject_ict'), ref('school_academic.demo_subject_art')])]"/>
+        </record>
+
+    </data>
+</odoo>

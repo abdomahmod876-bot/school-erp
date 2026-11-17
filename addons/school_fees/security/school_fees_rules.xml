@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_fee_type_school" model="ir.rule">
+        <field name="name">Fee type: users limited to assigned schools</field>
+        <field name="model_id" ref="model_school_fee_type"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_user'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_fee_structure_school" model="ir.rule">
+        <field name="name">Fee structure: users limited to assigned schools</field>
+        <field name="model_id" ref="model_school_fee_structure"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_user'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_fee_structure_line_school" model="ir.rule">
+        <field name="name">Fee structure line: users limited to assigned schools</field>
+        <field name="model_id" ref="model_school_fee_structure_line"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_user'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_fee_assignment_school" model="ir.rule">
+        <field name="name">Fee plan: users limited to assigned schools</field>
+        <field name="model_id" ref="model_school_fee_assignment"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_user'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_fee_assignment_line_school" model="ir.rule">
+        <field name="name">Fee plan line: users limited to assigned schools</field>
+        <field name="model_id" ref="model_school_fee_assignment_line"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_user'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_fee_payment_school" model="ir.rule">
+        <field name="name">Fee payment: users limited to assigned schools</field>
+        <field name="model_id" ref="model_school_fee_payment"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_user'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+</odoo>

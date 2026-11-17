@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <menuitem id="menu_school_academics"
+                  name="Academics"
+                  parent="school_core.menu_school_root"
+                  sequence="30"
+                  groups="school_core.group_school_user,school_core.group_school_manager"/>
+
+        <menuitem id="menu_school_academic_years"
+                  name="Academic Years"
+                  parent="menu_school_academics"
+                  action="action_school_academic_year"
+                  sequence="10"/>
+
+        <menuitem id="menu_school_curricula"
+                  name="Curricula"
+                  parent="menu_school_academics"
+                  action="action_school_curriculum"
+                  sequence="20"/>
+
+        <menuitem id="menu_school_stages"
+                  name="Stages"
+                  parent="menu_school_academics"
+                  action="action_school_stage"
+                  sequence="30"/>
+
+        <menuitem id="menu_school_grades"
+                  name="Grades"
+                  parent="menu_school_academics"
+                  action="action_school_grade"
+                  sequence="40"/>
+
+        <menuitem id="menu_school_subjects"
+                  name="Subjects"
+                  parent="menu_school_academics"
+                  action="action_school_subject"
+                  sequence="50"/>
+
+        <menuitem id="menu_school_sections"
+                  name="Sections"
+                  parent="menu_school_academics"
+                  action="action_school_section"
+                  sequence="60"/>
+    </data>
+</odoo>

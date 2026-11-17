@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <record id="demo_session_1a" model="school.attendance.session">
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="date">2026-11-16</field>
+            <field name="period_id" ref="school_timetable.demo_period_1"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_mona"/>
+            <field name="state">done</field>
+        </record>
+
+        <record id="demo_line_1a_omar" model="school.attendance.line">
+            <field name="session_id" ref="demo_session_1a"/>
+            <field name="student_id" ref="school_student.demo_student_omar"/>
+            <field name="state">present</field>
+        </record>
+
+        <record id="demo_line_1a_sara" model="school.attendance.line">
+            <field name="session_id" ref="demo_session_1a"/>
+            <field name="student_id" ref="school_student.demo_student_sara"/>
+            <field name="state">late</field>
+            <field name="remark">Arrived 15 minutes late.</field>
+        </record>
+
+        <record id="demo_line_1a_adam" model="school.attendance.line">
+            <field name="session_id" ref="demo_session_1a"/>
+            <field name="student_id" ref="school_student.demo_student_adam"/>
+            <field name="state">absent</field>
+        </record>
+
+        <record id="demo_line_1a_nadia" model="school.attendance.line">
+            <field name="session_id" ref="demo_session_1a"/>
+            <field name="student_id" ref="school_student.demo_student_nadia"/>
+            <field name="state">excused</field>
+            <field name="remark">Medical excuse submitted.</field>
+        </record>
+
+        <record id="demo_session_2a" model="school.attendance.session">
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+            <field name="section_id" ref="school_academic.demo_section_2a"/>
+            <field name="date">2026-11-16</field>
+            <field name="period_id" ref="school_timetable.demo_period_1"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_salma"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_line_2a_laila" model="school.attendance.line">
+            <field name="session_id" ref="demo_session_2a"/>
+            <field name="student_id" ref="school_student.demo_student_laila"/>
+            <field name="state">present</field>
+        </record>
+    </data>
+</odoo>

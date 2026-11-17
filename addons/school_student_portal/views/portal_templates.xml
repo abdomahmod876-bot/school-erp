@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_breadcrumbs_student" name="Student Portal Breadcrumbs"
+              inherit_id="portal.portal_breadcrumbs">
+        <xpath expr="." position="inside">
+            <li t-if="page_name == 'school_student'" class="breadcrumb-item">My Student</li>
+        </xpath>
+    </template>
+</odoo>

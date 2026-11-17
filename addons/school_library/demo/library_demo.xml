@@ -1,0 +1,106 @@
+<odoo>
+    <data>
+        <record id="demo_book_math" model="school.library.book">
+            <field name="name">Mathematics Grade 1 Textbook</field>
+            <field name="isbn">9780000000001</field>
+            <field name="author">Ministry of Education</field>
+            <field name="publisher">School Books House</field>
+            <field name="category">textbook</field>
+            <field name="edition">2026 edition</field>
+            <field name="publication_year">2026</field>
+            <field name="shelf">TB-01</field>
+            <field name="copies_total">3</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_book_story" model="school.library.book">
+            <field name="name">The Nile Adventure</field>
+            <field name="isbn">9780000000002</field>
+            <field name="author">Amina Farid</field>
+            <field name="publisher">Young Readers</field>
+            <field name="category">fiction</field>
+            <field name="publication_year">2024</field>
+            <field name="shelf">F-03</field>
+            <field name="copies_total">2</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_book_atlas" model="school.library.book">
+            <field name="name">World Atlas for Students</field>
+            <field name="isbn">9780000000003</field>
+            <field name="author">Geo Maps Team</field>
+            <field name="publisher">Geo Maps</field>
+            <field name="category">reference</field>
+            <field name="publication_year">2023</field>
+            <field name="shelf">R-01</field>
+            <field name="copies_total">1</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_book_magazine" model="school.library.book">
+            <field name="name">Science Monthly Magazine</field>
+            <field name="isbn">9780000000004</field>
+            <field name="author">Science Monthly</field>
+            <field name="publisher">Science Monthly</field>
+            <field name="category">periodical</field>
+            <field name="publication_year">2026</field>
+            <field name="shelf">M-02</field>
+            <field name="copies_total">1</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_book_art" model="school.library.book">
+            <field name="name">Drawing for Beginners</field>
+            <field name="isbn">9780000000005</field>
+            <field name="author">Lina Magdy</field>
+            <field name="publisher">Art Press</field>
+            <field name="category">other</field>
+            <field name="publication_year">2022</field>
+            <field name="shelf">A-01</field>
+            <field name="copies_total">1</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_member_omar" model="school.library.member">
+            <field name="member_type">student</field>
+            <field name="student_id" ref="school_student.demo_student_omar"/>
+            <field name="join_date">2026-09-05</field>
+        </record>
+
+        <record id="demo_member_sara" model="school.library.member">
+            <field name="member_type">student</field>
+            <field name="student_id" ref="school_student.demo_student_sara"/>
+            <field name="join_date">2026-09-05</field>
+        </record>
+
+        <record id="demo_member_mona" model="school.library.member">
+            <field name="member_type">teacher</field>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_mona"/>
+            <field name="join_date">2018-09-10</field>
+        </record>
+
+        <record id="demo_loan_omar" model="school.library.loan">
+            <field name="book_id" ref="demo_book_math"/>
+            <field name="member_id" ref="demo_member_omar"/>
+            <field name="loan_date">2026-11-01</field>
+            <field name="due_date">2026-11-15</field>
+        </record>
+
+        <record id="demo_loan_sara" model="school.library.loan">
+            <field name="book_id" ref="demo_book_story"/>
+            <field name="member_id" ref="demo_member_sara"/>
+            <field name="loan_date">2026-10-20</field>
+            <field name="due_date">2026-11-03</field>
+            <field name="return_date">2026-11-02</field>
+            <field name="state">returned</field>
+        </record>
+
+        <record id="demo_loan_mona" model="school.library.loan">
+            <field name="book_id" ref="demo_book_atlas"/>
+            <field name="member_id" ref="demo_member_mona"/>
+            <field name="loan_date">2026-10-01</field>
+            <field name="due_date">2026-10-15</field>
+            <field name="state">lost</field>
+        </record>
+    </data>
+</odoo>

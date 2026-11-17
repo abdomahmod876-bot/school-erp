@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="rule_school_school_scoped" model="ir.rule">
+            <field name="name">School: assigned schools only</field>
+            <field name="model_id" ref="model_school_school"/>
+            <field name="groups" eval="[(4, ref('group_school_teacher')), (4, ref('group_school_accountant')), (4, ref('group_school_parent')), (4, ref('group_school_student'))]"/>
+            <field name="domain_force">[('id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_branch_scoped" model="ir.rule">
+            <field name="name">Branch: branches of assigned schools only</field>
+            <field name="model_id" ref="model_school_branch"/>
+            <field name="groups" eval="[(4, ref('group_school_teacher')), (4, ref('group_school_accountant')), (4, ref('group_school_parent')), (4, ref('group_school_student'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+    </data>
+</odoo>

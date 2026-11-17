@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_school_attendance_root"
+              name="Attendance"
+              parent="school_core.menu_school_root"
+              sequence="32"
+              groups="school_core.group_school_user,school_core.group_school_manager"/>
+
+    <menuitem id="menu_school_attendance_registers"
+              name="Registers"
+              parent="menu_school_attendance_root"
+              action="action_school_attendance_session"
+              sequence="10"/>
+</odoo>

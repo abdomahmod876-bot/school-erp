@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+        <record id="view_school_stage_list" model="ir.ui.view">
+            <field name="name">school.stage.list</field>
+            <field name="model">school.stage</field>
+            <field name="arch" type="xml">
+                <list string="Stages" decoration-muted="not active">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="school_id"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_school_stage_form" model="ir.ui.view">
+            <field name="name">school.stage.form</field>
+            <field name="model">school.stage</field>
+            <field name="arch" type="xml">
+                <form string="Stage">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <field name="active" invisible="1"/>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="e.g. Primary"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="school_id" options="{'no_create': True}"/>
+                                <field name="branch_id" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Grades" name="grades">
+                                <field name="grade_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="sequence"/>
+                                        <field name="curriculum_id" options="{'no_create': True}"/>
+                                        <field name="active" widget="boolean_toggle"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_school_stage_search" model="ir.ui.view">
+            <field name="name">school.stage.search</field>
+            <field name="model">school.stage</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                    <group name="group_by">
+                        <filter name="group_school" string="School" context="{'group_by': 'school_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_school_stage" model="ir.actions.act_window">
+            <field name="name">Stages</field>
+            <field name="res_model">school.stage</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Define the school stages</p>
+                <p>Stages group grades, for example Primary, Preparatory and Secondary.</p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,92 @@
+<odoo>
+    <data>
+        <record id="view_school_grade_list" model="ir.ui.view">
+            <field name="name">school.grade.list</field>
+            <field name="model">school.grade</field>
+            <field name="arch" type="xml">
+                <list string="Grades" decoration-muted="not active">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="stage_id"/>
+                    <field name="school_id"/>
+                    <field name="curriculum_id"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_school_grade_form" model="ir.ui.view">
+            <field name="name">school.grade.form</field>
+            <field name="model">school.grade</field>
+            <field name="arch" type="xml">
+                <form string="Grade">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <field name="active" invisible="1"/>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="e.g. Grade 1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="stage_id" options="{'no_create': True}"/>
+                                <field name="curriculum_id" options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="school_id"/>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Subjects" name="subjects">
+                                <field name="subject_line_ids">
+                                    <list editable="bottom">
+                                        <field name="subject_id" options="{'no_create': True}"/>
+                                        <field name="weekly_hours"/>
+                                        <field name="max_marks"/>
+                                        <field name="pass_mark"/>
+                                        <field name="elective"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Sections" name="sections">
+                                <field name="section_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="academic_year_id" options="{'no_create': True}"/>
+                                        <field name="capacity"/>
+                                        <field name="room"/>
+                                        <field name="active" widget="boolean_toggle"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_school_grade_search" model="ir.ui.view">
+            <field name="name">school.grade.search</field>
+            <field name="model">school.grade</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="stage_id"/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                    <group name="group_by">
+                        <filter name="group_stage" string="Stage" context="{'group_by': 'stage_id'}"/>
+                        <filter name="group_school" string="School" context="{'group_by': 'school_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_school_grade" model="ir.actions.act_window">
+            <field name="name">Grades</field>
+            <field name="res_model">school.grade</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_exam_teacher_school" model="ir.rule">
+        <field name="name">Exam: teachers limited to assigned schools</field>
+        <field name="model_id" ref="model_school_exam"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_exam_accountant_school" model="ir.rule">
+        <field name="name">Exam: accountants limited to assigned schools</field>
+        <field name="model_id" ref="model_school_exam"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_exam_schedule_teacher_school" model="ir.rule">
+        <field name="name">Exam schedule: teachers limited to assigned schools</field>
+        <field name="model_id" ref="model_school_exam_schedule"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_exam_schedule_accountant_school" model="ir.rule">
+        <field name="name">Exam schedule: accountants limited to assigned schools</field>
+        <field name="model_id" ref="model_school_exam_schedule"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_exam_result_teacher_school" model="ir.rule">
+        <field name="name">Exam result: teachers limited to assigned schools</field>
+        <field name="model_id" ref="model_school_exam_result"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_exam_result_accountant_school" model="ir.rule">
+        <field name="name">Exam result: accountants limited to assigned schools</field>
+        <field name="model_id" ref="model_school_exam_result"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+</odoo>

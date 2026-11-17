@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_school_timetable_root"
+              name="Timetable"
+              parent="school_core.menu_school_root"
+              sequence="35"
+              groups="school_core.group_school_user,school_core.group_school_manager"/>
+
+    <menuitem id="menu_school_timetables"
+              name="Timetables"
+              parent="menu_school_timetable_root"
+              action="action_school_timetable"
+              sequence="10"/>
+
+    <menuitem id="menu_school_periods"
+              name="Periods"
+              parent="school_core.menu_school_config"
+              action="action_school_period"
+              sequence="50"/>
+</odoo>

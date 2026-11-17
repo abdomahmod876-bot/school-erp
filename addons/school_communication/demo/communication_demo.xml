@@ -1,0 +1,87 @@
+<odoo>
+    <data>
+        <record id="demo_announcement_welcome" model="school.announcement">
+            <field name="name">Welcome to the 2026/2027 academic year</field>
+            <field name="body">Dear families, welcome back to Nile International School. The first day of school is 1 September 2026.</field>
+            <field name="audience">all</field>
+            <field name="date_start">2026-09-01</field>
+            <field name="state">published</field>
+            <field name="published_date">2026-09-01</field>
+            <field name="notification_channel">portal</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+        </record>
+
+        <record id="demo_announcement_pta" model="school.announcement">
+            <field name="name">Parents and Teachers Association meeting</field>
+            <field name="body">The PTA meeting will be held on 20 November 2026 at 5 PM in the main hall.</field>
+            <field name="audience">guardians</field>
+            <field name="date_start">2026-11-05</field>
+            <field name="date_end">2026-11-20</field>
+            <field name="state">published</field>
+            <field name="published_date">2026-11-05</field>
+            <field name="notify_guardians" eval="True"/>
+            <field name="notification_channel">email</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="branch_id" ref="school_core.demo_branch_main"/>
+        </record>
+
+        <record id="demo_announcement_draft" model="school.announcement">
+            <field name="name">Winter break dates</field>
+            <field name="body">The winter break dates will be announced after the midterm exams.</field>
+            <field name="audience">students</field>
+            <field name="date_start">2026-12-01</field>
+            <field name="state">draft</field>
+            <field name="notification_channel">portal</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_announcement_cancelled" model="school.announcement">
+            <field name="name">Sports day (postponed)</field>
+            <field name="body">The sports day event has been postponed to a later date.</field>
+            <field name="audience">all</field>
+            <field name="date_start">2026-10-10</field>
+            <field name="state">cancelled</field>
+            <field name="notification_channel">portal</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_message_khaled_welcome" model="school.communication.message">
+            <field name="announcement_id" ref="demo_announcement_welcome"/>
+            <field name="partner_id" ref="school_student.demo_partner_khaled"/>
+            <field name="channel">portal</field>
+            <field name="subject">Welcome to the 2026/2027 academic year</field>
+            <field name="body">Dear families, welcome back to Nile International School.</field>
+            <field name="state">sent</field>
+            <field name="sent_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_message_sherif_welcome" model="school.communication.message">
+            <field name="announcement_id" ref="demo_announcement_welcome"/>
+            <field name="partner_id" ref="school_student.demo_partner_sherif"/>
+            <field name="channel">portal</field>
+            <field name="subject">Welcome to the 2026/2027 academic year</field>
+            <field name="body">Dear families, welcome back to Nile International School.</field>
+            <field name="state">sent</field>
+            <field name="sent_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_message_nour_pta" model="school.communication.message">
+            <field name="announcement_id" ref="demo_announcement_pta"/>
+            <field name="partner_id" ref="school_student.demo_partner_nour"/>
+            <field name="channel">email</field>
+            <field name="subject">Parents and Teachers Association meeting</field>
+            <field name="body">The PTA meeting will be held on 20 November 2026 at 5 PM.</field>
+            <field name="state">sent</field>
+            <field name="sent_date">2026-11-05</field>
+        </record>
+
+        <record id="demo_message_fathy_draft" model="school.communication.message">
+            <field name="partner_id" ref="school_student.demo_partner_fathy"/>
+            <field name="channel">portal</field>
+            <field name="subject">Fee reminder</field>
+            <field name="body">Kindly settle the outstanding school fees before the end of the month.</field>
+            <field name="state">draft</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,25 @@
+{
+    'name': 'School Management Academic',
+    'version': '19.0.1.0.0',
+    'category': 'Education',
+    'summary': 'Academic years, curricula, stages, grades, subjects and class sections',
+    'author': 'School ERP Team',
+    'license': 'LGPL-3',
+    'depends': ['school_core'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/school_academic_rules.xml',
+        'views/academic_year_views.xml',
+        'views/curriculum_views.xml',
+        'views/stage_views.xml',
+        'views/grade_views.xml',
+        'views/subject_views.xml',
+        'views/section_views.xml',
+        'views/menus.xml',
+    ],
+    'demo': [
+        'demo/academic_demo.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

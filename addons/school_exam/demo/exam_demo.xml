@@ -1,0 +1,108 @@
+<odoo>
+    <data>
+        <record id="demo_exam_midterm" model="school.exam">
+            <field name="name">First Midterm 2026/2027</field>
+            <field name="exam_type">midterm</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="section_ids" eval="[(6, 0, [ref('school_academic.demo_section_1a'), ref('school_academic.demo_section_2a')])]"/>
+            <field name="date_start">2026-11-10</field>
+            <field name="date_end">2026-11-14</field>
+            <field name="state">published</field>
+        </record>
+
+        <record id="demo_exam_math" model="school.exam.schedule">
+            <field name="exam_id" ref="demo_exam_midterm"/>
+            <field name="subject_id" ref="school_academic.demo_subject_math"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_mona"/>
+            <field name="date">2026-11-11</field>
+            <field name="start_time">9.0</field>
+            <field name="end_time">10.5</field>
+            <field name="room">P-101</field>
+            <field name="max_marks">100.0</field>
+            <field name="pass_mark">50.0</field>
+        </record>
+
+        <record id="demo_exam_english" model="school.exam.schedule">
+            <field name="exam_id" ref="demo_exam_midterm"/>
+            <field name="subject_id" ref="school_academic.demo_subject_english"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_salma"/>
+            <field name="date">2026-11-12</field>
+            <field name="start_time">9.0</field>
+            <field name="end_time">10.5</field>
+            <field name="room">P-201</field>
+            <field name="max_marks">100.0</field>
+            <field name="pass_mark">50.0</field>
+        </record>
+
+        <record id="demo_exam_science" model="school.exam.schedule">
+            <field name="exam_id" ref="demo_exam_midterm"/>
+            <field name="subject_id" ref="school_academic.demo_subject_science"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_hany"/>
+            <field name="date">2026-11-13</field>
+            <field name="start_time">9.0</field>
+            <field name="end_time">10.5</field>
+            <field name="room">Lab 1</field>
+            <field name="max_marks">50.0</field>
+            <field name="pass_mark">25.0</field>
+        </record>
+
+        <record id="demo_result_omar_math" model="school.exam.result">
+            <field name="schedule_id" ref="demo_exam_math"/>
+            <field name="student_id" ref="school_student.demo_student_omar"/>
+            <field name="score">88.0</field>
+        </record>
+
+        <record id="demo_result_sara_math" model="school.exam.result">
+            <field name="schedule_id" ref="demo_exam_math"/>
+            <field name="student_id" ref="school_student.demo_student_sara"/>
+            <field name="score">94.0</field>
+        </record>
+
+        <record id="demo_result_adam_math" model="school.exam.result">
+            <field name="schedule_id" ref="demo_exam_math"/>
+            <field name="student_id" ref="school_student.demo_student_adam"/>
+            <field name="score">61.0</field>
+        </record>
+
+        <record id="demo_result_nadia_math" model="school.exam.result">
+            <field name="schedule_id" ref="demo_exam_math"/>
+            <field name="student_id" ref="school_student.demo_student_nadia"/>
+            <field name="score">73.0</field>
+        </record>
+
+        <record id="demo_result_laila_english" model="school.exam.result">
+            <field name="schedule_id" ref="demo_exam_english"/>
+            <field name="student_id" ref="school_student.demo_student_laila"/>
+            <field name="score">79.0</field>
+        </record>
+
+        <record id="demo_result_laila_science" model="school.exam.result">
+            <field name="schedule_id" ref="demo_exam_science"/>
+            <field name="student_id" ref="school_student.demo_student_laila"/>
+            <field name="score">42.0</field>
+        </record>
+
+        <record id="demo_exam_quiz" model="school.exam">
+            <field name="name">ICT Quiz 1</field>
+            <field name="exam_type">quiz</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="section_ids" eval="[(6, 0, [ref('school_academic.demo_section_2a')])]"/>
+            <field name="date_start">2026-12-01</field>
+            <field name="date_end">2026-12-03</field>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="demo_quiz_ict" model="school.exam.schedule">
+            <field name="exam_id" ref="demo_exam_quiz"/>
+            <field name="subject_id" ref="school_academic.demo_subject_ict"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_karim"/>
+            <field name="date">2026-12-02</field>
+            <field name="start_time">10.0</field>
+            <field name="end_time">10.75</field>
+            <field name="max_marks">20.0</field>
+            <field name="pass_mark">10.0</field>
+        </record>
+    </data>
+</odoo>

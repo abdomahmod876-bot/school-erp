@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="view_users_form_school_access" model="ir.ui.view">
+            <field name="name">res.users.form.school.access</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="School Access" name="school_access" groups="school_core.group_school_manager">
+                        <group>
+                            <group string="Allowed Scope">
+                                <field name="school_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                <field name="branch_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Defaults">
+                                <field name="default_school_id" options="{'no_create': True}"/>
+                                <field name="default_branch_id" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <div class="text-muted">
+                            Users in the teacher, accountant, parent or student roles only see
+                            records that belong to their allowed schools.
+                        </div>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

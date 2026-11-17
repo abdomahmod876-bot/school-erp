@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <record id="rule_school_student_teacher" model="ir.rule">
+            <field name="name">Student: teachers see assigned schools only</field>
+            <field name="model_id" ref="model_school_student"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_student_accountant" model="ir.rule">
+            <field name="name">Student: accountants see assigned schools only</field>
+            <field name="model_id" ref="model_school_student"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_student_parent" model="ir.rule">
+            <field name="name">Student: parents see their own children only</field>
+            <field name="model_id" ref="model_school_student"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_student_student" model="ir.rule">
+            <field name="name">Student: students see their own record only</field>
+            <field name="model_id" ref="model_school_student"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_student'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+        <record id="rule_school_student_guardian_teacher" model="ir.rule">
+            <field name="name">Guardian link: teachers see assigned schools only</field>
+            <field name="model_id" ref="model_school_student_guardian"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('student_id.school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_student_guardian_accountant" model="ir.rule">
+            <field name="name">Guardian link: accountants see assigned schools only</field>
+            <field name="model_id" ref="model_school_student_guardian"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+            <field name="domain_force">[('student_id.school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_student_guardian_parent" model="ir.rule">
+            <field name="name">Guardian link: parents see their own links only</field>
+            <field name="model_id" ref="model_school_student_guardian"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_student_guardian_student" model="ir.rule">
+            <field name="name">Guardian link: students see their own guardian links only</field>
+            <field name="model_id" ref="model_school_student_guardian"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_student'))]"/>
+            <field name="domain_force">[('student_id.user_id', '=', user.id)]</field>
+        </record>
+    </data>
+</odoo>

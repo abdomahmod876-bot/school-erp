@@ -1,0 +1,96 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Odoo: up",
+            "type": "shell",
+            "command": "docker compose up -d --build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Odoo: down",
+            "type": "shell",
+            "command": "docker compose down",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Odoo: restart",
+            "type": "shell",
+            "command": "docker compose restart odoo",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Odoo: logs",
+            "type": "shell",
+            "command": "docker compose logs -f --tail=200 odoo",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Odoo: init database (install all school modules)",
+            "type": "shell",
+            "command": "docker compose stop odoo && docker compose run --rm odoo -d school_erp -i school_core,school_academic,school_security,school_student,school_admission,school_teacher,school_timetable,school_attendance,school_exam,school_fees,school_accounting,school_library,school_transport,school_communication,school_parent_portal,school_student_portal --with-demo --stop-after-init && docker compose start odoo",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Odoo: update school modules",
+            "type": "shell",
+            "command": "docker compose stop odoo && docker compose run --rm odoo -d school_erp -u school_core,school_academic,school_security,school_student,school_admission,school_teacher,school_timetable,school_attendance,school_exam,school_fees,school_accounting,school_library,school_transport,school_communication,school_parent_portal,school_student_portal --stop-after-init && docker compose start odoo",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Odoo: install custom accounting pack",
+            "type": "shell",
+            "command": "docker compose stop odoo && docker compose run --rm odoo -d school_erp -i om_account_accountant,web_responsive,om_print_journal_entry --stop-after-init && docker compose start odoo",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Odoo: update custom accounting pack",
+            "type": "shell",
+            "command": "docker compose stop odoo && docker compose run --rm odoo -d school_erp -u om_account_accountant,web_responsive,om_print_journal_entry --stop-after-init && docker compose start odoo",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Odoo: shell",
+            "type": "shell",
+            "command": "docker compose exec odoo bash",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "PostgreSQL: psql (school_erp)",
+            "type": "shell",
+            "command": "docker compose exec db psql -U odoo -d school_erp",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

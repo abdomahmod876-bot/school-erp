@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_school_transport"
+                  name="Transport"
+                  parent="school_core.menu_school_root"
+                  sequence="80"
+                  groups="school_core.group_school_user,school_core.group_school_manager,school_core.group_school_teacher,school_core.group_school_accountant"/>
+
+        <menuitem id="menu_school_transport_vehicle"
+                  name="Vehicles"
+                  parent="menu_school_transport"
+                  action="action_school_transport_vehicle"
+                  sequence="10"/>
+
+        <menuitem id="menu_school_transport_route"
+                  name="Routes"
+                  parent="menu_school_transport"
+                  action="action_school_transport_route"
+                  sequence="20"/>
+
+        <menuitem id="menu_school_transport_subscription"
+                  name="Subscriptions"
+                  parent="menu_school_transport"
+                  action="action_school_transport_subscription"
+                  sequence="30"/>
+    </data>
+</odoo>

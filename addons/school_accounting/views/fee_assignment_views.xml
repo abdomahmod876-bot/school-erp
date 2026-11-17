@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_fee_assignment_form_accounting" model="ir.ui.view">
+        <field name="name">school.fee.assignment.form.accounting</field>
+        <field name="model">school.fee.assignment</field>
+        <field name="inherit_id" ref="school_fees.view_school_fee_assignment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_invoice" type="object"
+                            class="oe_stat_button" icon="fa-usd"
+                            invisible="not invoice_id"
+                            groups="account.group_account_invoice">
+                        <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                    </button>
+                </div>
+            </xpath>
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_create_invoice" type="object"
+                        string="Create Invoice" class="btn-primary"
+                        invisible="state != 'confirmed' or invoice_id"
+                        groups="account.group_account_invoice"/>
+            </xpath>
+            <xpath expr="//group[@name='summary']" position="inside">
+                <field name="invoice_id" readonly="1"
+                       groups="account.group_account_invoice"/>
+                <field name="invoice_state" widget="badge"
+                       groups="account.group_account_invoice"
+                       decoration-info="invoice_state == 'draft'"
+                       decoration-success="invoice_state == 'posted'"
+                       decoration-danger="invoice_state == 'cancel'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_school_fee_assignment_list_accounting" model="ir.ui.view">
+        <field name="name">school.fee.assignment.list.accounting</field>
+        <field name="model">school.fee.assignment</field>
+        <field name="inherit_id" ref="school_fees.view_school_fee_assignment_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_state']" position="after">
+                <field name="invoice_id" optional="hide"
+                       groups="account.group_account_invoice"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_school_fee_assignment_search_accounting" model="ir.ui.view">
+        <field name="name">school.fee.assignment.search.accounting</field>
+        <field name="model">school.fee.assignment</field>
+        <field name="inherit_id" ref="school_fees.view_school_fee_assignment_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_paid']" position="after">
+                <separator/>
+                <filter name="filter_invoiced" string="Invoiced"
+                        domain="[('invoice_id', '!=', False)]"
+                        groups="account.group_account_invoice"/>
+                <filter name="filter_not_invoiced" string="Not Invoiced"
+                        domain="[('invoice_id', '=', False)]"
+                        groups="account.group_account_invoice"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

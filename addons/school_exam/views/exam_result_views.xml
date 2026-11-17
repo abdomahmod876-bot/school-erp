@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_exam_result_list" model="ir.ui.view">
+        <field name="name">school.exam.result.list</field>
+        <field name="model">school.exam.result</field>
+        <field name="arch" type="xml">
+            <list string="Exam Results" sample="1"
+                  decoration-danger="not passed">
+                <field name="student_id"/>
+                <field name="exam_id"/>
+                <field name="subject_id"/>
+                <field name="date"/>
+                <field name="score"/>
+                <field name="max_marks"/>
+                <field name="percentage"/>
+                <field name="grade" widget="badge"
+                       decoration-success="grade == 'a'"
+                       decoration-danger="grade == 'f'"/>
+                <field name="passed" optional="hide"/>
+                <field name="remark" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_exam_result_form" model="ir.ui.view">
+        <field name="name">school.exam.result.form</field>
+        <field name="model">school.exam.result</field>
+        <field name="arch" type="xml">
+            <form string="Exam Result">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="schedule_id"
+                                   domain="[('exam_id.state', '=', 'draft')]"
+                                   options="{'no_create': True}"/>
+                            <field name="exam_id"/>
+                            <field name="subject_id"/>
+                            <field name="date"/>
+                            <field name="student_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="max_marks"/>
+                            <field name="pass_mark"/>
+                            <field name="score"/>
+                            <field name="percentage"/>
+                            <field name="grade" widget="badge"
+                                   decoration-success="grade == 'a'"
+                                   decoration-danger="grade == 'f'"/>
+                            <field name="passed"/>
+                            <field name="remark"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_exam_result_search" model="ir.ui.view">
+        <field name="name">school.exam.result.search</field>
+        <field name="model">school.exam.result</field>
+        <field name="arch" type="xml">
+            <search string="Exam Results">
+                <field name="student_id"/>
+                <field name="exam_id"/>
+                <field name="subject_id"/>
+                <field name="date"/>
+                <filter name="filter_passed" string="Passed"
+                        domain="[('passed', '=', True)]"/>
+                <filter name="filter_failed" string="Failed"
+                        domain="[('passed', '=', False)]"/>
+                <separator/>
+                <filter name="group_exam" string="Exam"
+                        context="{'group_by': 'exam_id'}"/>
+                <filter name="group_subject" string="Subject"
+                        context="{'group_by': 'subject_id'}"/>
+                <filter name="group_student" string="Student"
+                        context="{'group_by': 'student_id'}"/>
+                <filter name="group_grade" string="Grade"
+                        context="{'group_by': 'grade'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_exam_result" model="ir.actions.act_window">
+        <field name="name">Results</field>
+        <field name="res_model">school.exam.result</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_exam_result_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No exam results yet</p>
+            <p>Generate the result sheets from an exam and then enter the scores.</p>
+        </field>
+    </record>
+</odoo>

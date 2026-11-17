@@ -1,0 +1,22 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_fee_type_manager,school.fee.type manager,model_school_fee_type,school_core.group_school_manager,1,1,1,1
+access_school_fee_type_accountant,school.fee.type accountant,model_school_fee_type,school_core.group_school_accountant,1,1,1,1
+access_school_fee_type_user,school.fee.type user,model_school_fee_type,school_core.group_school_user,1,0,0,0
+access_school_fee_structure_manager,school.fee.structure manager,model_school_fee_structure,school_core.group_school_manager,1,1,1,1
+access_school_fee_structure_accountant,school.fee.structure accountant,model_school_fee_structure,school_core.group_school_accountant,1,1,1,1
+access_school_fee_structure_user,school.fee.structure user,model_school_fee_structure,school_core.group_school_user,1,0,0,0
+access_school_fee_structure_line_manager,school.fee.structure.line manager,model_school_fee_structure_line,school_core.group_school_manager,1,1,1,1
+access_school_fee_structure_line_accountant,school.fee.structure.line accountant,model_school_fee_structure_line,school_core.group_school_accountant,1,1,1,1
+access_school_fee_structure_line_user,school.fee.structure.line user,model_school_fee_structure_line,school_core.group_school_user,1,0,0,0
+access_school_fee_assignment_manager,school.fee.assignment manager,model_school_fee_assignment,school_core.group_school_manager,1,1,1,1
+access_school_fee_assignment_accountant,school.fee.assignment accountant,model_school_fee_assignment,school_core.group_school_accountant,1,1,1,1
+access_school_fee_assignment_user,school.fee.assignment user,model_school_fee_assignment,school_core.group_school_user,1,0,0,0
+access_school_fee_assignment_line_manager,school.fee.assignment.line manager,model_school_fee_assignment_line,school_core.group_school_manager,1,1,1,1
+access_school_fee_assignment_line_accountant,school.fee.assignment.line accountant,model_school_fee_assignment_line,school_core.group_school_accountant,1,1,1,1
+access_school_fee_assignment_line_user,school.fee.assignment.line user,model_school_fee_assignment_line,school_core.group_school_user,1,0,0,0
+access_school_fee_payment_manager,school.fee.payment manager,model_school_fee_payment,school_core.group_school_manager,1,1,1,1
+access_school_fee_payment_accountant,school.fee.payment accountant,model_school_fee_payment,school_core.group_school_accountant,1,1,1,1
+access_school_fee_payment_user,school.fee.payment user,model_school_fee_payment,school_core.group_school_user,1,0,0,0
+access_school_fee_payment_wizard_manager,school.fee.payment.wizard manager,model_school_fee_payment_wizard,school_core.group_school_manager,1,1,1,1
+access_school_fee_payment_wizard_accountant,school.fee.payment.wizard accountant,model_school_fee_payment_wizard,school_core.group_school_accountant,1,1,1,1
+access_school_fee_payment_wizard_user,school.fee.payment.wizard user,model_school_fee_payment_wizard,school_core.group_school_user,1,0,0,0

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_admission_list" model="ir.ui.view">
+        <field name="name">school.admission.list</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <list string="Admission Applications" sample="1">
+                <field name="name"/>
+                <field name="applicant_name"/>
+                <field name="grade_id"/>
+                <field name="academic_year_id"/>
+                <field name="section_id"/>
+                <field name="guardian_name"/>
+                <field name="interview_date" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state in ('submitted', 'under_review', 'interview')"
+                       decoration-success="state in ('accepted', 'enrolled')"
+                       decoration-warning="state == 'waitlisted'"
+                       decoration-danger="state == 'rejected'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_admission_kanban" model="ir.ui.view">
+        <field name="name">school.admission.kanban</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="name"/>
+                <field name="applicant_name"/>
+                <field name="grade_id"/>
+                <field name="state"/>
+                <field name="guardian_phone"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="applicant_name"/></strong>
+                            <field name="state" widget="label_selection" options="{'classes': {'draft': 'secondary', 'submitted': 'info', 'under_review': 'info', 'interview': 'warning', 'accepted': 'success', 'waitlisted': 'warning', 'rejected': 'danger', 'enrolled': 'success'}}"/>
+                        </div>
+                        <div class="text-muted">
+                            <field name="name"/>
+                        </div>
+                        <div>
+                            <field name="grade_id"/>
+                        </div>
+                        <div class="text-muted">
+                            <i class="fa fa-phone" title="Phone"/>
+                            <field name="guardian_phone"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_school_admission_form" model="ir.ui.view">
+        <field name="name">school.admission.form</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <form string="Admission Application">
+                <header>
+                    <button name="action_submit" string="Submit" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_start_review" string="Start Review" type="object"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_schedule_interview" string="Schedule Interview" type="object"
+                            invisible="state not in ('submitted', 'under_review')"/>
+                    <button name="action_accept" string="Accept" type="object"
+                            class="btn-primary"
+                            invisible="state not in ('submitted', 'under_review', 'interview', 'waitlisted')"/>
+                    <button name="action_waitlist" string="Waitlist" type="object"
+                            invisible="state not in ('submitted', 'under_review', 'interview')"/>
+                    <button name="action_reject" string="Reject" type="object"
+                            invisible="state not in ('submitted', 'under_review', 'interview', 'waitlisted')"/>
+                    <button name="action_enroll" string="Enroll Student" type="object"
+                            class="btn-primary" invisible="state != 'accepted'"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object"
+                            invisible="state in ('draft', 'enrolled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,under_review,interview,accepted,enrolled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="applicant_name"/>
+                        <h1>
+                            <field name="applicant_name" placeholder="Applicant name"/>
+                        </h1>
+                        <group>
+                            <field name="name" readonly="1"/>
+                        </group>
+                    </div>
+                    <group>
+                        <group string="Academic">
+                            <field name="school_id"/>
+                            <field name="branch_id"/>
+                            <field name="academic_year_id"/>
+                            <field name="grade_id"/>
+                            <field name="section_id"/>
+                        </group>
+                        <group string="Applicant">
+                            <field name="gender"/>
+                            <field name="birth_date"/>
+                            <field name="national_id"/>
+                            <field name="previous_school"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Guardian">
+                            <field name="guardian_name"/>
+                            <field name="guardian_relation"/>
+                            <field name="guardian_phone" widget="phone"/>
+                            <field name="guardian_email" widget="email"/>
+                        </group>
+                        <group string="Contact">
+                            <field name="email" widget="email"/>
+                            <field name="phone" widget="phone"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Documents">
+                            <group>
+                                <group>
+                                    <field name="birth_certificate"/>
+                                    <field name="previous_report"/>
+                                </group>
+                                <group>
+                                    <field name="photos"/>
+                                    <field name="medical_report"/>
+                                    <field name="documents_complete"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Decision">
+                            <group>
+                                <field name="interview_date"/>
+                                <field name="decision_note"/>
+                            </group>
+                        </page>
+                        <page string="Enrollment" invisible="state != 'enrolled'">
+                            <group>
+                                <field name="student_id"/>
+                                <field name="enrollment_id"/>
+                            </group>
+                        </page>
+                        <page string="Notes">
+                            <field name="note" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_admission_search" model="ir.ui.view">
+        <field name="name">school.admission.search</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <search string="Admission Applications">
+                <field name="name"/>
+                <field name="applicant_name"/>
+                <field name="guardian_name"/>
+                <field name="guardian_phone"/>
+                <field name="national_id"/>
+                <field name="phone"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_pending" string="In Process"
+                        domain="[('state', 'in', ('submitted', 'under_review', 'interview'))]"/>
+                <filter name="filter_accepted" string="Accepted"
+                        domain="[('state', '=', 'accepted')]"/>
+                <filter name="filter_waitlisted" string="Waitlisted"
+                        domain="[('state', '=', 'waitlisted')]"/>
+                <filter name="filter_rejected" string="Rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                <filter name="filter_enrolled" string="Enrolled"
+                        domain="[('state', '=', 'enrolled')]"/>
+                <separator/>
+                <filter name="filter_docs_complete" string="Documents Complete"
+                        domain="[('birth_certificate', '=', True), ('previous_report', '=', True), ('photos', '=', True), ('medical_report', '=', True)]"/>
+                <separator/>
+                <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                <filter name="group_grade" string="Grade" context="{'group_by': 'grade_id'}"/>
+                <filter name="group_year" string="Academic Year"
+                        context="{'group_by': 'academic_year_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_school_admission_calendar" model="ir.ui.view">
+        <field name="name">school.admission.calendar</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <calendar string="Admission Interviews" date_start="interview_date"
+                      color="state" mode="month" create="0">
+                <field name="applicant_name"/>
+                <field name="grade_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_school_admission" model="ir.actions.act_window">
+        <field name="name">Admission Applications</field>
+        <field name="res_model">school.admission</field>
+        <field name="view_mode">kanban,list,form,calendar</field>
+        <field name="search_view_id" ref="view_school_admission_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first admission application</p>
+            <p>Track applicants from submission through interview until enrollment.</p>
+        </field>
+    </record>
+</odoo>

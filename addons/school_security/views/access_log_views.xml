@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <record id="view_school_access_log_list" model="ir.ui.view">
+            <field name="name">school.access.log.list</field>
+            <field name="model">school.access.log</field>
+            <field name="arch" type="xml">
+                <list string="School Access Log" create="0" edit="0" delete="0">
+                    <field name="create_date" string="Date"/>
+                    <field name="user_id"/>
+                    <field name="school_id"/>
+                    <field name="action" widget="badge"
+                           decoration-success="action == 'grant'"
+                           decoration-danger="action == 'revoke'"/>
+                    <field name="granted_by"/>
+                    <field name="note"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_school_access_log_search" model="ir.ui.view">
+            <field name="name">school.access.log.search</field>
+            <field name="model">school.access.log</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="user_id"/>
+                    <field name="school_id"/>
+                    <filter name="filter_grant" string="Granted" domain="[('action', '=', 'grant')]"/>
+                    <filter name="filter_revoke" string="Revoked" domain="[('action', '=', 'revoke')]"/>
+                    <group name="group_by">
+                        <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
+                        <filter name="group_school" string="School" context="{'group_by': 'school_id'}"/>
+                        <filter name="group_action" string="Action" context="{'group_by': 'action'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_school_access_log" model="ir.actions.act_window">
+            <field name="name">Access Log</field>
+            <field name="res_model">school.access.log</field>
+            <field name="view_mode">list</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No access changes recorded yet</p>
+                <p>Every grant or revocation done through the access wizard is logged here.</p>
+            </field>
+        </record>
+    </data>
+</odoo>

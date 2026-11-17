@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rule_school_library_book_teacher" model="ir.rule">
+            <field name="name">Library book: teachers see assigned schools only</field>
+            <field name="model_id" ref="model_school_library_book"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_library_member_teacher" model="ir.rule">
+            <field name="name">Library member: teachers see assigned schools only</field>
+            <field name="model_id" ref="model_school_library_member"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+        <record id="rule_school_library_loan_teacher" model="ir.rule">
+            <field name="name">Library loan: teachers see assigned schools only</field>
+            <field name="model_id" ref="model_school_library_loan"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+            <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+        </record>
+    </data>
+</odoo>

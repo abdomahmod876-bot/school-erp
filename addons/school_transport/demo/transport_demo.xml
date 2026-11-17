@@ -1,0 +1,109 @@
+<odoo>
+    <data>
+        <record id="demo_vehicle_bus1" model="school.transport.vehicle">
+            <field name="name">Bus 1</field>
+            <field name="plate_number">DEMO-1001</field>
+            <field name="model">Toyota Coaster</field>
+            <field name="capacity">40</field>
+            <field name="driver_name">Mahmoud Aly</field>
+            <field name="driver_phone">+20 100 000 6001</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_vehicle_bus2" model="school.transport.vehicle">
+            <field name="name">Bus 2</field>
+            <field name="plate_number">DEMO-1002</field>
+            <field name="model">Mercedes Sprinter</field>
+            <field name="capacity">20</field>
+            <field name="driver_name">Sayed Kamel</field>
+            <field name="driver_phone">+20 100 000 6002</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_route_nasr" model="school.transport.route">
+            <field name="name">Nasr City Route</field>
+            <field name="code">NC-01</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="vehicle_id" ref="demo_vehicle_bus1"/>
+        </record>
+
+        <record id="demo_stop_city_stars" model="school.transport.stop">
+            <field name="route_id" ref="demo_route_nasr"/>
+            <field name="name">Nasr City - City Stars</field>
+            <field name="sequence">10</field>
+            <field name="pickup_time">6.5</field>
+            <field name="dropoff_time">15.5</field>
+        </record>
+
+        <record id="demo_stop_roxy" model="school.transport.stop">
+            <field name="route_id" ref="demo_route_nasr"/>
+            <field name="name">Heliopolis - Roxy</field>
+            <field name="sequence">20</field>
+            <field name="pickup_time">6.75</field>
+            <field name="dropoff_time">15.75</field>
+        </record>
+
+        <record id="demo_stop_abbassia" model="school.transport.stop">
+            <field name="route_id" ref="demo_route_nasr"/>
+            <field name="name">Abbassia Square</field>
+            <field name="sequence">30</field>
+            <field name="pickup_time">7.0</field>
+            <field name="dropoff_time">16.0</field>
+        </record>
+
+        <record id="demo_route_maadi" model="school.transport.route">
+            <field name="name">Maadi Route</field>
+            <field name="code">MD-01</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="vehicle_id" ref="demo_vehicle_bus2"/>
+        </record>
+
+        <record id="demo_stop_degla" model="school.transport.stop">
+            <field name="route_id" ref="demo_route_maadi"/>
+            <field name="name">Maadi - Degla</field>
+            <field name="sequence">10</field>
+            <field name="pickup_time">6.75</field>
+            <field name="dropoff_time">15.75</field>
+        </record>
+
+        <record id="demo_stop_zahraa" model="school.transport.stop">
+            <field name="route_id" ref="demo_route_maadi"/>
+            <field name="name">Zahraa El Maadi</field>
+            <field name="sequence">20</field>
+            <field name="pickup_time">7.0</field>
+            <field name="dropoff_time">16.0</field>
+        </record>
+
+        <record id="demo_subscription_omar" model="school.transport.subscription">
+            <field name="student_id" ref="school_student.demo_student_omar"/>
+            <field name="route_id" ref="demo_route_nasr"/>
+            <field name="stop_id" ref="demo_stop_city_stars"/>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="direction">both</field>
+            <field name="date_start">2026-09-01</field>
+            <field name="monthly_fee">900.0</field>
+            <field name="state">running</field>
+        </record>
+
+        <record id="demo_subscription_sara" model="school.transport.subscription">
+            <field name="student_id" ref="school_student.demo_student_sara"/>
+            <field name="route_id" ref="demo_route_nasr"/>
+            <field name="stop_id" ref="demo_stop_roxy"/>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="direction">pickup</field>
+            <field name="date_start">2026-09-01</field>
+            <field name="monthly_fee">900.0</field>
+            <field name="state">running</field>
+        </record>
+
+        <record id="demo_subscription_adam" model="school.transport.subscription">
+            <field name="student_id" ref="school_student.demo_student_adam"/>
+            <field name="route_id" ref="demo_route_maadi"/>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="direction">dropoff</field>
+            <field name="date_start">2026-09-01</field>
+            <field name="monthly_fee">750.0</field>
+            <field name="state">draft</field>
+        </record>
+    </data>
+</odoo>

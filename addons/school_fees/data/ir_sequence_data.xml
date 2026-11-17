@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_school_fee_assignment" model="ir.sequence">
+            <field name="name">Student Fee Plan</field>
+            <field name="code">school.fee.assignment</field>
+            <field name="prefix">FEE/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_school_fee_payment" model="ir.sequence">
+            <field name="name">Fee Payment</field>
+            <field name="code">school.fee.payment</field>
+            <field name="prefix">PAY/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

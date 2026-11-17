@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_attendance_session_list" model="ir.ui.view">
+        <field name="name">school.attendance.session.list</field>
+        <field name="model">school.attendance.session</field>
+        <field name="arch" type="xml">
+            <list string="Attendance Registers" sample="1">
+                <field name="date"/>
+                <field name="name" optional="hide"/>
+                <field name="section_id"/>
+                <field name="period_id"/>
+                <field name="teacher_id" optional="show"/>
+                <field name="present_count"/>
+                <field name="absent_count"/>
+                <field name="late_count" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_attendance_session_form" model="ir.ui.view">
+        <field name="name">school.attendance.session.form</field>
+        <field name="model">school.attendance.session</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Register">
+                <header>
+                    <button name="action_load_students" string="Load Students" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_mark_all_present" string="Mark All Present" type="object"
+                            invisible="state != 'draft'"/>
+                    <button name="action_done" string="Mark Done" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object"
+                            invisible="state != 'done'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="section_id" string="Section"/>
+                        <h1><field name="section_id" options="{'no_create': True}"/></h1>
+                        <group>
+                            <field name="date"/>
+                            <field name="period_id" options="{'no_create': True}"/>
+                        </group>
+                    </div>
+                    <group>
+                        <group string="School">
+                            <field name="school_id" options="{'no_create': True}"/>
+                            <field name="branch_id" options="{'no_create': True}"/>
+                            <field name="academic_year_id"/>
+                            <field name="teacher_id" options="{'no_create': True}"/>
+                        </group>
+                        <group string="Summary">
+                            <field name="present_count"/>
+                            <field name="absent_count"/>
+                            <field name="late_count"/>
+                            <field name="excused_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Attendance" name="attendance">
+                            <field name="line_ids">
+                                <list editable="bottom"
+                                      decoration-danger="state == 'absent'"
+                                      decoration-warning="state == 'late'"
+                                      decoration-info="state == 'excused'">
+                                    <field name="student_id" options="{'no_create': True}"/>
+                                    <field name="state"/>
+                                    <field name="remark"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_attendance_session_search" model="ir.ui.view">
+        <field name="name">school.attendance.session.search</field>
+        <field name="model">school.attendance.session</field>
+        <field name="arch" type="xml">
+            <search string="Attendance Registers">
+                <field name="name"/>
+                <field name="section_id"/>
+                <field name="teacher_id"/>
+                <field name="date"/>
+                <filter name="filter_today" string="Today"
+                        domain="[('date', '=', datetime.date.today())]"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_done" string="Done"
+                        domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter name="group_date" string="Date" context="{'group_by': 'date'}"/>
+                <filter name="group_section" string="Section" context="{'group_by': 'section_id'}"/>
+                <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_attendance_session" model="ir.actions.act_window">
+        <field name="name">Attendance Registers</field>
+        <field name="res_model">school.attendance.session</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_attendance_session_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first attendance register</p>
+            <p>Load the active students of a section, mark their attendance and close the register.</p>
+        </field>
+    </record>
+
+    <record id="view_school_section_form_attendance" model="ir.ui.view">
+        <field name="name">school.section.form.attendance</field>
+        <field name="model">school.section</field>
+        <field name="inherit_id" ref="school_academic.view_school_section_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Attendance" name="attendance">
+                    <field name="attendance_session_ids">
+                        <list>
+                            <field name="date"/>
+                            <field name="period_id"/>
+                            <field name="teacher_id"/>
+                            <field name="present_count"/>
+                            <field name="absent_count"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

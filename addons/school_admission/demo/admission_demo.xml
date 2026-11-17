@@ -1,0 +1,182 @@
+<odoo>
+    <data>
+        <record id="demo_enrollment_omar" model="school.enrollment">
+            <field name="student_id" ref="school_student.demo_student_omar"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="enrollment_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_enrollment_sara" model="school.enrollment">
+            <field name="student_id" ref="school_student.demo_student_sara"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="enrollment_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_enrollment_adam" model="school.enrollment">
+            <field name="student_id" ref="school_student.demo_student_adam"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="enrollment_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_enrollment_nadia" model="school.enrollment">
+            <field name="student_id" ref="school_student.demo_student_nadia"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="enrollment_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_enrollment_laila" model="school.enrollment">
+            <field name="student_id" ref="school_student.demo_student_laila"/>
+            <field name="section_id" ref="school_academic.demo_section_2a"/>
+            <field name="enrollment_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_enrollment_youssef" model="school.enrollment">
+            <field name="student_id" ref="school_student.demo_student_youssef"/>
+            <field name="section_id" ref="school_academic.demo_section_7a"/>
+            <field name="enrollment_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_enrollment_jana" model="school.enrollment">
+            <field name="student_id" ref="school_student.demo_student_jana"/>
+            <field name="section_id" ref="school_academic.demo_section_1b"/>
+            <field name="enrollment_date">2026-09-01</field>
+        </record>
+
+        <record id="demo_admission_draft" model="school.admission">
+            <field name="applicant_name">Mariam Fouad</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2019-06-18</field>
+            <field name="guardian_name">Fouad Amin</field>
+            <field name="guardian_relation">father</field>
+            <field name="guardian_phone">+20 100 000 4001</field>
+            <field name="guardian_email">fouad.amin@example.com</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_1"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="birth_certificate" eval="True"/>
+            <field name="photos" eval="True"/>
+        </record>
+
+        <record id="demo_admission_submitted" model="school.admission">
+            <field name="applicant_name">Ziad Mahmoud</field>
+            <field name="gender">male</field>
+            <field name="birth_date">2019-02-09</field>
+            <field name="guardian_name">Mahmoud Sabry</field>
+            <field name="guardian_relation">father</field>
+            <field name="guardian_phone">+20 100 000 4002</field>
+            <field name="guardian_email">mahmoud.sabry@example.com</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_1"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="state">submitted</field>
+        </record>
+
+        <record id="demo_admission_review" model="school.admission">
+            <field name="applicant_name">Farida Yasser</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2018-12-01</field>
+            <field name="guardian_name">Yasser Hamed</field>
+            <field name="guardian_relation">father</field>
+            <field name="guardian_phone">+20 100 000 4003</field>
+            <field name="guardian_email">yasser.hamed@example.com</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_2"/>
+            <field name="section_id" ref="school_academic.demo_section_2a"/>
+            <field name="state">under_review</field>
+            <field name="birth_certificate" eval="True"/>
+            <field name="previous_report" eval="True"/>
+        </record>
+
+        <record id="demo_admission_interview" model="school.admission">
+            <field name="applicant_name">Hassan Tarek</field>
+            <field name="gender">male</field>
+            <field name="birth_date">2018-08-14</field>
+            <field name="guardian_name">Tarek Nabil</field>
+            <field name="guardian_relation">father</field>
+            <field name="guardian_phone">+20 100 000 4004</field>
+            <field name="guardian_email">tarek.nabil@example.com</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_2"/>
+            <field name="section_id" ref="school_academic.demo_section_2a"/>
+            <field name="state">interview</field>
+            <field name="interview_date">2026-11-25 10:00:00</field>
+        </record>
+
+        <record id="demo_admission_accepted" model="school.admission">
+            <field name="applicant_name">Dina Sameh</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2019-05-20</field>
+            <field name="guardian_name">Sameh Roshdy</field>
+            <field name="guardian_relation">father</field>
+            <field name="guardian_phone">+20 100 000 4005</field>
+            <field name="guardian_email">sameh.roshdy@example.com</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_1"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="state">accepted</field>
+            <field name="birth_certificate" eval="True"/>
+            <field name="previous_report" eval="True"/>
+            <field name="photos" eval="True"/>
+            <field name="medical_report" eval="True"/>
+            <field name="decision_note">Accepted after the placement interview.</field>
+        </record>
+
+        <record id="demo_admission_waitlisted" model="school.admission">
+            <field name="applicant_name">Mostafa Gamal</field>
+            <field name="gender">male</field>
+            <field name="birth_date">2019-10-11</field>
+            <field name="guardian_name">Gamal Ashraf</field>
+            <field name="guardian_relation">guardian</field>
+            <field name="guardian_phone">+20 100 000 4006</field>
+            <field name="guardian_email">gamal.ashraf@example.com</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_1"/>
+            <field name="section_id" ref="school_academic.demo_section_1b"/>
+            <field name="state">waitlisted</field>
+            <field name="decision_note">Waiting for a free seat in Grade 1.</field>
+        </record>
+
+        <record id="demo_admission_rejected" model="school.admission">
+            <field name="applicant_name">Rania Kamal</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2017-04-03</field>
+            <field name="guardian_name">Kamal Lotfy</field>
+            <field name="guardian_relation">other</field>
+            <field name="guardian_phone">+20 100 000 4007</field>
+            <field name="guardian_email">kamal.lotfy@example.com</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_3"/>
+            <field name="state">rejected</field>
+            <field name="decision_note">Age does not match the requested grade.</field>
+        </record>
+
+        <record id="demo_admission_enrolled" model="school.admission">
+            <field name="applicant_name">Nadia Fathy</field>
+            <field name="gender">female</field>
+            <field name="birth_date">2019-01-28</field>
+            <field name="national_id">DEMO-2019-0007</field>
+            <field name="guardian_name">Fathy Ibrahim</field>
+            <field name="guardian_relation">father</field>
+            <field name="guardian_phone">+20 100 000 2004</field>
+            <field name="guardian_email">fathy.ibrahim@example.com</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="academic_year_id" ref="school_academic.demo_year_2026"/>
+            <field name="grade_id" ref="school_academic.demo_grade_1"/>
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="state">enrolled</field>
+            <field name="student_id" ref="school_student.demo_student_nadia"/>
+            <field name="enrollment_id" ref="demo_enrollment_nadia"/>
+            <field name="birth_certificate" eval="True"/>
+            <field name="previous_report" eval="True"/>
+            <field name="photos" eval="True"/>
+            <field name="medical_report" eval="True"/>
+        </record>
+    </data>
+</odoo>

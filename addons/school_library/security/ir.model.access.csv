@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_library_book_manager,school.library.book.manager,model_school_library_book,school_core.group_school_manager,1,1,1,1
+access_school_library_book_user,school.library.book.user,model_school_library_book,school_core.group_school_user,1,1,1,0
+access_school_library_book_teacher,school.library.book.teacher,model_school_library_book,school_core.group_school_teacher,1,0,0,0
+access_school_library_member_manager,school.library.member.manager,model_school_library_member,school_core.group_school_manager,1,1,1,1
+access_school_library_member_user,school.library.member.user,model_school_library_member,school_core.group_school_user,1,1,1,0
+access_school_library_member_teacher,school.library.member.teacher,model_school_library_member,school_core.group_school_teacher,1,0,0,0
+access_school_library_loan_manager,school.library.loan.manager,model_school_library_loan,school_core.group_school_manager,1,1,1,1
+access_school_library_loan_user,school.library.loan.user,model_school_library_loan,school_core.group_school_user,1,1,1,0
+access_school_library_loan_teacher,school.library.loan.teacher,model_school_library_loan,school_core.group_school_teacher,1,0,0,0

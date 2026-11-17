@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_breadcrumbs_school" name="School Portal Breadcrumbs"
+              inherit_id="portal.portal_breadcrumbs">
+        <xpath expr="." position="inside">
+            <li t-if="page_name == 'school_children'" class="breadcrumb-item">My Children</li>
+            <li t-elif="page_name == 'school_child'" class="breadcrumb-item">
+                <a href="/my/children">My Children</a>
+            </li>
+            <li t-if="page_name == 'school_child'" class="breadcrumb-item">
+                <t t-out="student.name"/>
+            </li>
+            <li t-if="page_name == 'school_notifications'" class="breadcrumb-item">Notifications</li>
+        </xpath>
+    </template>
+
+    <template id="portal_children" name="My Children">
+        <t t-call="portal.portal_layout">
+            <t t-set="page_name" t-value="'school_children'"/>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="mb-0">My Children</h3>
+                <a href="/my/notifications" class="btn btn-outline-primary btn-sm">
+                    Notifications
+                </a>
+            </div>
+            <div t-if="not children" class="alert alert-info" role="alert">
+                No child is linked to your account yet. Please contact the school to
+                link your guardian account.
+            </div>
+            <div class="row g-3">
+                <t t-foreach="children" t-as="child">
+                    <div class="col-md-6">
+                        <a t-attf-href="/my/children/#{child.id}"
+                           class="card h-100 text-decoration-none shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title mb-1" t-out="child.name"/>
+                                <div class="text-muted small" t-out="child.reference"/>
+                                <div class="text-muted small" t-out="child.school_id.name"/>
+                                <span t-if="child.state == 'active'"
+                                      class="badge text-bg-success mt-2">Active</span>
+                                <span t-elif="child.state == 'graduated'"
+                                      class="badge text-bg-info mt-2">Graduated</span>
+                                <span t-else="" class="badge text-bg-secondary mt-2"
+                                      t-out="child.state"/>
+                            </div>
+                        </a>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_child" name="Child Dashboard">
+        <t t-call="portal.portal_layout">
+            <t t-set="page_name" t-value="'school_child'"/>
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                <div>
+                    <h3 class="mb-1" t-out="student.name"/>
+                    <div class="text-muted">
+                        <span t-out="student.reference"/>
+                        <t t-if="enrollment">
+                            <span> - </span>
+                            <span t-out="enrollment.section_id.display_name"/>
+                        </t>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="/my/children" class="btn btn-outline-secondary btn-sm">
+                        All children
+                    </a>
+                    <a href="/my/notifications" class="btn btn-outline-primary btn-sm">
+                        Notifications
+                    </a>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Fees</h5>
+                </div>
+                <div class="card-body">
+                    <div t-if="not fee_assignments" class="text-muted">No fee plan yet.</div>
+                    <div t-else="" class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Plan</th>
+                                    <th>Year</th>
+                                    <th class="text-end">Total</th>
+                                    <th class="text-end">Paid</th>
+                                    <th class="text-end">Balance</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="fee_assignments" t-as="fee">
+                                    <tr>
+                                        <td t-out="fee.reference"/>
+                                        <td t-out="fee.academic_year_id.name"/>
+                                        <td class="text-end" t-out="'%.2f' % fee.total_amount"/>
+                                        <td class="text-end" t-out="'%.2f' % fee.paid_amount"/>
+                                        <td class="text-end fw-bold" t-out="'%.2f' % fee.balance"/>
+                                        <td>
+                                            <span t-attf-class="badge #{payment_badges.get(fee.payment_state, 'text-bg-secondary')}"
+                                                  t-out="payment_labels.get(fee.payment_state)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Attendance</h5>
+                </div>
+                <div class="card-body">
+                    <div t-if="not attendance_lines" class="text-muted">No attendance records yet.</div>
+                    <div t-else="" class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Section</th>
+                                    <th>Status</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="attendance_lines" t-as="line">
+                                    <tr>
+                                        <td t-out="line.date"/>
+                                        <td t-out="line.section_id.display_name"/>
+                                        <td>
+                                            <span t-attf-class="badge #{attendance_badges.get(line.state, 'text-bg-secondary')}"
+                                                  t-out="line.state"/>
+                                        </td>
+                                        <td t-out="line.remark or ''"/>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Exam Results</h5>
+                </div>
+                <div class="card-body">
+                    <div t-if="not results" class="text-muted">No published results yet.</div>
+                    <div t-else="" class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Subject</th>
+                                    <th class="text-end">Score</th>
+                                    <th class="text-end">Max</th>
+                                    <th class="text-end">%</th>
+                                    <th>Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="results" t-as="result">
+                                    <tr>
+                                        <td t-out="result.date"/>
+                                        <td t-out="result.subject_id.name"/>
+                                        <td class="text-end" t-out="'%.2f' % result.score"/>
+                                        <td class="text-end" t-out="'%.2f' % result.max_marks"/>
+                                        <td class="text-end" t-out="'%.2f' % result.percentage"/>
+                                        <td>
+                                            <span t-attf-class="badge #{'text-bg-success' if result.passed else 'text-bg-danger'}">
+                                                <t t-out="grade_labels.get(result.grade)"/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Timetable</h5>
+                </div>
+                <div class="card-body">
+                    <div t-if="not timetable_rows" class="text-muted">No published timetable yet.</div>
+                    <div t-else="" class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Period</th>
+                                    <th>Time</th>
+                                    <th>Subject</th>
+                                    <th>Teacher</th>
+                                    <th>Room</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="timetable_rows" t-as="row">
+                                    <tr>
+                                        <td t-out="row['day']"/>
+                                        <td t-out="row['period']"/>
+                                        <td t-out="row['time']"/>
+                                        <td t-out="row['subject']"/>
+                                        <td t-out="row['teacher']"/>
+                                        <td t-out="row['room']"/>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_notifications" name="School Notifications">
+        <t t-call="portal.portal_layout">
+            <t t-set="page_name" t-value="'school_notifications'"/>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="mb-0">Notifications</h3>
+                <a href="/my/children" class="btn btn-outline-secondary btn-sm">
+                    My Children
+                </a>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Messages</h5>
+                </div>
+                <div class="card-body">
+                    <div t-if="not messages" class="text-muted">No messages yet.</div>
+                    <t t-else="" t-foreach="messages" t-as="message">
+                        <div class="border-bottom py-3">
+                            <div class="d-flex justify-content-between">
+                                <strong t-out="message.subject"/>
+                                <small class="text-muted" t-out="message.create_date"/>
+                            </div>
+                            <div class="mt-2" t-field="message.body"/>
+                        </div>
+                    </t>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Announcements</h5>
+                </div>
+                <div class="card-body">
+                    <div t-if="not announcements" class="text-muted">No announcements yet.</div>
+                    <t t-else="" t-foreach="announcements" t-as="announcement">
+                        <div class="border-bottom py-3">
+                            <div class="d-flex justify-content-between">
+                                <strong t-out="announcement.name"/>
+                                <small class="text-muted" t-out="announcement.date_start"/>
+                            </div>
+                            <div class="mt-2" t-field="announcement.body"/>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

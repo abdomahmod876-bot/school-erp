@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_academic_year_manager,school.academic.year.manager,model_school_academic_year,school_core.group_school_manager,1,1,1,1
+access_school_academic_year_user,school.academic.year.user,model_school_academic_year,school_core.group_school_user,1,0,0,0
+access_school_curriculum_manager,school.curriculum.manager,model_school_curriculum,school_core.group_school_manager,1,1,1,1
+access_school_curriculum_user,school.curriculum.user,model_school_curriculum,school_core.group_school_user,1,0,0,0
+access_school_stage_manager,school.stage.manager,model_school_stage,school_core.group_school_manager,1,1,1,1
+access_school_stage_user,school.stage.user,model_school_stage,school_core.group_school_user,1,0,0,0
+access_school_grade_manager,school.grade.manager,model_school_grade,school_core.group_school_manager,1,1,1,1
+access_school_grade_user,school.grade.user,model_school_grade,school_core.group_school_user,1,0,0,0
+access_school_grade_subject_manager,school.grade.subject.manager,model_school_grade_subject,school_core.group_school_manager,1,1,1,1
+access_school_grade_subject_user,school.grade.subject.user,model_school_grade_subject,school_core.group_school_user,1,0,0,0
+access_school_subject_manager,school.subject.manager,model_school_subject,school_core.group_school_manager,1,1,1,1
+access_school_subject_user,school.subject.user,model_school_subject,school_core.group_school_user,1,0,0,0
+access_school_section_manager,school.section.manager,model_school_section,school_core.group_school_manager,1,1,1,1
+access_school_section_user,school.section.user,model_school_section,school_core.group_school_user,1,0,0,0

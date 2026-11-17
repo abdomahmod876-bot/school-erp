@@ -1,0 +1,208 @@
+<odoo>
+    <data>
+        <record id="demo_curriculum" model="school.curriculum">
+            <field name="name">National Curriculum</field>
+            <field name="code">NC</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="description">Egyptian national curriculum.</field>
+        </record>
+
+        <record id="demo_year_2025" model="school.academic.year">
+            <field name="name">2025/2026</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="date_start">2025-09-01</field>
+            <field name="date_end">2026-06-30</field>
+        </record>
+
+        <record id="demo_year_2026" model="school.academic.year">
+            <field name="name">2026/2027</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="date_start">2026-09-01</field>
+            <field name="date_end">2027-06-30</field>
+            <field name="is_current" eval="True"/>
+        </record>
+
+        <record id="demo_stage_primary" model="school.stage">
+            <field name="name">Primary</field>
+            <field name="code">PRI</field>
+            <field name="sequence">10</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_stage_prep" model="school.stage">
+            <field name="name">Preparatory</field>
+            <field name="code">PREP</field>
+            <field name="sequence">20</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_stage_secondary" model="school.stage">
+            <field name="name">Secondary</field>
+            <field name="code">SEC</field>
+            <field name="sequence">30</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_grade_1" model="school.grade">
+            <field name="name">Grade 1</field>
+            <field name="code">G1</field>
+            <field name="sequence">1</field>
+            <field name="stage_id" ref="demo_stage_primary"/>
+            <field name="curriculum_id" ref="demo_curriculum"/>
+        </record>
+
+        <record id="demo_grade_2" model="school.grade">
+            <field name="name">Grade 2</field>
+            <field name="code">G2</field>
+            <field name="sequence">2</field>
+            <field name="stage_id" ref="demo_stage_primary"/>
+            <field name="curriculum_id" ref="demo_curriculum"/>
+        </record>
+
+        <record id="demo_grade_3" model="school.grade">
+            <field name="name">Grade 3</field>
+            <field name="code">G3</field>
+            <field name="sequence">3</field>
+            <field name="stage_id" ref="demo_stage_primary"/>
+            <field name="curriculum_id" ref="demo_curriculum"/>
+        </record>
+
+        <record id="demo_grade_7" model="school.grade">
+            <field name="name">Grade 7</field>
+            <field name="code">G7</field>
+            <field name="sequence">7</field>
+            <field name="stage_id" ref="demo_stage_prep"/>
+            <field name="curriculum_id" ref="demo_curriculum"/>
+        </record>
+
+        <record id="demo_section_1a" model="school.section">
+            <field name="name">A</field>
+            <field name="grade_id" ref="demo_grade_1"/>
+            <field name="academic_year_id" ref="demo_year_2026"/>
+            <field name="capacity">25</field>
+            <field name="room">P-101</field>
+        </record>
+
+        <record id="demo_section_1b" model="school.section">
+            <field name="name">B</field>
+            <field name="grade_id" ref="demo_grade_1"/>
+            <field name="academic_year_id" ref="demo_year_2026"/>
+            <field name="capacity">25</field>
+            <field name="room">P-102</field>
+        </record>
+
+        <record id="demo_section_2a" model="school.section">
+            <field name="name">A</field>
+            <field name="grade_id" ref="demo_grade_2"/>
+            <field name="academic_year_id" ref="demo_year_2026"/>
+            <field name="capacity">25</field>
+            <field name="room">P-201</field>
+        </record>
+
+        <record id="demo_section_7a" model="school.section">
+            <field name="name">A</field>
+            <field name="grade_id" ref="demo_grade_7"/>
+            <field name="academic_year_id" ref="demo_year_2026"/>
+            <field name="capacity">30</field>
+            <field name="room">S-101</field>
+        </record>
+
+        <record id="demo_subject_math" model="school.subject">
+            <field name="name">Mathematics</field>
+            <field name="code">MATH</field>
+            <field name="subject_type">core</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_subject_english" model="school.subject">
+            <field name="name">English</field>
+            <field name="code">ENG</field>
+            <field name="subject_type">core</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_subject_science" model="school.subject">
+            <field name="name">Science</field>
+            <field name="code">SCI</field>
+            <field name="subject_type">core</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_subject_arabic" model="school.subject">
+            <field name="name">Arabic</field>
+            <field name="code">ARB</field>
+            <field name="subject_type">core</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_subject_art" model="school.subject">
+            <field name="name">Art</field>
+            <field name="code">ART</field>
+            <field name="subject_type">activity</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_subject_ict" model="school.subject">
+            <field name="name">Information Technology</field>
+            <field name="code">ICT</field>
+            <field name="subject_type">optional</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+        </record>
+
+        <record id="demo_grade1_math" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_1"/>
+            <field name="subject_id" ref="demo_subject_math"/>
+            <field name="weekly_hours">6</field>
+        </record>
+
+        <record id="demo_grade1_english" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_1"/>
+            <field name="subject_id" ref="demo_subject_english"/>
+            <field name="weekly_hours">5</field>
+        </record>
+
+        <record id="demo_grade1_science" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_1"/>
+            <field name="subject_id" ref="demo_subject_science"/>
+            <field name="weekly_hours">4</field>
+        </record>
+
+        <record id="demo_grade1_arabic" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_1"/>
+            <field name="subject_id" ref="demo_subject_arabic"/>
+            <field name="weekly_hours">5</field>
+        </record>
+
+        <record id="demo_grade1_art" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_1"/>
+            <field name="subject_id" ref="demo_subject_art"/>
+            <field name="weekly_hours">2</field>
+            <field name="elective" eval="True"/>
+        </record>
+
+        <record id="demo_grade2_math" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_2"/>
+            <field name="subject_id" ref="demo_subject_math"/>
+            <field name="weekly_hours">6</field>
+        </record>
+
+        <record id="demo_grade2_english" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_2"/>
+            <field name="subject_id" ref="demo_subject_english"/>
+            <field name="weekly_hours">5</field>
+        </record>
+
+        <record id="demo_grade2_science" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_2"/>
+            <field name="subject_id" ref="demo_subject_science"/>
+            <field name="weekly_hours">4</field>
+        </record>
+
+        <record id="demo_grade2_ict" model="school.grade.subject">
+            <field name="grade_id" ref="demo_grade_2"/>
+            <field name="subject_id" ref="demo_subject_ict"/>
+            <field name="weekly_hours">2</field>
+            <field name="elective" eval="True"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_school_communication"
+                  name="Communication"
+                  parent="school_core.menu_school_root"
+                  sequence="90"
+                  groups="school_core.group_school_user,school_core.group_school_manager,school_core.group_school_teacher"/>
+
+        <menuitem id="menu_school_communication_announcement"
+                  name="Announcements"
+                  parent="menu_school_communication"
+                  action="action_school_announcement"
+                  sequence="10"/>
+
+        <menuitem id="menu_school_communication_message"
+                  name="Messages"
+                  parent="menu_school_communication"
+                  action="action_school_communication_message"
+                  sequence="20"/>
+    </data>
+</odoo>

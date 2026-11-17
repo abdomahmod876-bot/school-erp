@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_fee_payment_list" model="ir.ui.view">
+        <field name="name">school.fee.payment.list</field>
+        <field name="model">school.fee.payment</field>
+        <field name="arch" type="xml">
+            <list string="Fee Payments" sample="1">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="student_id"/>
+                <field name="assignment_id" optional="show"/>
+                <field name="amount"/>
+                <field name="method"/>
+                <field name="reference" optional="hide"/>
+                <field name="school_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_fee_payment_form" model="ir.ui.view">
+        <field name="name">school.fee.payment.form</field>
+        <field name="model">school.fee.payment</field>
+        <field name="arch" type="xml">
+            <form string="Fee Payment">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="line_id"
+                                   domain="[('assignment_id.state', '=', 'confirmed')]"
+                                   options="{'no_create': True}"/>
+                            <field name="assignment_id"/>
+                            <field name="student_id"/>
+                            <field name="school_id"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="date"/>
+                            <field name="method"/>
+                            <field name="reference"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note" placeholder="Internal notes..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_fee_payment_search" model="ir.ui.view">
+        <field name="name">school.fee.payment.search</field>
+        <field name="model">school.fee.payment</field>
+        <field name="arch" type="xml">
+            <search string="Fee Payments">
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="assignment_id"/>
+                <field name="date"/>
+                <filter name="filter_cash" string="Cash"
+                        domain="[('method', '=', 'cash')]"/>
+                <filter name="filter_bank" string="Bank Transfer"
+                        domain="[('method', '=', 'bank_transfer')]"/>
+                <separator/>
+                <filter name="group_method" string="Method"
+                        context="{'group_by': 'method'}"/>
+                <filter name="group_date" string="Date"
+                        context="{'group_by': 'date'}"/>
+                <filter name="group_student" string="Student"
+                        context="{'group_by': 'student_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_fee_payment" model="ir.actions.act_window">
+        <field name="name">Payments</field>
+        <field name="res_model">school.fee.payment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_fee_payment_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No payments yet</p>
+            <p>Register payments from a confirmed fee plan or create them manually.</p>
+        </field>
+    </record>
+</odoo>

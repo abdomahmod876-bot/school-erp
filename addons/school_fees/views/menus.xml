@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_school_fees_root"
+              name="Fees"
+              parent="school_core.menu_school_root"
+              sequence="45"
+              groups="school_core.group_school_user,school_core.group_school_manager"/>
+
+    <menuitem id="menu_school_fee_assignments"
+              name="Student Fees"
+              parent="menu_school_fees_root"
+              action="action_school_fee_assignment"
+              sequence="10"/>
+
+    <menuitem id="menu_school_fee_payments"
+              name="Payments"
+              parent="menu_school_fees_root"
+              action="action_school_fee_payment"
+              sequence="20"/>
+
+    <menuitem id="menu_school_fee_structures"
+              name="Fee Structures"
+              parent="menu_school_fees_root"
+              action="action_school_fee_structure"
+              sequence="30"/>
+
+    <menuitem id="menu_school_fee_types"
+              name="Fee Types"
+              parent="school_core.menu_school_config"
+              action="action_school_fee_type"
+              sequence="60"/>
+</odoo>

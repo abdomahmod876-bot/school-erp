@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_announcement_manager,school.announcement.manager,model_school_announcement,school_core.group_school_manager,1,1,1,1
+access_school_announcement_user,school.announcement.user,model_school_announcement,school_core.group_school_user,1,1,1,0
+access_school_announcement_teacher,school.announcement.teacher,model_school_announcement,school_core.group_school_teacher,1,0,0,0
+access_school_communication_message_manager,school.communication.message.manager,model_school_communication_message,school_core.group_school_manager,1,1,1,1
+access_school_communication_message_user,school.communication.message.user,model_school_communication_message,school_core.group_school_user,1,1,1,0
+access_school_communication_message_teacher,school.communication.message.teacher,model_school_communication_message,school_core.group_school_teacher,1,0,0,0

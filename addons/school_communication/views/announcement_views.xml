@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_announcement_list" model="ir.ui.view">
+        <field name="name">school.announcement.list</field>
+        <field name="model">school.announcement</field>
+        <field name="arch" type="xml">
+            <list string="Announcements" sample="1">
+                <field name="name"/>
+                <field name="audience"/>
+                <field name="date_start"/>
+                <field name="date_end" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'published'"
+                       decoration-muted="state == 'cancelled'"/>
+                <field name="notification_count" optional="show"/>
+                <field name="sent_count" optional="show"/>
+                <field name="school_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_announcement_form" model="ir.ui.view">
+        <field name="name">school.announcement.form</field>
+        <field name="model">school.announcement</field>
+        <field name="arch" type="xml">
+            <form string="Announcement">
+                <header>
+                    <button name="action_publish" type="object" string="Publish"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_notify_guardians" type="object"
+                            string="Notify Guardians"
+                            invisible="state != 'published'"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Reset to Draft" invisible="state == 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'published'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,published"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Announcement title..."/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="audience"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </group>
+                        <group>
+                            <field name="published_date"/>
+                            <field name="school_id" readonly="1"/>
+                            <field name="branch_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Content" name="content">
+                            <field name="body" placeholder="Write the announcement..."/>
+                        </page>
+                        <page string="Notifications" name="notifications"
+                              invisible="state == 'draft'">
+                            <group>
+                                <group>
+                                    <field name="notify_guardians"/>
+                                    <field name="notification_channel"/>
+                                </group>
+                                <group>
+                                    <field name="notification_count"/>
+                                    <field name="sent_count"/>
+                                </group>
+                            </group>
+                            <field name="notification_ids" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="partner_id"/>
+                                    <field name="channel"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'sent'"
+                                           decoration-danger="state == 'failed'"/>
+                                    <field name="sent_date"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_announcement_search" model="ir.ui.view">
+        <field name="name">school.announcement.search</field>
+        <field name="model">school.announcement</field>
+        <field name="arch" type="xml">
+            <search string="Announcements">
+                <field name="name"/>
+                <field name="audience"/>
+                <field name="date_start"/>
+                <field name="school_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_published" string="Published"
+                        domain="[('state', '=', 'published')]"/>
+                <filter name="filter_guardians" string="For Guardians"
+                        domain="[('audience', '=', 'guardians')]"/>
+                <separator/>
+                <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                <filter name="group_audience" string="Audience"
+                        context="{'group_by': 'audience'}"/>
+                <filter name="group_school" string="School"
+                        context="{'group_by': 'school_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_announcement" model="ir.actions.act_window">
+        <field name="name">Announcements</field>
+        <field name="res_model">school.announcement</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Publish your first announcement</p>
+            <p>Announcements are posted on the chatter and can be sent to guardians
+               through the portal or by email.</p>
+        </field>
+    </record>
+</odoo>

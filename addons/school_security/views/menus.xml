@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <menuitem id="menu_school_access_management"
+                  name="Access Management"
+                  parent="school_core.menu_school_config"
+                  action="action_school_access_wizard"
+                  sequence="30"/>
+
+        <menuitem id="menu_school_access_log"
+                  name="Access Log"
+                  parent="school_core.menu_school_config"
+                  action="action_school_access_log"
+                  sequence="40"/>
+    </data>
+</odoo>

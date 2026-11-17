@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_access_log_manager,school.access.log.manager,model_school_access_log,school_core.group_school_manager,1,0,0,0
+access_school_access_wizard_manager,school.access.wizard.manager,model_school_access_wizard,school_core.group_school_manager,1,1,1,1

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_transport_vehicle_list" model="ir.ui.view">
+        <field name="name">school.transport.vehicle.list</field>
+        <field name="model">school.transport.vehicle</field>
+        <field name="arch" type="xml">
+            <list string="Vehicles" sample="1" decoration-muted="not active">
+                <field name="name"/>
+                <field name="plate_number"/>
+                <field name="model"/>
+                <field name="capacity"/>
+                <field name="driver_name"/>
+                <field name="driver_phone" optional="show"/>
+                <field name="school_id" optional="hide"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_transport_vehicle_form" model="ir.ui.view">
+        <field name="name">school.transport.vehicle.form</field>
+        <field name="model">school.transport.vehicle</field>
+        <field name="arch" type="xml">
+            <form string="School Vehicle">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Bus 1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Vehicle">
+                            <field name="plate_number"/>
+                            <field name="model"/>
+                            <field name="capacity"/>
+                            <field name="school_id"/>
+                            <field name="branch_id"/>
+                        </group>
+                        <group string="Driver">
+                            <field name="driver_name"/>
+                            <field name="driver_phone" widget="phone"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Routes" name="routes">
+                            <field name="route_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="stop_count"/>
+                                    <field name="running_count"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Maintenance notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_transport_vehicle_search" model="ir.ui.view">
+        <field name="name">school.transport.vehicle.search</field>
+        <field name="model">school.transport.vehicle</field>
+        <field name="arch" type="xml">
+            <search string="Vehicles">
+                <field name="name"/>
+                <field name="plate_number"/>
+                <field name="driver_name"/>
+                <field name="school_id"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter name="group_school" string="School"
+                        context="{'group_by': 'school_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_transport_vehicle" model="ir.actions.act_window">
+        <field name="name">Vehicles</field>
+        <field name="res_model">school.transport.vehicle</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add your first school vehicle</p>
+            <p>Buses and vans are assigned to transport routes and drivers.</p>
+        </field>
+    </record>
+</odoo>

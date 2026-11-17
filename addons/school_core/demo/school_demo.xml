@@ -1,0 +1,59 @@
+<odoo>
+    <data>
+        <record id="demo_school" model="school.school">
+            <field name="name">Nile International School</field>
+            <field name="code">NIS</field>
+            <field name="phone">+20 100 000 1000</field>
+            <field name="email">info@nile-school.example.com</field>
+            <field name="website">https://nile-school.example.com</field>
+            <field name="street">15 Nile Street</field>
+            <field name="city">Cairo</field>
+            <field name="country_id" ref="base.eg"/>
+            <field name="established_date">2015-09-01</field>
+            <field name="motto">Learn, Grow, Lead</field>
+            <field name="grading_system">percentage</field>
+            <field name="pass_mark">50.0</field>
+            <field name="note">&lt;p&gt;Demo school used to explore the School ERP modules.&lt;/p&gt;</field>
+        </record>
+
+        <record id="demo_branch_main" model="school.branch">
+            <field name="name">Main Campus</field>
+            <field name="code">MAIN</field>
+            <field name="school_id" ref="demo_school"/>
+            <field name="phone">+20 100 000 1001</field>
+            <field name="email">main@nile-school.example.com</field>
+            <field name="street">15 Nile Street</field>
+            <field name="city">Cairo</field>
+        </record>
+
+        <record id="demo_branch_new_cairo" model="school.branch">
+            <field name="name">New Cairo Campus</field>
+            <field name="code">NCC</field>
+            <field name="school_id" ref="demo_school"/>
+            <field name="phone">+20 100 000 1002</field>
+            <field name="email">newcairo@nile-school.example.com</field>
+            <field name="street">7 Fifth Settlement Avenue</field>
+            <field name="city">New Cairo</field>
+        </record>
+
+        <record id="demo_manager_user" model="res.users">
+            <field name="name">Rania Adel</field>
+            <field name="login">demo.manager</field>
+            <field name="password">demo</field>
+            <field name="email">rania.adel@example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('group_school_manager')])]"/>
+            <field name="school_ids" eval="[(6, 0, [ref('demo_school')])]"/>
+            <field name="default_school_id" ref="demo_school"/>
+        </record>
+
+        <record id="demo_staff_user" model="res.users">
+            <field name="name">Yara Sameh</field>
+            <field name="login">demo.staff</field>
+            <field name="password">demo</field>
+            <field name="email">yara.sameh@example.com</field>
+            <field name="group_ids" eval="[(6, 0, [ref('group_school_user')])]"/>
+            <field name="school_ids" eval="[(6, 0, [ref('demo_school')])]"/>
+            <field name="default_school_id" ref="demo_school"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rule_school_enrollment_parent" model="ir.rule">
+            <field name="name">Enrollment: parents see their children only</field>
+            <field name="model_id" ref="school_admission.model_school_enrollment"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_attendance_session_parent" model="ir.rule">
+            <field name="name">Attendance register: parents see their children sections only</field>
+            <field name="model_id" ref="school_attendance.model_school_attendance_session"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('section_id.enrollment_ids.student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_attendance_line_parent" model="ir.rule">
+            <field name="name">Attendance line: parents see their children only</field>
+            <field name="model_id" ref="school_attendance.model_school_attendance_line"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_exam_parent" model="ir.rule">
+            <field name="name">Exam: parents see published exams only</field>
+            <field name="model_id" ref="school_exam.model_school_exam"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('state', '=', 'published')]</field>
+        </record>
+        <record id="rule_school_exam_result_parent" model="ir.rule">
+            <field name="name">Exam result: parents see their children only</field>
+            <field name="model_id" ref="school_exam.model_school_exam_result"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_fee_assignment_parent" model="ir.rule">
+            <field name="name">Fee plan: parents see their children only</field>
+            <field name="model_id" ref="school_fees.model_school_fee_assignment"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_fee_assignment_line_parent" model="ir.rule">
+            <field name="name">Fee line: parents see their children only</field>
+            <field name="model_id" ref="school_fees.model_school_fee_assignment_line"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('assignment_id.student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_timetable_parent" model="ir.rule">
+            <field name="name">Timetable: parents see timetables of their children sections</field>
+            <field name="model_id" ref="school_timetable.model_school_timetable"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('state', '=', 'published'), ('section_id.enrollment_ids.student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_timetable_slot_parent" model="ir.rule">
+            <field name="name">Timetable slot: parents see slots of their children sections</field>
+            <field name="model_id" ref="school_timetable.model_school_timetable_slot"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('section_id.enrollment_ids.student_id.guardian_ids.partner_id', '=', user.partner_id.id)]</field>
+        </record>
+        <record id="rule_school_announcement_parent" model="ir.rule">
+            <field name="name">Announcement: parents see published announcements only</field>
+            <field name="model_id" ref="school_communication.model_school_announcement"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('state', '=', 'published')]</field>
+        </record>
+        <record id="rule_school_communication_message_parent" model="ir.rule">
+            <field name="name">Communication message: parents see their own messages only</field>
+            <field name="model_id" ref="school_communication.model_school_communication_message"/>
+            <field name="groups" eval="[(4, ref('school_core.group_school_parent'))]"/>
+            <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+        </record>
+    </data>
+</odoo>

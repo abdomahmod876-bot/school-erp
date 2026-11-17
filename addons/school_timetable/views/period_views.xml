@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_period_list" model="ir.ui.view">
+        <field name="name">school.period.list</field>
+        <field name="model">school.period</field>
+        <field name="arch" type="xml">
+            <list string="Periods" sample="1" decoration-muted="not active">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code" optional="hide"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+                <field name="duration" widget="float_time"/>
+                <field name="school_id"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_period_form" model="ir.ui.view">
+        <field name="name">school.period.form</field>
+        <field name="model">school.period</field>
+        <field name="arch" type="xml">
+            <form string="Period">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name" string="Period Name"/>
+                        <h1><field name="name" placeholder="e.g. First Period"/></h1>
+                    </div>
+                    <group>
+                        <group string="School">
+                            <field name="school_id" options="{'no_create': True}"/>
+                            <field name="branch_id" options="{'no_create': True}"/>
+                        </group>
+                        <group string="Timing">
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="start_time" widget="float_time"/>
+                            <field name="end_time" widget="float_time"/>
+                            <field name="duration" widget="float_time"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_period_search" model="ir.ui.view">
+        <field name="name">school.period.search</field>
+        <field name="model">school.period</field>
+        <field name="arch" type="xml">
+            <search string="Periods">
+                <field name="name"/>
+                <field name="code"/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_school" string="School" context="{'group_by': 'school_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_period" model="ir.actions.act_window">
+        <field name="name">Periods</field>
+        <field name="res_model">school.period</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_period_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define the class periods</p>
+            <p>Periods are the time blocks used when building section timetables.</p>
+        </field>
+    </record>
+</odoo>

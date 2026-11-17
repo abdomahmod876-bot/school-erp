@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_school_library"
+                  name="Library"
+                  parent="school_core.menu_school_root"
+                  sequence="70"
+                  groups="school_core.group_school_user,school_core.group_school_manager,school_core.group_school_teacher"/>
+
+        <menuitem id="menu_school_library_book"
+                  name="Books"
+                  parent="menu_school_library"
+                  action="action_school_library_book"
+                  sequence="10"/>
+
+        <menuitem id="menu_school_library_member"
+                  name="Members"
+                  parent="menu_school_library"
+                  action="action_school_library_member"
+                  sequence="20"/>
+
+        <menuitem id="menu_school_library_loan"
+                  name="Loans"
+                  parent="menu_school_library"
+                  action="action_school_library_loan"
+                  sequence="30"/>
+    </data>
+</odoo>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_enrollment_list" model="ir.ui.view">
+        <field name="name">school.enrollment.list</field>
+        <field name="model">school.enrollment</field>
+        <field name="arch" type="xml">
+            <list string="Enrollments" sample="1">
+                <field name="student_id"/>
+                <field name="section_id"/>
+                <field name="academic_year_id"/>
+                <field name="enrollment_date"/>
+                <field name="end_date" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-info="state == 'completed'"
+                       decoration-warning="state == 'transferred'"
+                       decoration-danger="state == 'withdrawn'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_enrollment_form" model="ir.ui.view">
+        <field name="name">school.enrollment.form</field>
+        <field name="model">school.enrollment</field>
+        <field name="arch" type="xml">
+            <form string="Enrollment">
+                <header>
+                    <button name="action_complete" string="Mark Completed" type="object"
+                            class="btn-primary" invisible="state != 'active'"/>
+                    <button name="action_withdraw" string="Withdraw" type="object"
+                            invisible="state != 'active'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="active,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Student">
+                            <field name="student_id"/>
+                            <field name="school_id"/>
+                        </group>
+                        <group string="Placement">
+                            <field name="section_id"/>
+                            <field name="academic_year_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Dates">
+                            <field name="enrollment_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group string="Note">
+                            <field name="note" nolabel="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_enrollment_search" model="ir.ui.view">
+        <field name="name">school.enrollment.search</field>
+        <field name="model">school.enrollment</field>
+        <field name="arch" type="xml">
+            <search string="Enrollments">
+                <field name="student_id"/>
+                <field name="section_id"/>
+                <field name="academic_year_id"/>
+                <filter name="filter_active" string="Active"
+                        domain="[('state', '=', 'active')]"/>
+                <filter name="filter_withdrawn" string="Withdrawn"
+                        domain="[('state', '=', 'withdrawn')]"/>
+                <separator/>
+                <filter name="group_section" string="Section"
+                        context="{'group_by': 'section_id'}"/>
+                <filter name="group_year" string="Academic Year"
+                        context="{'group_by': 'academic_year_id'}"/>
+                <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_enrollment" model="ir.actions.act_window">
+        <field name="name">Enrollments</field>
+        <field name="res_model">school.enrollment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_school_enrollment_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No enrollments yet</p>
+            <p>Enrollments are created automatically when an accepted application is enrolled.</p>
+        </field>
+    </record>
+
+    <record id="view_school_section_form_enrollment" model="ir.ui.view">
+        <field name="name">school.section.form.enrollment</field>
+        <field name="model">school.section</field>
+        <field name="inherit_id" ref="school_academic.view_school_section_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Enrollments" name="enrollments">
+                    <group>
+                        <field name="student_count"/>
+                    </group>
+                    <field name="enrollment_ids" readonly="1">
+                        <list>
+                            <field name="student_id"/>
+                            <field name="enrollment_date"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_school_student_form_enrollment" model="ir.ui.view">
+        <field name="name">school.student.form.enrollment</field>
+        <field name="model">school.student</field>
+        <field name="inherit_id" ref="school_student.view_school_student_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Enrollments" name="enrollments">
+                    <field name="enrollment_ids" readonly="1">
+                        <list>
+                            <field name="academic_year_id"/>
+                            <field name="section_id"/>
+                            <field name="enrollment_date"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_fee_payment_form_accounting" model="ir.ui.view">
+        <field name="name">school.fee.payment.form.accounting</field>
+        <field name="model">school.fee.payment</field>
+        <field name="inherit_id" ref="school_fees.view_school_fee_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="action_post_account_payment" type="object"
+                            string="Post to Accounting" class="btn-primary"
+                            invisible="account_payment_id"
+                            groups="account.group_account_invoice"/>
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='method']" position="after">
+                <field name="journal_id" options="{'no_create': True}"
+                       groups="account.group_account_invoice"/>
+            </xpath>
+            <xpath expr="//field[@name='reference']" position="after">
+                <field name="account_payment_id" readonly="1"
+                       groups="account.group_account_invoice"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_school_fee_payment_list_accounting" model="ir.ui.view">
+        <field name="name">school.fee.payment.list.accounting</field>
+        <field name="model">school.fee.payment</field>
+        <field name="inherit_id" ref="school_fees.view_school_fee_payment_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reference']" position="after">
+                <field name="journal_id" optional="hide"
+                       groups="account.group_account_invoice"/>
+                <field name="account_payment_id" optional="hide"
+                       groups="account.group_account_invoice"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_school_fee_payment_search_accounting" model="ir.ui.view">
+        <field name="name">school.fee.payment.search.accounting</field>
+        <field name="model">school.fee.payment</field>
+        <field name="inherit_id" ref="school_fees.view_school_fee_payment_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_bank']" position="after">
+                <separator/>
+                <filter name="filter_posted" string="Posted to Accounting"
+                        domain="[('account_payment_id', '!=', False)]"
+                        groups="account.group_account_invoice"/>
+                <filter name="filter_not_posted" string="Not Posted"
+                        domain="[('account_payment_id', '=', False)]"
+                        groups="account.group_account_invoice"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

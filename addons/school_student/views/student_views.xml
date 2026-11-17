@@ -1,0 +1,161 @@
+<odoo>
+    <data>
+        <record id="view_school_student_list" model="ir.ui.view">
+            <field name="name">school.student.list</field>
+            <field name="model">school.student</field>
+            <field name="arch" type="xml">
+                <list string="Students"
+                      decoration-muted="state in ('graduated', 'withdrawn') or not active">
+                    <field name="reference"/>
+                    <field name="name"/>
+                    <field name="gender"/>
+                    <field name="age"/>
+                    <field name="school_id"/>
+                    <field name="primary_guardian_id"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'active'"
+                           decoration-info="state == 'draft'"
+                           decoration-warning="state == 'graduated'"
+                           decoration-danger="state == 'withdrawn'"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_school_student_form" model="ir.ui.view">
+            <field name="name">school.student.form</field>
+            <field name="model">school.student</field>
+            <field name="arch" type="xml">
+                <form string="Student">
+                    <header>
+                        <button name="action_activate" type="object" string="Activate"
+                                class="btn-primary" invisible="state == 'active'"/>
+                        <button name="action_graduate" type="object" string="Graduate"
+                                invisible="state != 'active'"/>
+                        <button name="action_withdraw" type="object" string="Withdraw"
+                                invisible="state != 'active'"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,active,graduated,withdrawn"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <field name="active" invisible="1"/>
+                        <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image'}"/>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Student full name"/></h1>
+                            <group>
+                                <field name="reference" readonly="1"/>
+                            </group>
+                        </div>
+                        <group>
+                            <group string="Academic">
+                                <field name="school_id" options="{'no_create': True}"/>
+                                <field name="branch_id" options="{'no_create': True}"/>
+                                <field name="admission_date"/>
+                                <field name="user_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Personal">
+                                <field name="gender"/>
+                                <field name="birth_date"/>
+                                <field name="age"/>
+                                <field name="blood_group"/>
+                                <field name="national_id"/>
+                                <field name="nationality_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Contact">
+                                <field name="phone" widget="phone"/>
+                                <field name="email" widget="email"/>
+                                <field name="street"/>
+                                <field name="city"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Guardians" name="guardians">
+                                <field name="guardian_ids">
+                                    <list editable="bottom">
+                                        <field name="partner_id" options="{'no_create': True}"/>
+                                        <field name="relation"/>
+                                        <field name="is_primary"/>
+                                    </list>
+                                </field>
+                                <group>
+                                    <field name="primary_guardian_id" readonly="1"/>
+                                </group>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="note"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_school_student_kanban" model="ir.ui.view">
+            <field name="name">school.student.kanban</field>
+            <field name="model">school.student</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <field name="name"/>
+                    <field name="reference"/>
+                    <field name="school_id"/>
+                    <field name="state"/>
+                    <field name="age"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="row">
+                                <div class="col-8">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="col-4 text-end">
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'active'"
+                                           decoration-warning="state == 'graduated'"/>
+                                </div>
+                            </div>
+                            <div class="text-muted"><field name="reference"/></div>
+                            <div><field name="school_id"/></div>
+                            <div class="text-muted">
+                                <field name="age"/> years old
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_school_student_search" model="ir.ui.view">
+            <field name="name">school.student.search</field>
+            <field name="model">school.student</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="reference"/>
+                    <field name="national_id"/>
+                    <field name="school_id"/>
+                    <filter name="filter_active" string="Active" domain="[('state', '=', 'active')]"/>
+                    <filter name="filter_graduated" string="Graduated" domain="[('state', '=', 'graduated')]"/>
+                    <filter name="filter_withdrawn" string="Withdrawn" domain="[('state', '=', 'withdrawn')]"/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                    <group name="group_by">
+                        <filter name="group_school" string="School" context="{'group_by': 'school_id'}"/>
+                        <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_school_student" model="ir.actions.act_window">
+            <field name="name">Students</field>
+            <field name="res_model">school.student</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first student</p>
+                <p>Student records are usually created from an accepted admission, but can also be created manually.</p>
+            </field>
+        </record>
+    </data>
+</odoo>

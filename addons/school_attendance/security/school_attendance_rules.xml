@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_attendance_session_teacher_school" model="ir.rule">
+        <field name="name">Attendance register: teachers limited to assigned schools</field>
+        <field name="model_id" ref="model_school_attendance_session"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_attendance_session_accountant_school" model="ir.rule">
+        <field name="name">Attendance register: accountants limited to assigned schools</field>
+        <field name="model_id" ref="model_school_attendance_session"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_attendance_line_teacher_school" model="ir.rule">
+        <field name="name">Attendance line: teachers limited to assigned schools</field>
+        <field name="model_id" ref="model_school_attendance_line"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_teacher'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+
+    <record id="rule_attendance_line_accountant_school" model="ir.rule">
+        <field name="name">Attendance line: accountants limited to assigned schools</field>
+        <field name="model_id" ref="model_school_attendance_line"/>
+        <field name="groups" eval="[(4, ref('school_core.group_school_accountant'))]"/>
+        <field name="domain_force">[('school_id', 'in', user.school_ids.ids)]</field>
+    </record>
+</odoo>

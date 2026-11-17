@@ -1,0 +1,25 @@
+{
+    'name': 'School Management Fees',
+    'version': '19.0.1.0.0',
+    'category': 'Education',
+    'summary': 'Fee types, grade fee structures, student fee plans and payments',
+    'author': 'School ERP Team',
+    'license': 'LGPL-3',
+    'depends': ['mail', 'school_core', 'school_academic', 'school_student', 'school_admission'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/school_fees_rules.xml',
+        'data/ir_sequence_data.xml',
+        'views/fee_type_views.xml',
+        'views/fee_structure_views.xml',
+        'views/fee_assignment_views.xml',
+        'views/fee_payment_views.xml',
+        'views/fee_payment_wizard_views.xml',
+        'views/menus.xml',
+    ],
+    'demo': [
+        'demo/fees_demo.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

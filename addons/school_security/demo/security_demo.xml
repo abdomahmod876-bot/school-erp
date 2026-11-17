@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="demo_log_grant" model="school.access.log">
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="action">grant</field>
+            <field name="note">Initial access to the demo school.</field>
+        </record>
+
+        <record id="demo_log_revoke" model="school.access.log">
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="action">revoke</field>
+            <field name="note">Temporary access removed after the audit.</field>
+        </record>
+    </data>
+</odoo>

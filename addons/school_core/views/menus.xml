@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <menuitem id="menu_school_root"
+                  name="School"
+                  sequence="85"
+                  groups="school_core.group_school_user,school_core.group_school_manager"/>
+
+        <menuitem id="menu_school_config"
+                  name="Configuration"
+                  parent="menu_school_root"
+                  sequence="90"
+                  groups="school_core.group_school_manager"/>
+
+        <menuitem id="menu_school_schools"
+                  name="Schools"
+                  parent="menu_school_config"
+                  action="action_school_school"
+                  sequence="10"/>
+
+        <menuitem id="menu_school_branches"
+                  name="Branches"
+                  parent="menu_school_config"
+                  action="action_school_branch"
+                  sequence="20"/>
+    </data>
+</odoo>

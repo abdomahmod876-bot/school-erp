@@ -1,0 +1,130 @@
+<odoo>
+    <data>
+        <record id="demo_period_1" model="school.period">
+            <field name="name">First Period</field>
+            <field name="code">P1</field>
+            <field name="sequence">1</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="start_time">8.0</field>
+            <field name="end_time">8.75</field>
+        </record>
+
+        <record id="demo_period_2" model="school.period">
+            <field name="name">Second Period</field>
+            <field name="code">P2</field>
+            <field name="sequence">2</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="start_time">8.85</field>
+            <field name="end_time">9.6</field>
+        </record>
+
+        <record id="demo_period_3" model="school.period">
+            <field name="name">Third Period</field>
+            <field name="code">P3</field>
+            <field name="sequence">3</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="start_time">9.75</field>
+            <field name="end_time">10.5</field>
+        </record>
+
+        <record id="demo_period_4" model="school.period">
+            <field name="name">Fourth Period</field>
+            <field name="code">P4</field>
+            <field name="sequence">4</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="start_time">10.6</field>
+            <field name="end_time">11.35</field>
+        </record>
+
+        <record id="demo_period_5" model="school.period">
+            <field name="name">Fifth Period</field>
+            <field name="code">P5</field>
+            <field name="sequence">5</field>
+            <field name="school_id" ref="school_core.demo_school"/>
+            <field name="start_time">11.45</field>
+            <field name="end_time">12.2</field>
+        </record>
+
+        <record id="demo_timetable_1a" model="school.timetable">
+            <field name="section_id" ref="school_academic.demo_section_1a"/>
+            <field name="state">published</field>
+        </record>
+
+        <record id="demo_timetable_2a" model="school.timetable">
+            <field name="section_id" ref="school_academic.demo_section_2a"/>
+            <field name="state">published</field>
+        </record>
+
+        <record id="demo_slot_1a_math" model="school.timetable.slot">
+            <field name="timetable_id" ref="demo_timetable_1a"/>
+            <field name="day_of_week">0</field>
+            <field name="period_id" ref="demo_period_1"/>
+            <field name="subject_id" ref="school_academic.demo_subject_math"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_mona"/>
+            <field name="room">P-101</field>
+        </record>
+
+        <record id="demo_slot_1a_english" model="school.timetable.slot">
+            <field name="timetable_id" ref="demo_timetable_1a"/>
+            <field name="day_of_week">0</field>
+            <field name="period_id" ref="demo_period_2"/>
+            <field name="subject_id" ref="school_academic.demo_subject_english"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_salma"/>
+            <field name="room">P-101</field>
+        </record>
+
+        <record id="demo_slot_1a_science" model="school.timetable.slot">
+            <field name="timetable_id" ref="demo_timetable_1a"/>
+            <field name="day_of_week">1</field>
+            <field name="period_id" ref="demo_period_1"/>
+            <field name="subject_id" ref="school_academic.demo_subject_science"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_hany"/>
+            <field name="room">Lab 1</field>
+        </record>
+
+        <record id="demo_slot_1a_art" model="school.timetable.slot">
+            <field name="timetable_id" ref="demo_timetable_1a"/>
+            <field name="day_of_week">2</field>
+            <field name="period_id" ref="demo_period_3"/>
+            <field name="subject_id" ref="school_academic.demo_subject_art"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_karim"/>
+            <field name="room">Art Room</field>
+        </record>
+
+        <record id="demo_slot_2a_english" model="school.timetable.slot">
+            <field name="timetable_id" ref="demo_timetable_2a"/>
+            <field name="day_of_week">0</field>
+            <field name="period_id" ref="demo_period_1"/>
+            <field name="subject_id" ref="school_academic.demo_subject_english"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_salma"/>
+            <field name="room">P-201</field>
+        </record>
+
+        <record id="demo_slot_2a_math" model="school.timetable.slot">
+            <field name="timetable_id" ref="demo_timetable_2a"/>
+            <field name="day_of_week">1</field>
+            <field name="period_id" ref="demo_period_1"/>
+            <field name="subject_id" ref="school_academic.demo_subject_math"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_mona"/>
+            <field name="room">P-201</field>
+        </record>
+
+        <record id="demo_slot_2a_science" model="school.timetable.slot">
+            <field name="timetable_id" ref="demo_timetable_2a"/>
+            <field name="day_of_week">2</field>
+            <field name="period_id" ref="demo_period_1"/>
+            <field name="subject_id" ref="school_academic.demo_subject_science"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_hany"/>
+            <field name="room">Lab 1</field>
+        </record>
+
+        <record id="demo_slot_2a_art" model="school.timetable.slot">
+            <field name="timetable_id" ref="demo_timetable_2a"/>
+            <field name="day_of_week">3</field>
+            <field name="period_id" ref="demo_period_3"/>
+            <field name="subject_id" ref="school_academic.demo_subject_art"/>
+            <field name="teacher_id" ref="school_teacher.demo_teacher_karim"/>
+            <field name="room">Art Room</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="demo_parent_user" model="res.users">
+            <field name="login">demo.parent</field>
+            <field name="password">demo</field>
+            <field name="partner_id" ref="school_student.demo_partner_khaled"/>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_portal'), ref('school_core.group_school_parent')])]"/>
+            <field name="school_ids" eval="[(6, 0, [ref('school_core.demo_school')])]"/>
+            <field name="default_school_id" ref="school_core.demo_school"/>
+        </record>
+    </data>
+</odoo>

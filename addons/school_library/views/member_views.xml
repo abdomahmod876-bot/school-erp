@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_library_member_list" model="ir.ui.view">
+        <field name="name">school.library.member.list</field>
+        <field name="model">school.library.member</field>
+        <field name="arch" type="xml">
+            <list string="Library Members" sample="1" decoration-muted="not active">
+                <field name="card_number"/>
+                <field name="name"/>
+                <field name="member_type"/>
+                <field name="school_id"/>
+                <field name="join_date"/>
+                <field name="loan_count" string="Loans"/>
+                <field name="active_loan_count" string="Active Loans"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_library_member_form" model="ir.ui.view">
+        <field name="name">school.library.member.form</field>
+        <field name="model">school.library.member</field>
+        <field name="arch" type="xml">
+            <form string="Library Member">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="card_number"/>
+                        <h1><field name="card_number" readonly="1"/></h1>
+                        <group>
+                            <field name="name" readonly="1"/>
+                        </group>
+                    </div>
+                    <group>
+                        <group string="Member">
+                            <field name="member_type" widget="radio"/>
+                            <field name="student_id"
+                                   invisible="member_type != 'student'"
+                                   domain="[('school_id', '=', school_id)]"
+                                   options="{'no_create': True}"/>
+                            <field name="teacher_id"
+                                   invisible="member_type != 'teacher'"
+                                   domain="[('school_id', '=', school_id)]"
+                                   options="{'no_create': True}"/>
+                            <field name="school_id" readonly="1"/>
+                            <field name="join_date"/>
+                        </group>
+                        <group string="Statistics">
+                            <field name="loan_count"/>
+                            <field name="active_loan_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Loans" name="loans">
+                            <field name="loan_ids" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="book_id"/>
+                                    <field name="loan_date"/>
+                                    <field name="due_date"/>
+                                    <field name="return_date"/>
+                                    <field name="state" widget="badge"
+                                           decoration-info="state == 'borrowed'"
+                                           decoration-success="state == 'returned'"
+                                           decoration-danger="state == 'lost'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_school_library_member_search" model="ir.ui.view">
+        <field name="name">school.library.member.search</field>
+        <field name="model">school.library.member</field>
+        <field name="arch" type="xml">
+            <search string="Library Members">
+                <field name="name"/>
+                <field name="card_number"/>
+                <field name="student_id"/>
+                <field name="teacher_id"/>
+                <field name="school_id"/>
+                <filter name="filter_students" string="Students"
+                        domain="[('member_type', '=', 'student')]"/>
+                <filter name="filter_teachers" string="Teachers"
+                        domain="[('member_type', '=', 'teacher')]"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter name="group_type" string="Member Type"
+                        context="{'group_by': 'member_type'}"/>
+                <filter name="group_school" string="School"
+                        context="{'group_by': 'school_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_school_library_member" model="ir.actions.act_window">
+        <field name="name">Library Members</field>
+        <field name="res_model">school.library.member</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register your first library member</p>
+            <p>Students and teachers can borrow books from the school library.</p>
+        </field>
+    </record>
+</odoo>

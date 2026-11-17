@@ -1,0 +1,30 @@
+{
+    'name': 'School Management Parent Portal',
+    'version': '19.0.1.0.0',
+    'category': 'Education',
+    'summary': 'Portal for guardians: children, fees, attendance, results and timetable',
+    'author': 'School ERP Team',
+    'license': 'LGPL-3',
+    'depends': [
+        'portal',
+        'school_core',
+        'school_student',
+        'school_admission',
+        'school_attendance',
+        'school_exam',
+        'school_timetable',
+        'school_fees',
+        'school_communication',
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/school_parent_portal_rules.xml',
+        'views/portal_templates.xml',
+        'views/portal_home.xml',
+    ],
+    'demo': [
+        'demo/portal_demo.xml',
+    ],
+    'installable': True,
+    'application': False,
+}
