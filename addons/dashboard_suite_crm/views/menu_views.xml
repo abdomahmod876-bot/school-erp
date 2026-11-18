@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="action_crm_pipeline_dashboard" model="ir.actions.client">
+            <field name="name">CRM Pipeline</field>
+            <field name="tag">dashboard_suite_core.dashboard_action</field>
+            <field name="params" eval="{'dashboard_id': ref('dashboard_crm_pipeline')}"/>
+        </record>
+
+        <menuitem id="menu_crm_pipeline"
+                  name="CRM Pipeline"
+                  parent="dashboard_suite_core.menu_dashboard_suite_root"
+                  sequence="4"
+                  action="action_crm_pipeline_dashboard"
+                  groups="dashboard_suite_core.group_dashboard_viewer"/>
+    </data>
+</odoo>

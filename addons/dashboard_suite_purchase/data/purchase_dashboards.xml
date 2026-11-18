@@ -1,0 +1,147 @@
+<odoo>
+    <data noupdate="1">
+        <record id="dashboard_purchase_overview" model="dashboard.suite">
+            <field name="name">Purchasing Overview</field>
+            <field name="description">Purchase orders, RFQs and vendor spend.</field>
+            <field name="dashboard_type">predefined</field>
+            <field name="visibility">shared</field>
+            <field name="sequence">9</field>
+        </record>
+
+        <record id="access_purchase_overview_viewers" model="dashboard.suite.access">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="group_id" ref="dashboard_suite_core.group_dashboard_viewer"/>
+            <field name="access_level">viewer</field>
+        </record>
+
+        <!-- KPI row -->
+        <record id="widget_purchase_orders" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Purchase Orders</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['state', '=', 'purchase']]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="widget_purchase_amount" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Purchase Amount</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="purchase.field_purchase_order__amount_untaxed"/>
+            <field name="domain" eval="[['state', '=', 'purchase']]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="widget_purchase_draft_rfqs" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Draft RFQs</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['state', 'in', ['draft', 'sent']]]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="widget_purchase_to_approve" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">To Approve</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['state', '=', 'to approve']]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Charts -->
+        <record id="widget_purchase_by_status" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Orders by Status</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">bar</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="operation">count</field>
+            <field name="group_by_field_id" ref="purchase.field_purchase_order__state"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="widget_purchase_spend_by_vendor" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Spend by Vendor</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">doughnut</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="purchase.field_purchase_order__amount_untaxed"/>
+            <field name="group_by_field_id" ref="purchase.field_purchase_order__partner_id"/>
+            <field name="domain" eval="[['state', '=', 'purchase']]"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="widget_purchase_trend" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Purchase Trend</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">line</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="purchase.field_purchase_order__amount_untaxed"/>
+            <field name="date_field_id" ref="purchase.field_purchase_order__date_order"/>
+            <field name="domain" eval="[['state', '=', 'purchase']]"/>
+            <field name="config" eval="{'granularity': 'month'}"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="limit">12</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- Table -->
+        <record id="widget_purchase_latest_orders" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Latest Orders</field>
+            <field name="widget_type">table</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="operation">count</field>
+            <field name="sort_field_id" ref="purchase.field_purchase_order__date_order"/>
+            <field name="config" eval="{'columns': ['name', 'partner_id', 'date_order', 'amount_untaxed', 'state'], 'sort_direction': 'desc'}"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="limit">6</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <!-- Filters -->
+        <record id="filter_purchase_date_from" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Order Date From</field>
+            <field name="filter_type">date</field>
+            <field name="field_id" ref="purchase.field_purchase_order__date_order"/>
+            <field name="operator">&gt;=</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="filter_purchase_vendor" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_purchase_overview"/>
+            <field name="name">Vendor</field>
+            <field name="filter_type">many2one</field>
+            <field name="field_id" ref="purchase.field_purchase_order__partner_id"/>
+            <field name="operator">=</field>
+            <field name="sequence">20</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="dashboard_suite_core.DashboardAction">
+        <div class="o_ds_dashboard h-100 overflow-auto">
+            <div t-if="state.error" class="o_ds_state">
+                <div class="o_ds_state_icon text-danger"><i class="fa fa-exclamation-triangle"/></div>
+                <p t-esc="state.error"/>
+                <button class="btn btn-primary btn-sm" t-on-click="refresh">
+                    <i class="fa fa-refresh"/> Retry
+                </button>
+            </div>
+            <div t-elif="state.loading and !state.dashboard" class="o_ds_state">
+                <span class="fa fa-spinner fa-spin fa-2x text-primary"/>
+                <p>Loading dashboard…</p>
+            </div>
+            <t t-elif="state.dashboard">
+                <div class="o_ds_header">
+                    <div class="o_ds_heading">
+                        <h2 class="o_ds_title" t-esc="state.dashboard.name"/>
+                        <div t-if="state.dashboard.description"
+                             class="o_ds_subtitle" t-esc="state.dashboard.description"/>
+                    </div>
+                    <div class="o_ds_actions">
+                        <span t-if="state.loading" class="fa fa-spinner fa-spin text-primary"/>
+                        <button class="btn btn-sm btn-outline-secondary" t-on-click="refresh"
+                                title="Refresh">
+                            <i class="fa fa-refresh"/>
+                        </button>
+                        <button t-attf-class="btn btn-sm {{ state.dashboard.is_favorite ? 'btn-warning' : 'btn-outline-secondary' }}"
+                                t-on-click="toggleFavorite" title="Favorite">
+                            <i t-attf-class="fa {{ state.dashboard.is_favorite ? 'fa-star' : 'fa-star-o' }}"/>
+                        </button>
+                        <button t-if="state.dashboard.can_edit"
+                                class="btn btn-sm btn-outline-secondary"
+                                t-on-click="editDashboard">
+                            <i class="fa fa-pencil"/> Edit
+                        </button>
+                    </div>
+                </div>
+
+                <DashboardFilterBar t-if="filterList.length"
+                                    dashboardId="state.dashboard.id"
+                                    filters="filterList"
+                                    values="state.filters"
+                                    onChange="(id, value) => this.onFilterChange(id, value)"/>
+
+                <div class="o_ds_grid"
+                     t-on-dragstart="onDragStart"
+                     t-on-dragover="onDragOver"
+                     t-on-drop="onDrop"
+                     t-on-dragend="onDragEnd">
+                    <t t-foreach="widgetList" t-as="widget" t-key="widget.id">
+                        <DashboardWidget widget="widget"
+                                         dashboardId="state.dashboard.id"
+                                         filters="state.filters"
+                                         canEdit="canEdit"
+                                         dragging="state.draggingId === widget.id"
+                                         onResize="(widget, size) => this.onWidgetResize(widget, size)"/>
+                    </t>
+                    <div t-if="!widgetList.length" class="o_ds_empty o_ds_empty_grid">
+                        <i class="fa fa-plus-circle"/>
+                        <p>This dashboard has no widgets yet.</p>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="dashboard_suite_core.DashboardWidget">
+        <div t-ref="root"
+             t-attf-class="o_ds_widget o_ds_widget_{{ props.widget.widget_type }} {{ props.dragging ? 'o_ds_widget_dragging' : '' }} {{ state.resizing ? 'o_ds_widget_resizing' : '' }}"
+             t-att-style="widgetStyle"
+             t-att-data-widget-id="props.widget.id"
+             t-att-draggable="props.canEdit ? 'true' : false">
+            <div class="o_ds_widget_head">
+                <span class="o_ds_widget_name" t-esc="props.widget.name"/>
+                <span t-if="props.widget.widget_type === 'table'"
+                      class="o_ds_widget_meta">
+                    <t t-esc="props.widget.total"/> records
+                </span>
+                <span t-elif="props.widget.measure" class="o_ds_widget_meta"
+                      t-esc="measureLabel(props.widget)"/>
+                <button t-if="canExport" class="o_ds_widget_export"
+                        title="Export CSV" draggable="false"
+                        t-on-click="exportCsv"
+                        t-on-pointerdown.stop="">
+                    <i class="fa fa-download"/>
+                </button>
+                <span t-if="props.canEdit" class="o_ds_drag_hint"
+                      title="Drag to reorder">
+                    <i class="fa fa-arrows"/>
+                </span>
+            </div>
+
+            <div t-if="props.widget.error" class="o_ds_error">
+                <i class="fa fa-exclamation-triangle"/>
+                <span t-esc="props.widget.error"/>
+            </div>
+
+            <t t-elif="props.widget.widget_type === 'kpi'">
+                <div class="o_ds_kpi">
+                    <div class="o_ds_kpi_value">
+                        <span t-if="props.widget.currency and props.widget.currency.position === 'before'"
+                              class="o_ds_currency" t-esc="props.widget.currency.symbol"/>
+                        <span t-esc="props.widget.formatted_value"/>
+                        <span t-if="props.widget.currency and props.widget.currency.position === 'after'"
+                              class="o_ds_currency" t-esc="props.widget.currency.symbol"/>
+                    </div>
+                    <div t-if="props.widget.target" class="o_ds_progress">
+                        <div class="o_ds_progress_bar">
+                            <div class="o_ds_progress_fill"
+                                 t-att-style="'width: ' + progressWidth + '%'"/>
+                        </div>
+                        <div class="o_ds_progress_legend">
+                            <span t-esc="props.widget.progress"/>% of
+                            <span t-esc="formatNumber(props.widget.target)"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-elif="props.widget.widget_type === 'progress'">
+                <div class="o_ds_progress_widget">
+                    <div class="o_ds_progress_numbers">
+                        <span class="o_ds_progress_value">
+                            <span t-if="props.widget.currency and props.widget.currency.position === 'before'"
+                                  class="o_ds_currency" t-esc="props.widget.currency.symbol"/>
+                            <t t-esc="props.widget.formatted_value"/>
+                        </span>
+                        <span class="o_ds_progress_target">
+                            / <t t-esc="formatNumber(props.widget.target)"/>
+                        </span>
+                    </div>
+                    <div class="o_ds_progress_bar o_ds_progress_bar_lg">
+                        <div class="o_ds_progress_fill"
+                             t-att-style="'width: ' + progressWidth + '%'"/>
+                    </div>
+                    <div class="o_ds_progress_legend">
+                        <span t-esc="props.widget.progress"/>%
+                    </div>
+                </div>
+            </t>
+
+            <t t-elif="props.widget.widget_type === 'chart'">
+                <div t-if="!(props.widget.labels or []).length" class="o_ds_empty">
+                    <i class="fa fa-bar-chart"/>
+                    <p>No data for the selected filters.</p>
+                </div>
+                <div t-else="" class="o_ds_chart_area">
+                    <DashboardChart widget="props.widget"/>
+                </div>
+            </t>
+
+            <t t-else="">
+                <DashboardTable widget="props.widget"
+                                dashboardId="props.dashboardId"
+                                filters="props.filters"/>
+            </t>
+
+            <div t-if="props.canEdit" class="o_ds_resize" draggable="false"
+                 title="Drag to resize" t-on-pointerdown="onResizeStart"/>
+        </div>
+    </t>
+
+    <t t-name="dashboard_suite_core.DashboardChart">
+        <div class="o_ds_chart">
+            <canvas t-ref="canvas"/>
+        </div>
+    </t>
+
+    <t t-name="dashboard_suite_core.DashboardTable">
+        <div class="o_ds_table_wrap">
+            <table class="table table-sm table-hover o_ds_table">
+                <thead>
+                    <tr>
+                        <th t-foreach="state.columns" t-as="column" t-key="column.name"
+                            t-esc="column.label"/>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="state.rows" t-as="row" t-key="row.id">
+                        <td t-foreach="state.columns" t-as="column" t-key="column.name"
+                            t-esc="formatCell(row.values[column.name])"/>
+                    </tr>
+                    <tr t-if="!state.rows.length">
+                        <td t-att-colspan="state.columns.length" class="o_ds_empty_cell">
+                            No records
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="o_ds_table_footer">
+                <span class="o_ds_table_range" t-esc="rangeLabel"/>
+                <div class="o_ds_pager">
+                    <button class="btn btn-sm btn-outline-secondary"
+                            t-on-click="previous"
+                            t-att-disabled="state.offset &lt;= 0 or state.loading">
+                        <i class="fa fa-chevron-left"/>
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary"
+                            t-on-click="next"
+                            t-att-disabled="!state.hasMore or state.loading">
+                        <i class="fa fa-chevron-right"/>
+                    </button>
+                </div>
+                <span t-if="state.loading" class="fa fa-spinner fa-spin"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="dashboard_suite_core.DashboardFilterBar">
+        <div class="o_ds_filters">
+            <div class="o_ds_filter" t-foreach="props.filters" t-as="filter" t-key="filter.id">
+                <label t-esc="filter.name"/>
+                <t t-if="filter.filter_type === 'date'">
+                    <input type="date" class="form-control form-control-sm"
+                           t-att-value="displayValue(filter)"
+                           t-on-change="ev => props.onChange(filter.id, ev.target.value)"/>
+                </t>
+                <t t-elif="filter.filter_type === 'selection'">
+                    <select class="form-select form-select-sm"
+                            t-on-change="ev => props.onChange(filter.id, ev.target.value)">
+                        <option value="">All</option>
+                        <option t-foreach="optionsFor(filter)" t-as="option"
+                                t-key="option.value"
+                                t-att-value="option.value"
+                                t-att-selected="isSelected(filter, option.value)"
+                                t-esc="option.label"/>
+                    </select>
+                </t>
+                <t t-else="">
+                    <select class="form-select form-select-sm"
+                            t-on-change="ev => props.onChange(filter.id, ev.target.value)">
+                        <option value="">All</option>
+                        <option t-foreach="optionsFor(filter)" t-as="option"
+                                t-key="option.value"
+                                t-att-value="option.value"
+                                t-att-selected="isSelected(filter, option.value)"
+                                t-esc="option.label"/>
+                    </select>
+                </t>
+                <button t-if="displayValue(filter)" class="o_ds_filter_clear"
+                        t-on-click="() => props.onChange(filter.id, null)">
+                    <i class="fa fa-times"/> Clear
+                </button>
+            </div>
+        </div>
+    </t>
+
+</templates>

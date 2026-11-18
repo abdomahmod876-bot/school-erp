@@ -1,0 +1,114 @@
+<odoo>
+    <data noupdate="1">
+        <record id="dashboard_hr_overview" model="dashboard.suite">
+            <field name="name">HR Overview</field>
+            <field name="description">Headcount, departments and job distribution.</field>
+            <field name="dashboard_type">predefined</field>
+            <field name="visibility">shared</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="access_hr_overview_viewers" model="dashboard.suite.access">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="group_id" ref="dashboard_suite_core.group_dashboard_viewer"/>
+            <field name="access_level">viewer</field>
+        </record>
+
+        <!-- KPI row -->
+        <record id="widget_hr_employees" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="name">Employees</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="operation">count</field>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="widget_hr_departments" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="name">Departments</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="hr.model_hr_department"/>
+            <field name="operation">count</field>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="widget_hr_contracts" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="name">Contracts</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="hr.model_hr_version"/>
+            <field name="operation">count</field>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="widget_hr_assigned_jobs" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="name">Assigned Jobs</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="hr.model_hr_version"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['job_id', '!=', False]]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Charts -->
+        <record id="widget_hr_by_department" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="name">Staff by Department</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">doughnut</field>
+            <field name="model_id" ref="hr.model_hr_version"/>
+            <field name="operation">count</field>
+            <field name="group_by_field_id" ref="hr.field_hr_version__department_id"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="widget_hr_by_job" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="name">Staff by Job</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">bar</field>
+            <field name="model_id" ref="hr.model_hr_version"/>
+            <field name="operation">count</field>
+            <field name="group_by_field_id" ref="hr.field_hr_version__job_id"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <!-- Table -->
+        <record id="widget_hr_employees_table" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="name">Employees</field>
+            <field name="widget_type">table</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="operation">count</field>
+            <field name="config" eval="{'columns': ['name', 'work_email', 'company_id', 'parent_id']}"/>
+            <field name="width">12</field>
+            <field name="height">3</field>
+            <field name="limit">6</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- Filters -->
+        <record id="filter_hr_department" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_hr_overview"/>
+            <field name="name">Department</field>
+            <field name="filter_type">many2one</field>
+            <field name="field_id" ref="hr.field_hr_version__department_id"/>
+            <field name="operator">=</field>
+            <field name="sequence">10</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,164 @@
+<odoo>
+    <data>
+        <record id="view_dashboard_suite_form" model="ir.ui.view">
+            <field name="name">dashboard.suite.form</field>
+            <field name="model">dashboard.suite</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_open" type="object"
+                                string="Open Dashboard" icon="fa-eye"
+                                class="oe_highlight"/>
+                        <button name="action_duplicate" type="object"
+                                string="Duplicate" icon="fa-copy"/>
+                        <button name="action_set_default" type="object"
+                                string="Set as Default" icon="fa-star"/>
+                        <button name="action_toggle_favorite" type="object"
+                                string="Toggle Favorite" icon="fa-star-o"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="e.g. Sales Performance"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="visibility"/>
+                                <field name="dashboard_type"/>
+                                <field name="sequence"/>
+                            </group>
+                            <group>
+                                <field name="company_ids" widget="many2many_tags"/>
+                                <field name="is_default" readonly="1"/>
+                                <field name="is_favorite" readonly="1"/>
+                                <field name="active" invisible="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description"
+                                   placeholder="What does this dashboard track?"/>
+                        </group>
+                        <notebook>
+                            <page string="Widgets" name="widgets">
+                                <field name="widget_ids"
+                                       context="{'default_dashboard_id': id}">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="widget_type"/>
+                                        <field name="chart_type"/>
+                                        <field name="model_id"
+                                               options="{'no_create': True}"/>
+                                        <field name="operation"/>
+                                        <field name="measure_field_id"
+                                               options="{'no_create': True}"/>
+                                        <field name="group_by_field_id"
+                                               options="{'no_create': True}"/>
+                                        <field name="date_field_id"
+                                               options="{'no_create': True}"/>
+                                        <field name="limit"/>
+                                        <field name="dashboard_id" invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Filters" name="filters">
+                                <field name="filter_ids"
+                                       context="{'default_dashboard_id': id}">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="filter_type"/>
+                                        <field name="field_id"
+                                               options="{'no_create': True}"/>
+                                        <field name="operator"/>
+                                        <field name="is_required"/>
+                                        <field name="dashboard_id" invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Sharing" name="sharing">
+                                <field name="access_ids"
+                                       context="{'default_dashboard_id': id}">
+                                    <list editable="bottom">
+                                        <field name="user_id"/>
+                                        <field name="group_id"/>
+                                        <field name="access_level"/>
+                                        <field name="dashboard_id" invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Layout" name="layout"
+                                  groups="dashboard_suite_core.group_dashboard_manager">
+                                <field name="layout_config"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_dashboard_suite_list" model="ir.ui.view">
+            <field name="name">dashboard.suite.list</field>
+            <field name="model">dashboard.suite</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="dashboard_type"/>
+                    <field name="visibility"/>
+                    <field name="company_ids" widget="many2many_tags"/>
+                    <field name="is_default"/>
+                    <field name="is_favorite"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_dashboard_suite_search" model="ir.ui.view">
+            <field name="name">dashboard.suite.search</field>
+            <field name="model">dashboard.suite</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <filter name="my_dashboards" string="My Dashboards"
+                            domain="[('user_id', '=', uid)]"/>
+                    <filter name="favorites" string="Favorites"
+                            domain="[('is_favorite', '=', True)]"/>
+                    <filter name="default_dashboard" string="Default"
+                            domain="[('is_default', '=', True)]"/>
+                    <separator/>
+                    <filter name="dynamic" string="Dynamic"
+                            domain="[('dashboard_type', '=', 'dynamic')]"/>
+                    <filter name="predefined" string="Predefined"
+                            domain="[('dashboard_type', '=', 'predefined')]"/>
+                    <group name="group_by">
+                        <filter name="group_by_user" string="Owner"
+                                context="{'group_by': 'user_id'}"/>
+                        <filter name="group_by_type" string="Type"
+                                context="{'group_by': 'dashboard_type'}"/>
+                        <filter name="group_by_visibility" string="Visibility"
+                                context="{'group_by': 'visibility'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dashboard_suite" model="ir.actions.act_window">
+            <field name="name">Dashboards</field>
+            <field name="res_model">dashboard.suite</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first dashboard
+                </p>
+                <p>
+                    Build KPI, chart, table and progress widgets over any
+                    business model, without writing code.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

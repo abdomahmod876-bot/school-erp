@@ -1,0 +1,135 @@
+<odoo>
+    <data noupdate="1">
+        <record id="dashboard_crm_pipeline" model="dashboard.suite">
+            <field name="name">CRM Pipeline</field>
+            <field name="description">Opportunities, expected revenue and lead activity.</field>
+            <field name="dashboard_type">predefined</field>
+            <field name="visibility">shared</field>
+            <field name="sequence">6</field>
+        </record>
+
+        <record id="access_crm_pipeline_viewers" model="dashboard.suite.access">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="group_id" ref="dashboard_suite_core.group_dashboard_viewer"/>
+            <field name="access_level">viewer</field>
+        </record>
+
+        <!-- KPI row -->
+        <record id="widget_crm_open_opportunities" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">Open Opportunities</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['type', '=', 'opportunity']]"/>
+            <field name="width">4</field>
+            <field name="height">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="widget_crm_expected_revenue" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">Expected Revenue</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+            <field name="domain" eval="[['type', '=', 'opportunity']]"/>
+            <field name="width">4</field>
+            <field name="height">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="widget_crm_new_leads" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">New Leads</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['type', '=', 'lead']]"/>
+            <field name="width">4</field>
+            <field name="height">2</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Charts -->
+        <record id="widget_crm_opportunities_by_stage" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">Opportunities by Stage</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">bar</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="operation">count</field>
+            <field name="group_by_field_id" ref="crm.field_crm_lead__stage_id"/>
+            <field name="domain" eval="[['type', '=', 'opportunity']]"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="widget_crm_revenue_by_salesperson" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">Expected Revenue by Salesperson</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">doughnut</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="crm.field_crm_lead__expected_revenue"/>
+            <field name="group_by_field_id" ref="crm.field_crm_lead__user_id"/>
+            <field name="domain" eval="[['type', '=', 'opportunity']]"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="widget_crm_lead_trend" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">Leads Created per Month</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">line</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="operation">count</field>
+            <field name="date_field_id" ref="crm.field_crm_lead__create_date"/>
+            <field name="domain" eval="[['type', 'in', ['lead', 'opportunity']]]"/>
+            <field name="config" eval="{'granularity': 'month'}"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="limit">12</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <!-- Table -->
+        <record id="widget_crm_latest_opportunities" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">Latest Opportunities</field>
+            <field name="widget_type">table</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="operation">count</field>
+            <field name="sort_field_id" ref="crm.field_crm_lead__create_date"/>
+            <field name="config" eval="{'columns': ['name', 'partner_id', 'expected_revenue', 'stage_id', 'user_id', 'date_deadline'], 'sort_direction': 'desc'}"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="limit">6</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- Filters -->
+        <record id="filter_crm_created_from" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">Created After</field>
+            <field name="filter_type">date</field>
+            <field name="field_id" ref="crm.field_crm_lead__create_date"/>
+            <field name="operator">&gt;=</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="filter_crm_salesperson" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_crm_pipeline"/>
+            <field name="name">Salesperson</field>
+            <field name="filter_type">many2one</field>
+            <field name="field_id" ref="crm.field_crm_lead__user_id"/>
+            <field name="operator">=</field>
+            <field name="sequence">20</field>
+        </record>
+    </data>
+</odoo>

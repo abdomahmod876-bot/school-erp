@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+        <record id="view_dashboard_suite_widget_form" model="ir.ui.view">
+            <field name="name">dashboard.suite.widget.form</field>
+            <field name="model">dashboard.suite.widget</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="e.g. Monthly Revenue"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="dashboard_id"/>
+                                <field name="widget_type"/>
+                                <field name="chart_type"
+                                       invisible="widget_type != 'chart'"/>
+                                <field name="model_id"
+                                       options="{'no_create': True}"/>
+                                <field name="operation"/>
+                                <field name="measure_field_id"
+                                       invisible="operation == 'count'"
+                                       options="{'no_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="group_by_field_id"
+                                       options="{'no_create': True}"/>
+                                <field name="date_field_id"
+                                       options="{'no_create': True}"/>
+                                <field name="sort_field_id"
+                                       options="{'no_create': True}"/>
+                                <field name="limit"/>
+                                <field name="sequence"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Domain" name="domain">
+                                <field name="domain" colspan="2"/>
+                            </page>
+                            <page string="Configuration" name="config">
+                                <field name="config" colspan="2"/>
+                            </page>
+                            <page string="Position" name="position">
+                                <group>
+                                    <group>
+                                        <field name="position_x"/>
+                                        <field name="position_y"/>
+                                    </group>
+                                    <group>
+                                        <field name="width"/>
+                                        <field name="height"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

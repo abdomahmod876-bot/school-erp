@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="action_dashboard_suite_client" model="ir.actions.client">
+            <field name="name">My Dashboard</field>
+            <field name="tag">dashboard_suite_core.dashboard_action</field>
+        </record>
+
+        <menuitem id="menu_dashboard_suite_root"
+                  name="Dashboards"
+                  sequence="60"
+                  groups="dashboard_suite_core.group_dashboard_viewer"/>
+
+        <menuitem id="menu_dashboard_suite_my"
+                  name="My Dashboard"
+                  parent="menu_dashboard_suite_root"
+                  sequence="1"
+                  action="action_dashboard_suite_client"
+                  groups="dashboard_suite_core.group_dashboard_viewer"/>
+
+        <menuitem id="menu_dashboard_suite_all"
+                  name="All Dashboards"
+                  parent="menu_dashboard_suite_root"
+                  sequence="2"
+                  action="action_dashboard_suite"
+                  groups="dashboard_suite_core.group_dashboard_viewer"/>
+    </data>
+</odoo>

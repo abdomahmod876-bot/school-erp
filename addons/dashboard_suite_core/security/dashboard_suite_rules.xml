@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+        <!-- Company scope (global: applies to every user) -->
+        <record id="rule_dashboard_suite_company" model="ir.rule">
+            <field name="name">Dashboard: allowed companies</field>
+            <field name="model_id" ref="model_dashboard_suite"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_ids', '=', False), ('company_ids', 'in', user.company_ids.ids)]</field>
+        </record>
+        <record id="rule_dashboard_suite_widget_company" model="ir.rule">
+            <field name="name">Dashboard widget: allowed companies</field>
+            <field name="model_id" ref="model_dashboard_suite_widget"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('dashboard_id.company_ids', '=', False), ('dashboard_id.company_ids', 'in', user.company_ids.ids)]</field>
+        </record>
+        <record id="rule_dashboard_suite_filter_company" model="ir.rule">
+            <field name="name">Dashboard filter: allowed companies</field>
+            <field name="model_id" ref="model_dashboard_suite_filter"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('dashboard_id.company_ids', '=', False), ('dashboard_id.company_ids', 'in', user.company_ids.ids)]</field>
+        </record>
+        <record id="rule_dashboard_suite_access_company" model="ir.rule">
+            <field name="name">Dashboard sharing: allowed companies</field>
+            <field name="model_id" ref="model_dashboard_suite_access"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('dashboard_id.company_ids', '=', False), ('dashboard_id.company_ids', 'in', user.company_ids.ids)]</field>
+        </record>
+
+        <!-- Owner or shared with the user -->
+        <record id="rule_dashboard_suite_owner_or_shared" model="ir.rule">
+            <field name="name">Dashboard: owner or shared</field>
+            <field name="model_id" ref="model_dashboard_suite"/>
+            <field name="groups" eval="[(4, ref('group_dashboard_viewer')), (4, ref('group_dashboard_editor'))]"/>
+            <field name="domain_force">['|', ('user_id', '=', user.id), '|', ('access_ids.user_id', '=', user.id), ('access_ids.group_id', 'in', user.all_group_ids.ids)]</field>
+        </record>
+        <record id="rule_dashboard_suite_widget_owner_or_shared" model="ir.rule">
+            <field name="name">Dashboard widget: owner or shared</field>
+            <field name="model_id" ref="model_dashboard_suite_widget"/>
+            <field name="groups" eval="[(4, ref('group_dashboard_viewer')), (4, ref('group_dashboard_editor'))]"/>
+            <field name="domain_force">['|', ('dashboard_id.user_id', '=', user.id), '|', ('dashboard_id.access_ids.user_id', '=', user.id), ('dashboard_id.access_ids.group_id', 'in', user.all_group_ids.ids)]</field>
+        </record>
+        <record id="rule_dashboard_suite_filter_owner_or_shared" model="ir.rule">
+            <field name="name">Dashboard filter: owner or shared</field>
+            <field name="model_id" ref="model_dashboard_suite_filter"/>
+            <field name="groups" eval="[(4, ref('group_dashboard_viewer')), (4, ref('group_dashboard_editor'))]"/>
+            <field name="domain_force">['|', ('dashboard_id.user_id', '=', user.id), '|', ('dashboard_id.access_ids.user_id', '=', user.id), ('dashboard_id.access_ids.group_id', 'in', user.all_group_ids.ids)]</field>
+        </record>
+        <record id="rule_dashboard_suite_access_owner_or_shared" model="ir.rule">
+            <field name="name">Dashboard sharing: owner or shared</field>
+            <field name="model_id" ref="model_dashboard_suite_access"/>
+            <field name="groups" eval="[(4, ref('group_dashboard_viewer')), (4, ref('group_dashboard_editor'))]"/>
+            <field name="domain_force">['|', ('dashboard_id.user_id', '=', user.id), '|', ('dashboard_id.access_ids.user_id', '=', user.id), ('dashboard_id.access_ids.group_id', 'in', user.all_group_ids.ids)]</field>
+        </record>
+
+        <!-- Dashboard administrators see everything -->
+        <record id="rule_dashboard_suite_manager" model="ir.rule">
+            <field name="name">Dashboard: administrator all</field>
+            <field name="model_id" ref="model_dashboard_suite"/>
+            <field name="groups" eval="[(4, ref('group_dashboard_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+        <record id="rule_dashboard_suite_widget_manager" model="ir.rule">
+            <field name="name">Dashboard widget: administrator all</field>
+            <field name="model_id" ref="model_dashboard_suite_widget"/>
+            <field name="groups" eval="[(4, ref('group_dashboard_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+        <record id="rule_dashboard_suite_filter_manager" model="ir.rule">
+            <field name="name">Dashboard filter: administrator all</field>
+            <field name="model_id" ref="model_dashboard_suite_filter"/>
+            <field name="groups" eval="[(4, ref('group_dashboard_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+        <record id="rule_dashboard_suite_access_manager" model="ir.rule">
+            <field name="name">Dashboard sharing: administrator all</field>
+            <field name="model_id" ref="model_dashboard_suite_access"/>
+            <field name="groups" eval="[(4, ref('group_dashboard_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+    </data>
+</odoo>

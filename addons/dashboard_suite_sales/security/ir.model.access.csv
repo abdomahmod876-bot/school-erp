@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dashboard_suite_sales_target_viewer,dashboard.suite.sales.target.viewer,model_dashboard_suite_sales_target,dashboard_suite_core.group_dashboard_viewer,1,0,0,0
+access_dashboard_suite_sales_target_editor,dashboard.suite.sales.target.editor,model_dashboard_suite_sales_target,dashboard_suite_core.group_dashboard_editor,1,0,0,0
+access_dashboard_suite_sales_target_manager,dashboard.suite.sales.target.manager,model_dashboard_suite_sales_target,dashboard_suite_core.group_dashboard_manager,1,1,1,1

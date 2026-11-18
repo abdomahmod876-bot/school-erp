@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <record id="module_category_dashboard_suite" model="ir.module.category">
+            <field name="name">Dashboard Suite</field>
+            <field name="sequence">25</field>
+        </record>
+
+        <record id="privilege_dashboard_suite" model="res.groups.privilege">
+            <field name="name">Dashboard Suite</field>
+            <field name="sequence">1</field>
+            <field name="category_id" ref="module_category_dashboard_suite"/>
+            <field name="description">Access levels for dashboards.</field>
+        </record>
+
+        <record id="group_dashboard_viewer" model="res.groups">
+            <field name="name">Viewer</field>
+            <field name="privilege_id" ref="privilege_dashboard_suite"/>
+            <field name="comment">Can view dashboards shared with them.</field>
+        </record>
+
+        <record id="group_dashboard_editor" model="res.groups">
+            <field name="name">Editor</field>
+            <field name="privilege_id" ref="privilege_dashboard_suite"/>
+            <field name="implied_ids" eval="[(4, ref('group_dashboard_viewer'))]"/>
+            <field name="comment">Can create personal dashboards and edit dashboards shared with editor access.</field>
+        </record>
+
+        <record id="group_dashboard_manager" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="privilege_id" ref="privilege_dashboard_suite"/>
+            <field name="implied_ids" eval="[(4, ref('group_dashboard_editor'))]"/>
+            <field name="comment">Full control over all dashboards, sharing and predefined templates.</field>
+        </record>
+
+        <function name="write" model="res.users">
+            <value eval="[ref('base.user_admin')]"/>
+            <value eval="{'group_ids': [(4, ref('group_dashboard_manager'))]}"/>
+        </function>
+    </data>
+</odoo>

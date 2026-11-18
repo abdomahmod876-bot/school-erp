@@ -1,0 +1,94 @@
+<odoo>
+    <data>
+        <record id="view_dashboard_suite_sales_target_list" model="ir.ui.view">
+            <field name="name">dashboard.suite.sales.target.list</field>
+            <field name="model">dashboard.suite.sales.target</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="team_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="target_amount" widget="monetary" sum="Total"/>
+                    <field name="target_orders" sum="Total"/>
+                    <field name="currency_id" column_invisible="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_dashboard_suite_sales_target_form" model="ir.ui.view">
+            <field name="name">dashboard.suite.sales.target.form</field>
+            <field name="model">dashboard.suite.sales.target</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id"
+                                       options="{'no_create': True}"/>
+                                <field name="team_id"
+                                       options="{'no_create': True}"/>
+                                <field name="company_id"
+                                       groups="base.group_multi_company"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="target_amount"
+                                       widget="monetary"/>
+                                <field name="target_orders"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_dashboard_suite_sales_target_search" model="ir.ui.view">
+            <field name="name">dashboard.suite.sales.target.search</field>
+            <field name="model">dashboard.suite.sales.target</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="team_id"/>
+                    <separator/>
+                    <filter name="archived" string="Archived"
+                            domain="[('active', '=', False)]"/>
+                    <group name="group_by">
+                        <filter name="group_by_user" string="Salesperson"
+                                context="{'group_by': 'user_id'}"/>
+                        <filter name="group_by_team" string="Sales Team"
+                                context="{'group_by': 'team_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dashboard_suite_sales_target" model="ir.actions.act_window">
+            <field name="name">Sales Targets</field>
+            <field name="res_model">dashboard.suite.sales.target</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Set a sales target
+                </p>
+                <p>
+                    Targets drive progress widgets. Create a company-wide,
+                    team or salesperson target for a period.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <record id="action_sales_overview_dashboard" model="ir.actions.client">
+            <field name="name">Sales Overview</field>
+            <field name="tag">dashboard_suite_core.dashboard_action</field>
+            <field name="params" eval="{'dashboard_id': ref('dashboard_sales_overview')}"/>
+        </record>
+
+        <menuitem id="menu_sales_overview"
+                  name="Sales Overview"
+                  parent="dashboard_suite_core.menu_dashboard_suite_root"
+                  sequence="3"
+                  action="action_sales_overview_dashboard"
+                  groups="dashboard_suite_core.group_dashboard_viewer"/>
+
+        <menuitem id="menu_dashboard_suite_sales_targets"
+                  name="Sales Targets"
+                  parent="dashboard_suite_core.menu_dashboard_suite_root"
+                  sequence="20"
+                  action="action_dashboard_suite_sales_target"
+                  groups="dashboard_suite_core.group_dashboard_manager"/>
+    </data>
+</odoo>

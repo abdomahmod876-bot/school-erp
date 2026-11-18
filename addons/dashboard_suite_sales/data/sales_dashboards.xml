@@ -1,0 +1,150 @@
+<odoo>
+    <data noupdate="1">
+        <record id="dashboard_sales_overview" model="dashboard.suite">
+            <field name="name">Sales Overview</field>
+            <field name="description">Confirmed sales, pipeline and monthly target.</field>
+            <field name="dashboard_type">predefined</field>
+            <field name="visibility">shared</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="access_sales_overview_viewers" model="dashboard.suite.access">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="group_id" ref="dashboard_suite_core.group_dashboard_viewer"/>
+            <field name="access_level">viewer</field>
+        </record>
+
+        <!-- KPI row -->
+        <record id="widget_sales_confirmed_amount" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Confirmed Sales</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="sale.field_sale_order__amount_untaxed"/>
+            <field name="domain" eval="[['state', 'in', ['sale']]]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="widget_sales_confirmed_orders" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Confirmed Orders</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['state', 'in', ['sale']]]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="widget_sales_average_order" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Average Order</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="operation">avg</field>
+            <field name="measure_field_id" ref="sale.field_sale_order__amount_untaxed"/>
+            <field name="domain" eval="[['state', 'in', ['sale']]]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="widget_sales_month_target" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Monthly Target</field>
+            <field name="widget_type">progress</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="sale.field_sale_order__amount_untaxed"/>
+            <field name="domain" eval="[['state', 'in', ['sale']]]"/>
+            <field name="config" eval="{'target_source': 'sales_target', 'target_metric': 'amount', 'target_date_field': 'date_order'}"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Charts -->
+        <record id="widget_sales_by_status" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Orders by Status</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">bar</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="operation">count</field>
+            <field name="group_by_field_id" ref="sale.field_sale_order__state"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="widget_sales_trend" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Sales Trend</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">line</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="sale.field_sale_order__amount_untaxed"/>
+            <field name="date_field_id" ref="sale.field_sale_order__date_order"/>
+            <field name="domain" eval="[['state', 'in', ['sale']]]"/>
+            <field name="config" eval="{'granularity': 'month'}"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="limit">12</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="widget_sales_by_salesperson" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Sales by Salesperson</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">doughnut</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="sale.field_sale_order__amount_untaxed"/>
+            <field name="group_by_field_id" ref="sale.field_sale_order__user_id"/>
+            <field name="domain" eval="[['state', 'in', ['sale']]]"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- Table -->
+        <record id="widget_sales_latest_orders" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Latest Orders</field>
+            <field name="widget_type">table</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="operation">count</field>
+            <field name="sort_field_id" ref="sale.field_sale_order__date_order"/>
+            <field name="config" eval="{'columns': ['name', 'partner_id', 'amount_untaxed', 'state', 'date_order'], 'sort_direction': 'desc'}"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="limit">6</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <!-- Filters -->
+        <record id="filter_sales_order_date" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">From Date</field>
+            <field name="filter_type">date</field>
+            <field name="field_id" ref="sale.field_sale_order__date_order"/>
+            <field name="operator">&gt;=</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="filter_sales_salesperson" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_sales_overview"/>
+            <field name="name">Salesperson</field>
+            <field name="filter_type">many2one</field>
+            <field name="field_id" ref="sale.field_sale_order__user_id"/>
+            <field name="operator">=</field>
+            <field name="sequence">20</field>
+        </record>
+    </data>
+</odoo>

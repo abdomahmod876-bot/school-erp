@@ -1,0 +1,143 @@
+<odoo>
+    <data noupdate="1">
+        <record id="dashboard_inventory_overview" model="dashboard.suite">
+            <field name="name">Inventory Overview</field>
+            <field name="description">On hand stock and transfer activity.</field>
+            <field name="dashboard_type">predefined</field>
+            <field name="visibility">shared</field>
+            <field name="sequence">7</field>
+        </record>
+
+        <record id="access_inventory_overview_viewers" model="dashboard.suite.access">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="group_id" ref="dashboard_suite_core.group_dashboard_viewer"/>
+            <field name="access_level">viewer</field>
+        </record>
+
+        <!-- KPI row -->
+        <record id="widget_inventory_stocked_products" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">Stocked Products</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="stock.model_stock_quant"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['quantity', '&gt;', 0], ['location_id.usage', '=', 'internal']]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="widget_inventory_on_hand_units" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">On Hand Units</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="stock.model_stock_quant"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="stock.field_stock_quant__quantity"/>
+            <field name="domain" eval="[['quantity', '&gt;', 0], ['location_id.usage', '=', 'internal']]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="widget_inventory_open_transfers" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">Open Transfers</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['state', 'in', ['confirmed', 'assigned']]]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="widget_inventory_done_transfers" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">Done Transfers</field>
+            <field name="widget_type">kpi</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="operation">count</field>
+            <field name="domain" eval="[['state', '=', 'done']]"/>
+            <field name="width">3</field>
+            <field name="height">2</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Charts -->
+        <record id="widget_inventory_transfers_by_status" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">Transfers by Status</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">bar</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="operation">count</field>
+            <field name="group_by_field_id" ref="stock.field_stock_picking__state"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="widget_inventory_transfers_by_type" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">Transfers by Type</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">doughnut</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="operation">count</field>
+            <field name="group_by_field_id" ref="stock.field_stock_picking__picking_type_id"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">60</field>
+        </record>
+
+        <record id="widget_inventory_on_hand_by_location" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">On Hand by Location</field>
+            <field name="widget_type">chart</field>
+            <field name="chart_type">pie</field>
+            <field name="model_id" ref="stock.model_stock_quant"/>
+            <field name="operation">sum</field>
+            <field name="measure_field_id" ref="stock.field_stock_quant__quantity"/>
+            <field name="group_by_field_id" ref="stock.field_stock_quant__location_id"/>
+            <field name="domain" eval="[['quantity', '&gt;', 0], ['location_id.usage', '=', 'internal']]"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="sequence">70</field>
+        </record>
+
+        <!-- Table -->
+        <record id="widget_inventory_recent_transfers" model="dashboard.suite.widget">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">Recent Transfers</field>
+            <field name="widget_type">table</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="operation">count</field>
+            <field name="sort_field_id" ref="stock.field_stock_picking__scheduled_date"/>
+            <field name="config" eval="{'columns': ['name', 'partner_id', 'picking_type_id', 'state', 'scheduled_date'], 'sort_direction': 'desc'}"/>
+            <field name="width">6</field>
+            <field name="height">3</field>
+            <field name="limit">6</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <!-- Filters -->
+        <record id="filter_inventory_scheduled_from" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">Scheduled After</field>
+            <field name="filter_type">date</field>
+            <field name="field_id" ref="stock.field_stock_picking__scheduled_date"/>
+            <field name="operator">&gt;=</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="filter_inventory_partner" model="dashboard.suite.filter">
+            <field name="dashboard_id" ref="dashboard_inventory_overview"/>
+            <field name="name">Partner</field>
+            <field name="filter_type">many2one</field>
+            <field name="field_id" ref="stock.field_stock_picking__partner_id"/>
+            <field name="operator">=</field>
+            <field name="sequence">20</field>
+        </record>
+    </data>
+</odoo>

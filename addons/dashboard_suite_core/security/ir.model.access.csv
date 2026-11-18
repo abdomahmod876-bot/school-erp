@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dashboard_suite_viewer,dashboard.suite.viewer,model_dashboard_suite,group_dashboard_viewer,1,1,0,0
+access_dashboard_suite_editor,dashboard.suite.editor,model_dashboard_suite,group_dashboard_editor,1,1,1,1
+access_dashboard_suite_widget_viewer,dashboard.suite.widget.viewer,model_dashboard_suite_widget,group_dashboard_viewer,1,0,0,0
+access_dashboard_suite_widget_editor,dashboard.suite.widget.editor,model_dashboard_suite_widget,group_dashboard_editor,1,1,1,1
+access_dashboard_suite_filter_viewer,dashboard.suite.filter.viewer,model_dashboard_suite_filter,group_dashboard_viewer,1,0,0,0
+access_dashboard_suite_filter_editor,dashboard.suite.filter.editor,model_dashboard_suite_filter,group_dashboard_editor,1,1,1,1
+access_dashboard_suite_access_viewer,dashboard.suite.access.viewer,model_dashboard_suite_access,group_dashboard_viewer,1,0,0,0
+access_dashboard_suite_access_editor,dashboard.suite.access.editor,model_dashboard_suite_access,group_dashboard_editor,1,1,1,1
+access_ir_model_dashboard_viewer,ir.model.dashboard.viewer,base.model_ir_model,group_dashboard_viewer,1,0,0,0
+access_ir_model_fields_dashboard_viewer,ir.model.fields.dashboard.viewer,base.model_ir_model_fields,group_dashboard_viewer,1,0,0,0
