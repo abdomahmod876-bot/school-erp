@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="school_dashboard.DashboardAction">
+        <div class="o_school_dashboard h-100 overflow-auto">
+            <div class="o_sd_toolbar">
+                <div class="o_sd_title">
+                    <span class="o_sd_title_icon"><i class="fa fa-pie-chart"/></span>
+                    <h2 t-esc="state.dashboard.name"/>
+                </div>
+                <div class="o_sd_periods">
+                    <button t-foreach="periods" t-as="period" t-key="period.key"
+                            class="o_sd_period btn btn-sm"
+                            t-att-class="{ active: state.period === period.key }"
+                            t-on-click="() => this.onPeriod(period.key)">
+                        <t t-esc="period.label"/>
+                    </button>
+                    <button class="o_sd_refresh btn btn-sm" t-on-click="refresh" title="Refresh">
+                        <i class="fa fa-refresh"/>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.error" class="alert alert-danger" t-esc="state.error"/>
+            <div t-if="state.loading" class="o_sd_loading">
+                <span class="fa fa-spinner fa-spin fa-2x text-primary"/>
+            </div>
+            <div t-if="!state.loading and !state.error" class="o_sd_grid"
+                 t-on-dragstart="onDragStart"
+                 t-on-dragover="onDragOver"
+                 t-on-drop="onDrop"
+                 t-on-dragend="onDragEnd"
+                 t-on-pointerdown="onPointerDown">
+                <t t-foreach="state.dashboard.items" t-as="item" t-key="item.id">
+                    <ChartCard item="item"/>
+                </t>
+                <div t-if="!state.dashboard.items.length" class="o_sd_empty text-muted">
+                    This dashboard has no items yet. Add items from the dashboard form.
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

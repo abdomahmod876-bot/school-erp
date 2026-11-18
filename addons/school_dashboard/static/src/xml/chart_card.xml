@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="school_dashboard.ChartCard">
+        <div t-attf-class="o_sd_card o_sd_{{ item.item_type }}"
+             draggable="true" t-att-data-id="item.id"
+             t-attf-style="--sd-accent: {{ item.color or '#6366f1' }}; grid-column: span {{ item.span or 4 }};">
+            <div class="o_sd_card_header">
+                <span class="o_sd_card_icon">
+                    <i t-attf-class="fa {{ item.icon or 'fa-bar-chart' }}"/>
+                </span>
+                <span class="o_sd_card_title" t-esc="item.name"/>
+                <span class="o_sd_drag_hint" title="Drag to reorder">
+                    <i class="fa fa-arrows"/>
+                </span>
+            </div>
+
+            <div t-if="item.error" class="o_sd_card_error">
+                <i class="fa fa-exclamation-triangle"/>
+                <span t-esc="item.error"/>
+            </div>
+
+            <div t-elif="item.kind === 'scalar'" class="o_sd_scalar">
+                <div class="o_sd_value" t-esc="formattedValue"/>
+                <div t-if="item.trend" t-attf-class="o_sd_trend {{ item.trend.direction }}">
+                    <i t-if="item.trend.direction === 'up'" class="fa fa-arrow-up"/>
+                    <i t-if="item.trend.direction === 'down'" class="fa fa-arrow-down"/>
+                    <i t-if="item.trend.direction === 'flat'" class="fa fa-minus"/>
+                    <span t-esc="item.trend.label"/>
+                    <span class="o_sd_trend_hint">vs previous period</span>
+                </div>
+            </div>
+
+            <div t-elif="item.kind === 'list'" class="o_sd_table_wrap">
+                <table class="table table-sm o_sd_table">
+                    <thead>
+                        <tr>
+                            <th t-foreach="item.columns" t-as="column" t-key="column.name"
+                                t-esc="column.label"/>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="item.rows" t-as="row" t-key="row_index">
+                            <td t-foreach="row" t-as="cell" t-key="cell_index" t-esc="cell"/>
+                        </tr>
+                        <tr t-if="!item.rows.length">
+                            <td t-att-colspan="item.columns.length" class="text-muted">
+                                No records
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div t-else="" class="o_sd_chart_wrap">
+                <canvas t-ref="canvas"/>
+            </div>
+
+            <div t-if="item.total !== undefined and item.kind !== 'scalar'" class="o_sd_card_footer">
+                <t t-esc="item.total"/> records
+            </div>
+
+            <div class="o_sd_resize" title="Drag to resize"/>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_dashboard_manager,school.dashboard.manager,model_school_dashboard,school_core.group_school_manager,1,1,1,1
+access_school_dashboard_user,school.dashboard.user,model_school_dashboard,school_core.group_school_user,1,1,1,1
+access_school_dashboard_item_manager,school.dashboard.item.manager,model_school_dashboard_item,school_core.group_school_manager,1,1,1,1
+access_school_dashboard_item_user,school.dashboard.item.user,model_school_dashboard_item,school_core.group_school_user,1,1,1,1
+access_ir_model_manager,ir.model.manager.read,base.model_ir_model,school_core.group_school_manager,1,0,0,0
+access_ir_model_user,ir.model.user.read,base.model_ir_model,school_core.group_school_user,1,0,0,0
+access_ir_model_fields_manager,ir.model.fields.manager.read,base.model_ir_model_fields,school_core.group_school_manager,1,0,0,0
+access_ir_model_fields_user,ir.model.fields.user.read,base.model_ir_model_fields,school_core.group_school_user,1,0,0,0

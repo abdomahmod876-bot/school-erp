@@ -1,0 +1,172 @@
+<odoo>
+    <data>
+        <record id="demo_dashboard_students" model="school.dashboard">
+            <field name="name">Student Overview</field>
+            <field name="description">Live student KPIs, splits and admissions trend.</field>
+            <field name="sequence">10</field>
+            <field name="user_id" eval="ref('base.user_root')"/>
+            <field name="group_ids" eval="[(6, 0, [ref('school_core.group_school_manager'), ref('school_core.group_school_user')])]"/>
+        </record>
+
+        <record id="demo_item_total_students" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Total Students</field>
+            <field name="sequence">10</field>
+            <field name="item_type">tile</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="measure">count</field>
+            <field name="icon">fa-users</field>
+            <field name="color">#6366f1</field>
+            <field name="span">3</field>
+        </record>
+
+        <record id="demo_item_active_students" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Active Students</field>
+            <field name="sequence">20</field>
+            <field name="item_type">kpi</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="measure">count</field>
+            <field name="domain">[('state', '=', 'active')]</field>
+            <field name="date_field_id" ref="school_student.field_school_student__admission_date"/>
+            <field name="icon">fa-user-check</field>
+            <field name="color">#22c55e</field>
+            <field name="span">3</field>
+        </record>
+
+        <record id="demo_item_graduated" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Graduated</field>
+            <field name="sequence">30</field>
+            <field name="item_type">tile</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="measure">count</field>
+            <field name="domain">[('state', '=', 'graduated')]</field>
+            <field name="icon">fa-graduation-cap</field>
+            <field name="color">#f59e0b</field>
+            <field name="span">3</field>
+        </record>
+
+        <record id="demo_item_withdrawn" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Withdrawn</field>
+            <field name="sequence">40</field>
+            <field name="item_type">tile</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="measure">count</field>
+            <field name="domain">[('state', '=', 'withdrawn')]</field>
+            <field name="icon">fa-user-times</field>
+            <field name="color">#ef4444</field>
+            <field name="span">3</field>
+        </record>
+
+        <record id="demo_item_students_by_gender" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Students by Gender</field>
+            <field name="sequence">50</field>
+            <field name="item_type">pie</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="measure">count</field>
+            <field name="groupby_field_id" ref="school_student.field_school_student__gender"/>
+            <field name="icon">fa-venus-mars</field>
+            <field name="color">#8b5cf6</field>
+            <field name="span">4</field>
+        </record>
+
+        <record id="demo_item_students_by_school" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Students per School</field>
+            <field name="sequence">60</field>
+            <field name="item_type">bar</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="measure">count</field>
+            <field name="groupby_field_id" ref="school_student.field_school_student__school_id"/>
+            <field name="icon">fa-school</field>
+            <field name="color">#0ea5e9</field>
+            <field name="span">4</field>
+        </record>
+
+        <record id="demo_item_status_split" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Status Split</field>
+            <field name="sequence">70</field>
+            <field name="item_type">doughnut</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="measure">count</field>
+            <field name="groupby_field_id" ref="school_student.field_school_student__state"/>
+            <field name="icon">fa-chart-pie</field>
+            <field name="color">#f97316</field>
+            <field name="span">4</field>
+        </record>
+
+        <record id="demo_item_admissions_trend" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Admissions Trend</field>
+            <field name="sequence">80</field>
+            <field name="item_type">line</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="measure">count</field>
+            <field name="date_field_id" ref="school_student.field_school_student__admission_date"/>
+            <field name="limit">12</field>
+            <field name="icon">fa-line-chart</field>
+            <field name="color">#10b981</field>
+            <field name="span">6</field>
+        </record>
+
+        <record id="demo_item_latest_students" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_students"/>
+            <field name="name">Latest Students</field>
+            <field name="sequence">90</field>
+            <field name="item_type">list</field>
+            <field name="model_id" ref="school_student.model_school_student"/>
+            <field name="limit">8</field>
+            <field name="list_field_ids" eval="[(6, 0, [ref('school_student.field_school_student__name'), ref('school_student.field_school_student__gender'), ref('school_student.field_school_student__state'), ref('school_student.field_school_student__school_id')])]"/>
+            <field name="icon">fa-list</field>
+            <field name="color">#64748b</field>
+            <field name="span">6</field>
+        </record>
+
+        <record id="demo_dashboard_contacts" model="school.dashboard">
+            <field name="name">Contacts Overview</field>
+            <field name="description">A small dashboard over res.partner to show the engine is model-agnostic.</field>
+            <field name="sequence">20</field>
+            <field name="user_id" eval="ref('base.user_root')"/>
+            <field name="group_ids" eval="[(6, 0, [ref('school_core.group_school_manager'), ref('school_core.group_school_user')])]"/>
+        </record>
+
+        <record id="demo_item_total_contacts" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_contacts"/>
+            <field name="name">Total Contacts</field>
+            <field name="item_type">tile</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="measure">count</field>
+            <field name="icon">fa-address-book</field>
+            <field name="color">#6366f1</field>
+            <field name="span">3</field>
+        </record>
+
+        <record id="demo_item_contact_types" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_contacts"/>
+            <field name="name">Company or Individual</field>
+            <field name="item_type">pie</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="measure">count</field>
+            <field name="groupby_field_id" ref="base.field_res_partner__is_company"/>
+            <field name="icon">fa-building</field>
+            <field name="color">#14b8a6</field>
+            <field name="span">3</field>
+        </record>
+
+        <record id="demo_item_latest_contacts" model="school.dashboard.item">
+            <field name="dashboard_id" ref="demo_dashboard_contacts"/>
+            <field name="name">Latest Contacts</field>
+            <field name="item_type">list</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="limit">8</field>
+            <field name="list_field_ids" eval="[(6, 0, [ref('base.field_res_partner__name'), ref('base.field_res_partner__email'), ref('base.field_res_partner__phone'), ref('base.field_res_partner__country_id')])]"/>
+            <field name="icon">fa-list</field>
+            <field name="color">#64748b</field>
+            <field name="span">6</field>
+        </record>
+    </data>
+</odoo>
